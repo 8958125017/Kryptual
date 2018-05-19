@@ -1,0 +1,696 @@
+<div class="main-content home-pg">
+    <app-header></app-header>
+    <div class="main-home">
+        <div class="wrapper faq_title">
+            <div class="content-center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="title" style="font-size: 55px;font-weight: 600;color: #fff;">List ICO</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--List ICO  Content-->
+        <div class="listico-home" data-background-color="gray">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-10 ml-auto mr-auto card" style="padding:30px 0 0 0px;margin-top: -80px;margin-bottom: 43px !important;">
+                        <h2 class="title text-center">Token Setup</h2>
+                        <p class="title text-center" style="padding-top: 0px;padding-bottom: 0;font-size: 20px;">Configure properties of your token. Created token contract will be ERC-20 compatible</p>
+                        <form [formGroup]="registerForm">
+                            <div class="page 1" style=" padding:2%;">
+                                <h4 class="title ">CROWDSALE CONTRACT</h4>
+                                <p>Modern crowdsale strategy with multiple tiers, whitelists, and limits. Recommended for every crowdsale</p>
+                                <div class="row ">
+                                    <div class="col-md-6">
+                                        <label>Company Name<sup style="color: red">*</sup></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-address-card-o"></i>
+                                                    </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Company Name..." [(ngModel)]="generalInfo.companyName" formControlName="companyName" type="text" required />
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['companyName'].valid&&registerForm.controls['companyName'].dirty"> <span class="small">Company Name is required</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Description<sup style="color: red">*</sup></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-list-alt"></i>
+                                                    </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Description..." [(ngModel)]="generalInfo.description" type="text" formControlName="description">
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['description'].valid && registerForm.controls['description'].dirty"> <span class="small">Description is required</span></div>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-md-4 pr-2">
+                                        <label>Company Email<sup style="color: red">*</sup></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-address-card-o"></i>
+                                                    </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Company Email..." [(ngModel)]="company_email.email" type="text" formControlName="email" required />
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['email'].valid&&registerForm.controls['email'].dirty"> <span *ngIf="registerForm.controls['email'].errors['required']" class="small">Email is required</span>
+                                            <span *ngIf="registerForm.controls['email'].errors['pattern']" style="color: red;">Email id is invalid</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-2">
+                                        <label>Token Logo</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-file-image-o"></i>
+                                                    </span>
+                                            <div style="padding: 7px;">
+                                                <!-- <input placeholder="Token Logo..." type="file" style="border:0px solid"> -->
+                                                <input name="..." (change)="tokenImage($event)" type="file" accept="image/x-png,image/gif,image/jpeg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-2">
+                                        <label>White Paper</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-file-o"></i>
+                                                    </span>
+                                            <div style="padding: 7px;">
+                                                <input placeholder="White Paper..." type="file" style="border:0px solid" accept="application/pdf" (change)="whitePaper($event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pl-2 ">
+                                    </div>
+                                </div>
+                                <h6 class="text-center" style="font-weight: bold;"> Social Links </h6>
+                                <div class="row">
+                                    <div class="col-md-4 pr-2">
+                                        <label>Twitter Link</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-twitter"></i>
+                                                    </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Twitter Link..." formControlName="twitter" [(ngModel)]="generalInfo.twitter" type="text">
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['twitter'].valid && registerForm.controls['twitter'].errors['pattern']">
+                                            <span class="small">Please enter valid URL</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-2 ">
+                                        <label>Facebook Link</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-facebook"></i>
+                                                    </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Facebook Link..." formControlName="facebook" [(ngModel)]="generalInfo.facebook" type="text">
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['facebook'].valid && registerForm.controls['facebook'].errors['pattern']">
+                                            <span class="small">Please enter valid URL</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-2 ">
+                                        <label>Linkedin Link</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-linkedin"></i>
+                                                    </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="linkedin Link..." formControlName="linkedin" [(ngModel)]="generalInfo.linkedin" type="text">
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['linkedin'].valid && registerForm.controls['linkedin'].errors['pattern']">
+                                            <span class="small">Please enter valid URL</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6 class="text-center" style="font-weight: bold;"> other details</h6>
+                                <div class="row ">
+                                    <div class="col-md-6 pr-2 ">
+                                        <label>Website Link</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                     <i  class="fa fa-globe"></i>
+                                </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Website Link..." formControlName="website" [(ngModel)]="generalInfo.website" type="text">
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['website'].valid && registerForm.controls['website'].errors['pattern']">
+                                            <span class="small">Please enter valid URL</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pl-2 ">
+                                        <label>Video Link</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-video-camera"></i>
+                                                    </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Video Url..." formControlName="vedio" [(ngModel)]="generalInfo.vedio" type="text">
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['vedio'].valid && registerForm.controls['vedio'].errors['pattern']">
+                                            <span class="small">Please enter valid URL</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row input_fields_wrap " style="text-align: right;">
+                                    <div *ngIf="teamForm">
+                                        <div class="col-md-12">
+                                            <div class="col-md-7">
+                                                <h6 class="text-right" style="font-weight: bold;padding-right: 8%;"> TEAM</h6></div>
+                                            <div class="col-md-5">
+                                                <button class="add_field_button btn btn-round " style="background:green; margin-bottom: 20px; " (click)="pushteam()">Save</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6 pr-2 ">
+                                                <label>Member Name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-user-o"></i>
+                                                    </span>
+                                                    <div class="form-group is-empty">
+                                                        <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Member Name..." formControlName="teamnames" [(ngModel)]="team.teamNames" type="text">
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!registerForm.controls['teamnames'].valid && registerForm.controls['teamnames'].errors['pattern']">
+                                                    <span class="small">Member Name should have atleast three alphabets</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 pl-2 ">
+                                                <label>Designation</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-id-card-o"></i>
+                                                    </span>
+                                                    <div class="form-group is-empty">
+                                                        <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Designation..." formControlName="designation" [(ngModel)]="team.designation" type="text">
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!registerForm.controls['designation'].valid && registerForm.controls['designation'].errors['pattern']">
+                                                    <span class="small">Designation should have atleast three alphabets</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6 pl-2 ">
+                                                <label>Linkedin name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-id-card-o"></i>
+                                                    </span>
+                                                    <div class="form-group is-empty">
+                                                        <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="linkedin name..." formControlName="linkedinname" [(ngModel)]="team.linkedinname" type="text">
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!registerForm.controls['linkedinname'].valid && registerForm.controls['linkedinname'].errors['pattern']">
+                                                    <span class="small">linkedin name should have atleast three alphabets</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 pr-2 " style="text-align: left;">
+                                                <label>Profile Image</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-picture-o"></i>
+                                                    </span>
+                                                    <div style="padding: 7px;">
+                                                        <input class="" placeholder="Profile Image..." (change)="teamImage($event)" name="..." type="file" accept="image/x-png,image/gif,image/jpeg" style="border:0px solid">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="teamTabel">
+                                        <div class="col-md-12">
+                                            <button class="add_field_button btn btn-round " style="background:green; margin-bottom: 20px; " (click)="addMoreteamteam()">Add More Team Members</button>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="text-center">
+                                                <h6 style="font-weight: bold;margin:  0;"> TEAM</h6></div>
+                                            <div class="card card-plain">
+                                                <div class="card-content table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>Profile Image</th>
+                                                                <th>Member Name</th>
+                                                                <th>Designation</th>
+                                                                <th>Linkedin Name</th>
+                                                                <!-- <th>Edit</th> -->
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let team of generalInfo.team ; let i = index">
+                                                                <td>{{i+1}}</td>
+                                                                <td><img class="picture-src" src={{team.image}} id="wizardPicturePreview" title=""></td>
+                                                                <td>{{team.name ? team.name : ''}}</td>
+                                                                <td>{{team.designation ? team.designation : ''}}</td>
+                                                                <td>{{team.linkedinname ? team.linkedinname : ''}}</td>
+                                                                <!-- <td class="text-success"><i class="material-icons" >edit</i></td> -->
+                                                                <td class="text-danger"><i class="material-icons" (click)="popteam(i)">close</i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div *ngIf="milestoneForm">
+                                            <div class="col-md-12">
+                                                <div class="col-md-7">
+                                                    <h6 class="text-right" style="font-weight: bold;padding-right: 3%;"> ROADMAP</h6></div>
+                                                <div class="col-md-5">
+                                                    <button class="add_milestone_button btn btn-round " style="background:green;margin-bottom: 20px; " (click)="pushroadmap()">save</button>
+                                                </div>
+                                            </div>
+                                            <div class="row input_fields_addmilestone ">
+                                                <div class="col-md-6 pr-2 ">
+                                                    <label>Milestones</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-cube"></i>
+                                                    </span>
+                                                        <div class="form-group is-empty">
+                                                            <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Milestones..." formControlName="milestone1" [(ngModel)]="milestone.milestone1" type="text">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 pr-2 ">
+                                                    <label>Milestone Date</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-calendar"></i>
+                                                    </span>
+                                                        <div class="form-group is-empty">
+                                                            <input [(ngModel)]="milestone.milestonedate" [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" class="form-control" formControlName="milestonedate" placeholder="MM/DD/YYYY" onkeydown="return false">
+                                                            <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="milestoneTabel">
+                                        <div class="col-md-12">
+                                            <button class="add_milestone_button btn btn-round " style="background:green;margin-bottom: 20px; " (click)="addMoreroadmap()">Add More Milestone</button>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="text-center">
+                                                <h6 style="font-weight: bold;margin:  0;"> ROADMAP</h6></div>
+                                            <div class="card card-plain">
+                                                <div class="card-content table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>Milestone</th>
+                                                                <th>Date</th>
+                                                                <!--    <th>Edit</th> -->
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let milestone of generalInfo.milestone ; let i = index">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{milestone.milestone1 ? milestone.milestone1 : '--'}}</td>
+                                                                <td>{{milestone.milestonedate ? milestone.milestonedate : '--'}}</td>
+                                                                <!--  <td class="text-success"><i class="material-icons">edit</i></td> -->
+                                                                <td class="text-danger"><i class="material-icons" (click)="popmilestone(i)">close</i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- </div>
+                            <div class="page 2 " style=" padding: 2%; "> -->
+                                <h4 class="title ">TOKEN SETUP</h4>
+                                <p>Configure properties of your token. Created token contract will be ERC-20 compatible</p>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6 pr-2 ">
+                                            <label>Token Name<sup style="color: red">*</sup></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-user-o"></i>
+                                                    </span>
+                                                <div class="form-group is-empty">
+                                                    <input class="form-control" style="border-bottom: 0px solid #eee !important; text-transform:uppercase" placeholder="Name..." type="text" formControlName="name" [(ngModel)]="token.name" required />
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!registerForm.controls['name'].valid && registerForm.controls['name'].dirty"> <span *ngIf="registerForm.controls['name'].errors['required']" class="small">name is required</span>
+                                                <span *ngIf="registerForm.controls['name'].errors['pattern']" class="small">Please enter alphanumeric and should not be exceed 28 characters </span>
+                                            </div>
+                                            <small>The name of your token. Will be used by Etherscan and other token browsers. Be afraid of Trademarks.</small>
+                                        </div>
+                                        <div class="col-md-6 pr-2 ">
+                                            <label>Token Ticker<sup style="color: red">*</sup></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-sitemap"></i>
+                                                    </span>
+                                                <div class="form-group is-empty">
+                                                    <input class="form-control" style="border-bottom: 0px solid #eee !important ; text-transform:uppercase" placeholder="Ticker..." type="text" [(ngModel)]="token.ticker" formControlName="ticker" required />
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!registerForm.controls['ticker'].valid&&registerForm.controls['ticker'].dirty">
+                                                <span *ngIf="registerForm.controls['ticker'].errors['required']" class="small">Ticker is required</span>
+                                                <span *ngIf="registerForm.controls['ticker'].errors['maxLength']" class="small">Ticker length should be 3 alphanumeric</span>
+                                                <span *ngIf="registerForm.controls['ticker'].errors['pattern']" style="color: red;">Please enter alphanumeric and should be maximum 3 characters</span>
+                                            </div>
+                                            <small>The three letter ticker for your token. There are 17,576 combinations for 26 english letters. Be hurry.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6 pr-2 ">
+                                            <label>Token Decimals<sup style="color: red">*</sup></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-sort-amount-asc"></i>
+                                                    </span>
+                                                <div class="form-group is-empty">
+                                                    <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Decimals..." [(ngModel)]="token.tokenDecimals" (keydown)="minus($event)" type="number" formControlName="tokenDecimals" required/>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!registerForm.controls['tokenDecimals'].valid&&registerForm.controls['tokenDecimals'].dirty">
+                                                <span *ngIf="registerForm.controls['tokenDecimals'].errors['required']" class="small">Decimals is required</span>
+                                                <span *ngIf="registerForm.controls['tokenDecimals'].errors['pattern']" class="small">Decimals should be between 1-18</span>
+                                            </div>
+                                            <small>Refers to how divisible a token can be, from 0 (not a all divisible) to 18 (pretty much continuous).</small>
+                                        </div>
+                                        <div class="col-md-6 pr-2 ">
+                                            <label>Token Supply<sup style="color: red">*</sup></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-database"></i>
+                                                    </span>
+                                                <div class="form-group is-empty">
+                                                    <input type="number" class="form-control" style="border-bottom: 0px solid #eee   !important" placeholder="Token Supply..." (keydown)="minus($event)" name="tokenValue" [(ngModel)]="token.tokenValue" formControlName="tokenValue" min="0" required/>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!registerForm.controls['tokenValue'].valid && registerForm.controls['tokenValue'].dirty">
+                                                <span *ngIf="registerForm.controls['tokenValue'].errors['required']" class="small">Token supply is required</span>
+                                                <span *ngIf="registerForm.controls['tokenValue'].errors['pattern']" class="small">Token value should be between 1-10000000000 </span>
+                                            </div>
+                                            <small>How many tokens will be sold on this tier. Cap of crowdsale equals to sum of supply of all tiers.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row " *ngIf="reservedTokenForm">
+                                        <div class="col-md-12" style="text-align: right;">
+                                            <div class="col-md-7">
+                                                <h6 class="text-right" style="font-weight: bold;"> RESERVED TOKENS </h6></div>
+                                            <div class="col-md-5">
+                                                <button class="add_rtoken_button btn btn-round " style="background:green;margin-bottom: 20px;" (click)="pushreservedToken()">Save</button>
+                                            </div>
+                                        </div>
+                                        <div class="row input_fields_addrtoken">
+                                            <div class="col-md-6 pr-2 ">
+                                                <label>Reserved Tokens</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-university"></i>
+                                                    </span>
+                                                    <div class="form-group is-empty">
+                                                        <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Address..." [(ngModel)]="reservedTokens.addr" type="text" formControlName="addr">
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!registerForm.controls['addr'].valid&& registerForm.controls['addr'].errors['pattern']"> <span style="color:red;">Address is incorrect</span>
+                                                </div>
+                                                <small>Address where to send reserved tokens</small>
+                                            </div>
+                                            <div class="col-md-6 pr-2 ">
+                                                <label>Reserved Token Value</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon brd-right">
+                                                <i  class="fa fa-database"></i>
+                                                    </span>
+                                                    <div class="form-group is-empty" style="padding-right: 20px;">
+                                                        <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Value..." formControlName="val" [(ngModel)]="reservedTokens.val" (keydown)="minus($event)" min="0" type="number" required />
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!registerForm.controls['val'].valid&&registerForm.controls['val'].dirty"> <span *ngIf="registerForm.controls['val'].errors['required']" class="small">Value is required</span>
+                                                    <div *ngIf="!registerForm.controls['val'].valid && registerForm.controls['val'].errors['pattern']">
+                                                        <span class="small">Value should be between 1-10000000000</span>
+                                                    </div>
+                                                </div>
+                                                <small>Values in tokens.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="reservedTokenTabel">
+                                    <div class="col-md-12" style="text-align: right;">
+                                        <button class="add_rtoken_button btn btn-round " style="background:green;margin-bottom: 20px;" (click)="addMorereservedToken()">Add More Reserved Token</button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="card card-plain">
+                                            <div class="card-content table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Value</th>
+                                                            <th>Address</th>
+                                                            <!--<th>Edit</th> -->
+                                                            <th>Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let reservedTokens of icowizards.crowdsale.reservedTokens ; let i = index">
+                                                            <td>{{i+1}}</td>
+                                                            <td>{{reservedTokens.val ? reservedTokens.val : '--'}}</td>
+                                                            <td>{{reservedTokens.addr ? reservedTokens.addr : '--'}}</td>
+                                                            <!--<td class="text-success"><i class="material-icons" >edit</i></td> -->
+                                                            <td class=" text-danger"><i class="material-icons" (click)="popreservedTokens(i)">close</i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6 pr-2 ">
+                                        <label>Crowdsale Address<sup style="color: red">*</sup></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-id-card-o"></i>
+                                                    </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Crowdsale Address..." name="crowdsaleAddress" [(ngModel)]="data.crowdsaleAddress" type="text" formControlName="crowdsaleAddress" (blur)="addressValidate(data.crowdsaleAddress)" required/>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['crowdsaleAddress'].valid&&registerForm.controls['crowdsaleAddress'].dirty"> <span *ngIf="registerForm.controls['crowdsaleAddress'].errors['required']" style="color:red;">Crowdsale Address is required</span>
+                                            <span *ngIf="registerForm.controls['crowdsaleAddress'].errors['pattern']" class="small">Crowdsale Address is incorrect</span>
+                                        </div>
+                                        <small>Name of a tier. e.g. PrePreIco PreICO, ICO with bonus A, ICO with bonus B. etc. We simplified that and will increment a number after each tier.
+                                    </small>
+                                    </div>
+                                    <div class="col-md-6 pr-2 ">
+                                        <label>Token Address<sup style="color: red">*</sup></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-university"></i>
+                                                    </span>
+                                            <div class="form-group is-empty">
+                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Token Address..." name="tokenAddress" [(ngModel)]="data.tokenAddress" type="text" formControlName="tokenAddress" (blur)="addressValidate(data.tokenAddress)" required/>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!registerForm.controls['tokenAddress'].valid&&registerForm.controls['tokenAddress'].dirty"> <span *ngIf="registerForm.controls['tokenAddress'].errors['required']" style="color:red;">Token Address is required</span>
+                                            <span *ngIf="registerForm.controls['tokenAddress'].errors['pattern']" class="small">Token Address is incorrect</span>
+                                        </div>
+                                        <small>Where the money goes after investors transactions. Immediately after each transaction. We recommend to setup a multisig wallet with hardware based signers.</small>
+                                    </div>
+                                </div>
+                                <div class="page 3 ">
+                                    <h4 class="title ">CROWDSALE SETUP</h4>
+                                    <p>The most important and exciting part of the crowdsale process. Here you can define parameters of your crowdsale campaign.</p>
+                                    <div *ngIf="tierForm" style=" padding: 2%; ">
+                                        <div class="col-md-12" style="text-align: right;">
+                                            <button class="add_crowdsale_button btn btn-round " style="background:green;margin-bottom: 20px; " (click)="pushtier()">Save</button>
+                                        </div>
+                                        <div class="row input_fields_addcrowdsale" style="background: #eeeeee6b;padding: 3%;">
+                                            <div class="col-md-12">
+                                                <div class="col-md-6 pr-2 ">
+                                                    <label>Crowdsale Setup Name<sup style="color: red">*</sup></label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-pencil"></i>
+                                                    </span>
+                                                        <div class="form-group is-empty">
+                                                            <input class="form-control" style="border-bottom: 0px solid #eee !important" name="tier" [(ngModel)]="crowdsale.tier" placeholder="Crowdsale Setup Name..." type="text" formControlName="tier" required/>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="!registerForm.controls['tier'].valid&&registerForm.controls['tier'].dirty"> <span style="color:red;">Tier  is required</span></div>
+                                                    <small>Name of a tier. e.g. PrePreIco PreICO, ICO with bonus A, ICO with bonus B. etc. We simplified that and will increment a number after each tier.
+                                                    </small>
+                                                </div>
+                                                <div class="col-md-6 pr-2 ">
+                                                    <label>Wallet Address<sup style="color: red">*</sup></label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-id-card-o"></i>
+                                                    </span>
+                                                        <div class="form-group is-empty">
+                                                            <input class="form-control" style="border-bottom: 0px solid #eee !important" name="walletAddress" [(ngModel)]="crowdsale.walletAddress" placeholder="Wallet Address..." type="text" formControlName="walletAddress" (blur)="addressValidate(crowdsale.walletAddress)" required>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="!registerForm.controls['walletAddress'].valid&&registerForm.controls['walletAddress'].dirty"> <span class="small">Wallet Address  is required</span></div>
+                                                    <small>Where the money goes after investors transactions. Immediately after each transaction. We recommend to setup a multisig wallet with hardware based signers.</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="col-md-6 pr-2 ">
+                                                    <label>Start Time<sup style="color: red">*</sup></label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-calendar"></i>
+                                                    </span>
+                                                        <div class="form-group is-empty">
+                                                            <!-- <input class="form-control" style="border-bottom: 0px solid #eee !important" name="startTime" [(ngModel)]="crowdsale.startTime" placeholder="Start Time..." type="datetime-local" formControlName="startTime" required/> -->
+                                                            <input [(ngModel)]="crowdsale.startTime" [min]="min" [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11" id='txtDate1' formControlName="startTime" class="form-control" placeholder="MM/DD/YYYY, hh:mm:ss" onkeydown="return false">
+                                                            <owl-date-time #dt11></owl-date-time>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="!registerForm.controls['startTime'].valid&&registerForm.controls['startTime'].dirty"> <span class="small">Start Time  is required</span></div>
+                                                    <small>Date and time when the tier starts. Can't be In the past from the current moment.</small>
+                                                </div>
+                                                <div class="col-md-6 pr-2 ">
+                                                    <label>End Time<sup style="color: red">*</sup></label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-calendar-check-o"></i>
+                                                    </span>
+                                                        <div class="form-group is-empty">
+                                                            <input [(ngModel)]="crowdsale.endTime" [min]="min" [owlDateTimeTrigger]="dtPicker1" formControlName="endTime" [owlDateTime]="dtPicker1" class="form-control" placeholder="MM/DD/YYYY, hh:m:ss" id='txtDate' onkeydown="return false">
+                                                            <owl-date-time #dtPicker1></owl-date-time>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="!registerForm.controls['endTime'].valid&&registerForm.controls['endTime'].dirty"> <span style="color:red;">End Time  is required</span></div>
+                                                    <small>Date and time when the tier ends. Can be only in the future.</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="col-md-6 pr-2 ">
+                                                    <label>Rate<sup style="color: red">*</sup></label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-database"></i>
+                                                    </span>
+                                                        <div class="form-group is-empty" style="padding-right: 20px;">
+                                                            <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Rate..." min="1" type="number" name="rate" [(ngModel)]="pricingStrategy.rate" (keydown)="minus($event)" formControlName="rate" required/>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="!registerForm.controls['rate'].valid&&registerForm.controls['rate'].dirty">
+                                                        <span *ngIf="registerForm.controls['rate'].errors['required']" class="small">Rate  is required</span>
+                                                        <span *ngIf="registerForm.controls['rate'].errors['pattern']" class="small">Rate should be between 1-10000000000</span>
+                                                    </div>
+                                                    <small>Exchange rate Ethereum to Tokens. If it's 100, then for 1 Ether you can buy 100 token</small>
+                                                </div>
+                                                <div class="col-md-6 pr-2 ">
+                                                    <label>Supply<sup style="color: red">*</sup></label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-thermometer-full"></i>
+                                                    </span>
+                                                        <div class="form-group is-empty" style="padding-right: 20px;">
+                                                            <input class="form-control" style="border-bottom: 0px solid #eee !important" [(ngModel)]="crowdsale.supply" placeholder="Supply..." min="0" type="number" formControlName="supply" (keydown)="minus($event)" required/>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="!registerForm.controls['supply'].valid&&registerForm.controls['supply'].dirty">
+                                                        <span *ngIf="registerForm.controls['supply'].errors['required']" class="small">Supply  is required</span>
+                                                        <span *ngIf="registerForm.controls['supply'].errors['pattern']" class="small">Supply should be between 1-10000000000</span>
+                                                    </div>
+                                                    <small>How many tokens will be sold on this tier. Cap of crowdsale equals to sum of supply of all tiers</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="tierTabel">
+                                        <div class="col-md-12" style="text-align: right;">
+                                            <button class="add_crowdsale_button btn btn-round " style="background:green;margin-bottom: 20px; " (click)="addMoretier()">Add More Crowdsale</button>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="card card-plain">
+                                                <div class="card-content table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>tier</th>
+                                                                <th>startTime</th>
+                                                                <th>endTime</th>
+                                                                <th>supply</th>
+                                                                <!--   <th>Edit</th> -->
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let crowdsale of icowizards.crowdsale.crowdsale ; let i = index">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{crowdsale.tier ? crowdsale.tier : '--'}}</td>
+                                                                <td>{{crowdsale.startTime ? crowdsale.startTime : '--'}}</td>
+                                                                <td>{{crowdsale.endTime ? crowdsale.endTime : '--'}}</td>
+                                                                <td>{{crowdsale.supply ? crowdsale.supply : '--'}}</td>
+                                                                <!--    <td class="text-success"><i class="material-icons" (click)="poptier(i)">edit</i></td> -->
+                                                                <td class="text-danger"><i class="material-icons" (click)="poptier(i)">close</i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h6 class="text-center " style="margin: 20px 0;padding-top: 20px;font-weight: bold;"> GLOBAL LIMITS</h6>
+                                    <div class="row ">
+                                        <div class="col-md-6 pr-2 ">
+                                            <label>Investor Min Cap<sup style="color: red">*</sup></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-suitcase"></i>
+                                                    </span>
+                                                <div class="form-group is-empty" style="padding-right: 20px;">
+                                                    <input class="form-control" style="border-bottom: 0px solid #eee !important" (keydown)="minus($event)" placeholder="Investor Min Cap..." [(ngModel)]="inversterMinCap.mincap" min="0" type="number" max="1000" formControlName="mincap" required/>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!registerForm.controls['mincap'].valid && registerForm.controls['mincap'].dirty">
+                                                <span *ngIf="registerForm.controls['mincap'].errors['required']" class="small">Min cap  is required</span>
+                                                <span *ngIf="registerForm.controls['mincap'].errors['pattern']" class="small">Min cap should be between 0 to 1000f</span>
+                                            </div>
+                                            <small>Minimum amount tokens to buy. Not a minimum size of a transaction. If minCap is 1 and user bought 1 token in a previous transaction and buying 0.1 token it will allow him to buy.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-center ">
+                                <!--  -->
+                                <button (click)="generateIco(registerForm.value)" [disabled]="!registerForm.valid" type="submit" class="btn btn-primary btn-round" name="submit" style="background-color: #f96332;">Submit </button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <app-footer></app-footer>
+        </div>
+    </div>
+</div>

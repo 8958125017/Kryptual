@@ -1,0 +1,214 @@
+
+ <div class="main-content">
+    <div class="container-fluid">
+        <div class="crowd-home">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 ml-auto">
+                        <div class="card" style="background: #fff;">
+                            <div class="sleep-card">
+                                <div class="row">
+                                    
+                                    <div class="bouts-card">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                            <img class="img" src={{tokenData?.tokenImage}}>
+                                            </div>
+                                            <div class="col-md-4 paddleft">
+                                                <h4 class="margbottm0 margtop15">{{tokenData?.tokenName}}</h4>
+                                                <span>{{website ? website :'--'}}</span>
+                                            </div>
+                                            <!-- <div class="col-md-4">
+                                                <div class="ico-font-color">
+                                                    <i class="fa fa-star fa-2x"></i>
+                                                    <i class="fa fa-star fa-2x"></i>
+                                                    <i class="fa fa-star fa-2x"></i>
+                                                    <i class="fa fa-star fa-2x"></i>
+                                                    <i class="fa fa-star-half-o fa-2x"></i>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                               <div class="row">
+                                <div class="pro-txt">
+                                    <h5 style="border-bottom: 1px solid lightgray;margin-top: 20px;">General Info</h5>
+                                    <p>{{description? description : '--'}}</p>  
+
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- <div class="card card-pricing" style="background: #000 !important;" *ngIf="!iframeStatus">
+                        
+                            <iframe src="tokenData.generalInfo.vedio" width="560" height="315" frameborder="0"webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        </div> -->
+                           
+                        <!-- Team Start -->
+                        <div class="team-1" *ngIf="teamInfoStatus">
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-md-12 ml-auto mr-auto text-center">
+                                        <h2>Team</h2>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center" style="padding-bottom:  20px;">
+                                    <div class="col-md-4 ml-1" style=" margin: 5px 0;"
+                                    *ngFor="let team of teamInfo">
+                                        <div class="card-profile card-plain" style="margin-bottom: 0px;">
+                                            <div class="card-avatar" style="margin-bottom: 10px;">
+                                            
+                                                <a >    
+                                                 <img class="img img-raised" src={{team.teamImage}}>
+                                                </a>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title" style="margin-bottom: 15px;">{{team.linkdinName}}</h4>
+                                                <h6 class="category text-success">{{team.designation}}</h6>
+                                               <!--  <div class="card-footer">
+                                                    <a href="{{team.linkdinName}}" class="btn btn-icon btn-success btn-round" target="_blank" (click)="teamLinkdenLInk()"><i class="fa fa-linkedin"></i></a>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Road map -->
+                        <div class="row" *ngIf="milestoneStatus">
+                            <div class="col-md-8 ml-auto mr-auto text-center">
+                                <h2 class="title">Roadmap</h2>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="milestoneStatus">
+                            <div class="main-timeline">
+                                
+                                <div class="timeline" *ngFor="let milestone of milestoneInfo">
+                                    <div class="timeline-icon"></div>
+                                    <div class="timeline-content">
+                                        <span class="date">{{milestone?.milestonedate |  date:'MM/dd/yyyy'}}</span>
+                                        <p class="description">
+                                            {{milestone?.milestone1}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- whitepaper -->
+                        <!-- <div class="row">
+                            <div class="col-md-8 ml-auto mr-auto text-center">
+                                <h2 class="title">Whitepaper</h2>
+                                <button class="btn btn-success btn-round pull-center">Download </button>
+                                <button  class="btn btn-success btn-round pull-center">View </button>
+                            </div>
+                        </div> -->
+
+                     <div class="row " style="margin-bottom: 20px " *ngIf="whitepaperStatus">
+                         <div class="col-sm-12">
+                        <iframe class="whitepaperiframe" [src]='whitePaperImage | safeHtml' width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="float: left;width: 100%;">
+                        </iframe>
+                        </div>
+                     </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p></p>
+                                    </div>
+                        
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Team Start -->
+                    </div>
+                  
+                    <div class="col-md-5 mr-auto">
+                <div class="card card-blog">
+                    <div class="head-adn">
+                        <div>
+                            <div class="head-ico-img">
+                                <p style="font-weight: bold; margin: 6px; font-size: 14px;"> <i class="fa fa-thumbs-up" style="font-size: 18px; color: #ffa500;"></i> CROWDSALE</p> 
+                            </div>
+                        </div>
+                       <div class="head-st-rt">
+                            <p style="margin-bottom: -5px; font-size: 15px; margin-left: 15px;font-weight: 500;">{{tokenData?.tokenSupply ? tokenData?.tokenSupply :'--'}} {{tokenData?.tokenTicker}}</p>
+                        </div>
+                    </div>
+                    <div class="en-name1">
+                        <p class="pull-left" style="font-weight: bold;">Status</p>
+                        <p class="pull-right"><span style="font-weight: 500;"> {{allTokenStatus ? allTokenStatus: '--'}}</span> <i style="font-size: 18px; color: #ffa500;"></i> </p>
+                    </div>
+                    <div class="en-name1">
+                        <p class="pull-left" style="font-weight: bold;">Goal</p>
+                        <p class="pull-right" style="font-weight: 500;">{{tokenData?.tokenSupply ? tokenData?.tokenSupply :'--'}}</p>
+                    </div>
+                    <div class="en-name1">
+                        <p class="pull-left" style="font-weight: bold;">Crowdsale Details</p>
+                       
+                </div>
+                
+            <!-- <div *ngIf="crowedSaleStatus"> -->
+                 <div class="en-name1">
+                        <p class="pull-left" style="font-weight: bold;">Tier</p>
+                        <p class="pull-left" style="font-weight: bold;margin-left: 50px;">Start Date</p>
+                        <p class="pull-left" style="font-weight: bold;margin-left: 50px;">End Date</p>
+                        <p class="pull-left" style="font-weight: bold;margin-left: 90px;text-align: right;">
+                        Status</p>
+                 </div>
+                        
+                         <div class="en-name1" *ngFor="let crowd of crowdSaleToken">
+                             <p class="pull-left" style="margin-left: 5px;font-size: 11px;text-transform: lowercase;"><b>{{crowd?.tierName}}</b></p>
+                             <p class="pull-left" style="margin-left: 30px;font-size: 11px;">{{crowd?.startTime |  date:'MM/dd/yyyy HH:mm' ? crowd?.startTime :'--'}}</p>
+                             <p class="pull-left" style="margin-left: 30px;font-size: 11px;">{{crowd?.endTime |  date:'MM/dd/yyyy HH:mm' ? crowd?.endTime :'--'}}</p>
+                             <p class="pull-left" style="margin-left: 30px;font-size: 11px;text-align: right;">{{crowd?.status ?crowd?.status : '--'}}</p>
+                        </div>
+                         <!-- </div> -->
+                        <b>
+
+                   
+                    <div class="en-name1">
+                        <p class="pull-left" style="font-weight: bold;">Price</p>
+                        <p class="pull-right" style="font-weight: 500;">1 {{tokenData?.tokenTicker}} = {{1/(tokenData?.tokenRate)}} ETH</p>
+                    </div>
+
+                    <div class="my-social-card"> 
+                        <div class="col-md-12">
+                            <div class="my-s-icon">                          
+                                <a href="{{facebookLink}}" target="_blank" class="btn btn-icon btn-facebook btn-round"  (click)="fbLInk()"><i class="fa fa-facebook-square"></i></a>
+                                <a href="{{twitterLink}}" target="_blank" class="btn btn-icon btn-twitter btn-round margleft30" (click)="twittLInk()"><i class="fa fa-twitter"></i></a>
+                                <a href="{{linkedinLink}}" target="_blank" class="btn btn-icon btn-linkedin btn-round margleft30" (click)="linkLInk()"><i class="fa fa-linkedin"></i></a>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="view text-center" style="font-weight: bold; font-size: 14px;">
+                        Follow Us
+                    </div>
+                </b>
+                </div>
+                <b>
+                <div class="card card-pricing">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="">
+                                <h2 class="margbottm10">Buy</h2>
+                                <p class="margbottm0" style="border-top: 1px solid lightgray;">Price 1ETH = {{tokenData?.tokenRate}} {{tokenData?.tokenTicker}}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="my-bt-card1">
+                            <button (click)="gotToInvest(tokenData._id,tokenData.tokenName,tokenData.tokenAddress)" class="btn btn-primary btn-round pull-center" style="background-color: #fa7132;">Invest </button>
+                        </div>
+                    </div>
+                </div>  
+            </b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

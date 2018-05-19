@@ -1,0 +1,287 @@
+
+<div class="product-detail">
+    <div class="container-fluid" style="padding-left:5%;">
+        <div class="header text-center">
+            <h3 style="padding-top: 0;" class="title">Kryptual Product</h3>
+        </div>
+        <div class="text-center" *ngIf="noProductStatus">
+                <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 2%;">
+            </div>
+        <div class="row newcard" *ngIf="!noProductStatus">         
+        <!-- <img src={{productImage[0]}} alt="image" data-gc-caption="Front View" /> -->
+            <div class="col-sm-4">
+                 <div  class="img-container">
+                <div class="img-thumbnail img-cnt"><img [imageZoom]="zoomedImageSrc" src={{zoomImg}} [style.width.px]="width" [style.height.px]="height">
+                </div>
+                <p>Scroll on Image to Zoom</p>
+                <ul >
+                    <li *ngFor="let img of productImage"><img class="img-container img-thumbnail"  src={{img}} [style.width.px]="width" [style.height.px]="height" (click)="changeImg(img)">
+                    </li>
+                     <!-- <li><img class="img-container img-thumbnail"  src={{productData.images[2]}} [style.width.px]="width" [style.height.px]="height"></li> -->                 
+                </ul>
+            </div>
+        </div>
+            <div class="col-sm-5">
+                <div class="prdcthead">
+                    <h3>{{productData.name?productData.name:'--'}} </h3>
+                    <div class="prdct-font-color">
+                        <i class="fa fa-star fa-2x"></i>
+                        <i class="fa fa-star fa-2x"></i>
+                        <i class="fa fa-star fa-2x"></i>
+                        <i class="fa fa-star fa-2x"></i>
+                        <i class="fa fa-star-half-o fa-2x"></i>
+                        <span data-target="#newModal" data-toggle="modal">View all reviews</span>
+                    </div>
+                    <!-- small modal -->
+                    <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-notice">
+                            <div class="modal-content">
+                                <div class="modal-header md-hdr" style="background: #fff;">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <i class="material-icons">clear</i></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <h3 class="text-center" style="margin-top: -3%;">Customer's Reviews </h3>
+                                        <div class="col-sm-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <span itemscope="">
+                                                            <h3 class="panel-title" itemprop="name">Review Title</h3>
+                                                          </span></div>
+                                                <!--/panel-heading-->
+                                                <div class="panel-body" itemprop="reviewBody">
+                                                    <p>{{productData.Description}}</p>
+                                                    <span itemprop="author">
+                                              <small>
+                                              <span itemprop="name">-- J. Reviewer</span>
+                                                    </small>
+                                                    </span>
+                                                    <!--/author schema --><small>
+
+                                                      <span class="pull-right">
+                                                      <span class="reviewRating">
+                                                        <meta itemprop="worstRating" content="1">
+                                                          <span itemprop="ratingValue">4.5</span> / 
+                                                        <span itemprop="bestRating"> stars </span>
+                                                      </span><!--/reviewRating-->
+                                                         <span><i class="fa fa-star fa-2x ratestar"></i>
+                                                            <i class="fa fa-star fa-2x ratestar"></i>
+                                                            <i class="fa fa-star fa-2x ratestar"></i>
+                                                            <i class="fa fa-star fa-2x ratestar"></i>
+                                                            <i class="fa fa-star-half-o fa-2x ratestar"></i>
+                                                         </span>
+                                                    </span></small>
+                                                </div>
+                                                <!--/panel-body-->
+                                                <!-- <div class="panel-footer clearfix">
+                                                <div class="col-sm-1"><i class="fa fa-facebook-official fa-2x"></i></div>
+                                                <div class="col-sm-1"><i class="fa fa-twitter-square fa-2x"></i></div>
+                                                <div class="col-sm-1"><i class="fa fa-google-plus fa-2x"></i></div>
+                                            </div> -->
+                                                <!--/panel-footer-->
+                                            </div>
+                                            <!--/panel-->
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <span itemscope="">
+                                                <h3 class="panel-title" itemprop="name">Review Title</h3>
+                                              </span></div>
+                                                <!--/panel-heading-->
+                                                <div class="panel-body" itemprop="reviewBody">
+                                                    <p>{{productData.detail?productData.detail:'--'}}</p>
+                                                    <span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+                                                  <small>
+                                                  <span itemprop="name">-- J. Reviewer</span>
+                                                    </small>
+                                                    </span>
+                                                    <!--/author schema --><small>
+                                                      <span class="pull-right">
+                                                      <span class="reviewRating" itemscope="" itemtype="http://schema.org/Rating">
+                                                        <meta itemprop="worstRating" content="1">
+                                                          <span itemprop="ratingValue">4.5</span> / 
+                                                        <span itemprop="bestRating"> stars </span>
+                                                      </span><!--/reviewRating-->
+                                             <span><i class="fa fa-star fa-2x ratestar"></i>
+                                                            <i class="fa fa-star fa-2x ratestar"></i>
+                                                            <i class="fa fa-star fa-2x ratestar"></i>
+                                                            <i class="fa fa-star fa-2x ratestar"></i>
+                                                            <i class="fa fa-star-half-o fa-2x ratestar"></i>
+                                                         </span>
+                                                    </span></small>
+                                                </div>
+                                            </div>
+                                            <!--/panel-->
+                                        </div>
+                                    </div>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="well-sm">
+                                                    <div class="text-right">
+                                                        <a class="btn btn-success" id="open-review-box">Leave a Review</a>
+                                                    </div>
+                                                    <div class="row well" style="margin-right: 4%;">
+                                                        <div class="col-md-12">
+                                                            <form accept-charset="UTF-8" action="" method="post">
+                                                                <input id="ratings-hidden" name="rating" type="hidden">
+                                                                <textarea class="form-control animated reviewcomnt" cols="50" id="review-title" name="review" placeholder=" Review Title..." rows="1"></textarea>
+                                                                <br>
+                                                                <textarea class="form-control animated reviewcomnt" cols="50" id="new-review" name="comment" placeholder=" Enter your review here..." rows="5"></textarea>
+                                                                <div class="text-right">
+                                                                    <div class="stars starrr" data-rating="0"></div>
+                                                                    <a class="btn btn-danger btn-sm" id="close-review-box" style="margin-right: 10px;">
+                                            <span></span>Cancel</a>
+                                                                    <button class="btn btn-success btn-sm" type="submit">Save</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end small modal -->
+                </div>
+                <div class="prdctprice padright">
+                    <h5 class="prdctrate"> Special Price </h5>
+                    <span class="mainprice">{{productData.price}} ETH</span>
+                    <span><del>0.0 ETH</del></span>
+                    <span class="prdctdiscount">Discount {{productData.discount}}%</span>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                <div class="prdctcolr">
+                    <h5>Color :</h5>
+                    <ul >
+                        <li *ngFor="let color of productColour">
+                            <div [style.backgroundColor]="color"></div>
+                        </li>                        
+                    </ul>
+                </div>
+                </div>
+                    <div class="col-sm-3">
+                        <dl class="param param-inline">
+                            <h5 class="prdctheading">Quantity: </h5>
+                            <dd>
+                               
+                                <select class="form-control form-control-sm slctqnty" (change)="selectQuantity($event)" >
+                                    <option *ngFor="let pq of prodQuant" [value]="pq">{{pq}}</option>
+                                </select>
+                            </dd>
+                        </dl>
+                        <!-- item-property .// -->
+                    </div>
+                    <!-- col.// -->
+                    <div class="col-sm-3">
+                        <dl class="param param-inline">
+                            <!--< dt class="prdctheading">Size: </dt>
+                            <dd>
+                                <label class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <span class="form-check-label">S</span>
+                                </label>
+                                <label class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <span class="form-check-label">M</span>
+                                </label>
+                                <label class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <span class="form-check-label">L</span>
+                                </label>
+                                <label class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <span class="form-check-label">XL</span>
+                                </label>
+                                <label class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <span class="form-check-label">XXL</span>
+                                </label>
+                            </dd> -->
+                            <h5 class="prdctheading">Size: </h5>
+                            <dd>
+                               
+                                <select class="form-control form-control-sm slctqnty" >
+                                    <option *ngFor="let ps of prodsiz" > {{ps}} </option>
+                                </select>
+                            </dd>
+                        </dl>
+                        <!-- item-property .// -->
+                    </div>
+                    <!-- col.// -->
+                </div>
+                <div class="prodctdetails">
+                    <h5 class="prdctheading">Product Detail</h5>
+                    <p>{{productData.description?productData.description:'--'}}</p>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="buy-now">
+                    <h5>To buy, select Size</h5>
+                    <!-- <div class="btn-group cart">
+                    <button type="button" class="btn btn-success">
+                        Add to cart 
+                    </button>
+                </div>
+                <div class="btn-group wishlist">
+                    <button type="button" class="btn btn-danger">
+                        Add to wishlist 
+                    </button>
+                </div>-->
+                    <div class="prdct1">
+                        <button class="prdct-cart btn btn-warning" data-toggle="tooltip" title="Add to cart" type="button" (click)="addToCart()">add to cart</button>
+                        <button class="prdct-wishlist btn btn-danger" data-toggle="tooltip" title="Add to wishlist" type="button" (click)="addToWishlist()"><span class="fa fa-heart"></span></button>
+                    </div>
+                    <div class="prdct2">
+                        <button class="prdct-cart btn btn-info" data-toggle="tooltip" title="Buy now" type="button" (click)="buyNow()">Buy Now</button>
+                    </div>
+                </div>
+                <div class="check-d">
+                    <h5>CHECK DELIVERY AVAILABILITY</h5>
+                    <p>Please enter your PIN code to check delivery availability</p>
+                    <form autocomplete="off">
+                        <input type="text" placeholder="Enter pincode" class="pincode-code" value="" name="pincode">
+                        <input type="submit" class="pincode-check pincode-button" value="Check Pin Code">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- notice modal -->
+<div class="modal fade" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notice">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+                <h5 class="modal-title" id="myModalLabel">Please Enter Password</h5>
+            </div>
+            <div class="modal-body">
+            <form [formGroup]="submitForm">
+                <div class="card-content" style="text-align: center;">
+                    <div class="row">
+                        <label class="col-sm-3 label-on-left" style="padding-top: 30px; font-size:14px;font-weight:500;;padding: 33px 0 0 10px;">Current Password</label>
+                        <div class="col-sm-9">
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label"></label>
+                                <input class="form-control ng-untouched ng-pristine ng-invalid" [(ngModel)]="currentpassword" placeholder="Current Password" required="" type="password" ng-reflect-required="" ng-reflect-name="currentPassword" ng-reflect-model="" formControlName="currentPassword">
+                            </div>
+                        </div>
+                    </div>
+                    <button data-dismiss="modal" class="btn btn-success" style="background:#18d26e;font-weight:500;" (click)="checkOutSubmit(currentpassword)" [disabled]="!submitForm.valid">
+                        <span class="btn-label">                                
+                            </span> Submit
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end notice modal -->

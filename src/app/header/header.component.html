@@ -1,0 +1,106 @@
+ <nav class="navbar navbar-primary navbar-transparent navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-example">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse">
+                <a class="navbar-brand" rel="tooltip" title="" data-placement="bottom" data-original-title="Kryptual" [routerLink]="['/home']">
+                   <img id="logo-top-white" src="assets/img/kryptual_logo_white.png" alt="Kryptual" style="width: 175px;">
+                </a>
+                <ul class="nav navbar-nav navbar-right" *ngIf="active">
+                    <li>
+                        <a [routerLink]="['/dashboard/view-user']">
+                            <i class="material-icons">dashboard</i>  Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a [routerLink]="['/listico']">
+                             <i class="material-icons">list</i>List ICO
+                        </a>
+                    </li>
+                    <li>
+                        <a scrollTo href="#contact">
+                            <i class="material-icons">contact_mail</i>Contact us
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="logout()">
+                         <i class="fa fa-sign-out log"></i>
+                         <a  style="color:white;cursor: pointer;">Logout</a>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" *ngIf="!active">
+                    <!--  <li>
+                        <a>
+                            <i class="material-icons">dashboard</i>  Dashboard
+                        </a>
+                    </li> -->
+                    <li>
+                        <a [routerLink]="['/login']">
+                            <i class="material-icons">account_circle</i> SIGN IN
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/signupHome']">
+                            <i class="material-icons">person_add</i> SignUp
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a [routerLink]="['/listico']">
+                             <i class="material-icons">list</i>List ICO
+                        </a>
+                    </li>
+                    <li>
+                        <a scrollTo href="#contact">
+                            <i class="material-icons">contact_mail</i>Contact us
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="menu">
+        <!-- Menu icon -->
+        <a class="navbar-brand" rel="tooltip" title="" data-placement="bottom" data-original-title="Kryptual">
+
+                   <img id="logo-top-color" class="" src="assets/img/kryptual_logo_white.png" alt="Kryptual"
+                    style="width: 242px;padding-top: 30px;">
+                </a>
+        <div class="icon-close">
+            <a><i class="material-icons">close</i></a>
+        </div>
+        <!-- Menu -->
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a [routerLink]="['/home']">
+                    <i class="material-icons">dashboard</i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a>
+                    <i class="material-icons">contact_mail</i>Contact us
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="['/login']">
+                    <i class="material-icons">account_circle</i> SIGN IN </a>
+            </li>
+            <li class=" active ">
+                <a [routerLink]="['/signupHome']">
+                    <i class="material-icons">person_add</i> SignUp
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- Main body -->
+    <div class="jumbotron">
+        <div class="icon-menu">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>

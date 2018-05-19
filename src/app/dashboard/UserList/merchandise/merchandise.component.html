@@ -1,0 +1,263 @@
+<div class="main-content add-cart">
+    <div class="container-fluid">
+        <div style="margin-bottom: 40px;" class="header text-center">
+            <h3 style="padding-top: 0;" class="title">MERCHANDISE</h3>
+        </div>
+        <div class="row" style="margin-bottom: 40px;">
+            <div class="col-md-12" style="display: flex;justify-content: center;align-items: center;">
+                <div class="places-buttons eth-bx-head" style="padding-bottom: 0px;">
+                    <div class="col-lg-3 col-md-12 col-sm-12 wdth-eth" style="width: auto;display: flex; justify-content: center;align-items: center;">
+                        <div class="card card-stats eth-bx">
+                            <div class="card-header" data-background-color="green">
+                                <i class="material-icons" style="font-size: 28px;line-height: 31px;width: auto;height: auto;">account_balance_wallet</i>
+                            </div>
+                            <div class="card-content">
+                                <p class="category">Balance</p>
+                                <h3 class="card-title" style="margin-left: 116px; ">{{ethBalance?ethBalance:'0.00'}} ETH</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 wdth-eth" style="width: auto;">
+                        <div class="card card-stats eth-bx">
+                            <div class="card-header" data-background-color="green">
+                                <i class="material-icons" style="font-size: 28px;line-height: 31px;width: auto;height: auto;">style</i>
+                            </div>
+                            <div class="card-content">
+                                <p class="category">Items</p>
+                                <h3 class="card-title" style="margin-left: 100px; ">{{cartProduct.length}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 wdth-eth" style="width: auto;">
+                        <div class="card card-stats eth-bx">
+                            <div class="card-header" data-background-color="green">
+                                <i class="material-icons" style="font-size: 28px;line-height: 31px;width: auto;height: auto;">star</i>
+                            </div>
+                            <div class="card-content">
+                                <p class="category">Points</p>
+                                <h3 class="card-title" style="margin-left: 100px; ">{{kryptualPoints?kryptualPoints:'0'}}KP</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 wdth-eth" style="width: auto;">
+                        <div class="card card-stats eth-bx ">
+                            <div [ngClass]="heart" style="margin-right: 0;" data-toggle="modal" (click)="wishlistmodel()" data-background-color="green" >
+                                <i class="material-icons"  style="font-size: 28px;line-height: 31px;width: auto;height: auto;">favorite</i>
+                                <span  class="cart-count-hrt">{{wishlist.length?wishlist.length:"0"}}</span>
+                            </div>
+                        </div>
+                    </div>
+                   <!--  <div class="col-lg-3 col-md-12 col-sm-12 wdth-eth" style="width: auto;">
+                        <div class="card card-stats eth-bx ">
+                            <div [ngClass]="heart" style="margin-right: 0;" data-toggle="modal" (click)="wishlistmodel()" data-background-color="green" >
+                                <i class="material-icons"  style="font-size: 28px;line-height: 31px;width: auto;height: auto;">favorite</i>
+                                <span  class="cart-count-hrt">{{wishlist.length?wishlist.length:"0"}}</span>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="row" style="z-index: 9;text-align:  center;position:  fixed;right:  0;top: 75px;margin:  0 auto;">
+            <div class="col-md-12">
+                <div class="col-lg-2 col-md-2 col-sm-2 wdth-eth" style="margin-left:  30px;width: auto;">                    
+                    <div class="add-cart-dash">
+                        <div class="dropdown cart-dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+
+                                        <span class="cart-icon">
+                                            <i class="material-icons">local_mall</i>
+                                            <span class="cart-count"> {{this.cartProduct.length}}</span>
+                                        </span>
+                                        
+                                    </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-form" *ngIf="cartProduct.length!=0">
+                                <p class="dropdown-cart-info">You have {{this.cartProduct.length}} products in your cart.</p>
+                                <div class="dropdown-menu-wrapper" *ngFor="let item of cartProduct;let i = index">
+                                    <div class="product">
+                                        <figure class="product-image-container">
+                                            <a title="Product Name">
+                                                <img src="{{item.images[0]}}" alt="Product Image">
+                                            </a>
+                                        </figure>
+                                        <div>
+                                            <a class="btn-delete" title="Delete product" role="button" (click)="deleteCart(i)"><i class="material-icons" style="color: #18d26e">close</i></a>
+                                            <h4 class="product-title"><a >{{item.name}}</a></h4>
+                                            <div class="product-price-container">
+                                                <span class="product-price">Price: {{item.price}} ETH</span>
+                                            </div>
+                                            <!-- End .product-price-container -->
+                                            <div class="product-qty">Max Qty : {{item.quantity}}</div>
+                                            <!-- End .product-qty -->
+                                            <div class="input-group number-spinner" style="display: table !important;margin-top: 10px;">
+                                                <span class="input-group-btn" style="display: table-cell;padding: 0;" (click)="decreseQuantity(i)">
+                                                <a class="btn btn-rose" data-dir="dwn" style="padding: 10px;"><i class="material-icons" style="padding: 0;">remove</i></a>
+                                                </span>
+                                                <input type="text" name="adult" id="{{i}}" class="form-control prd-cnt text-center" value="1" max="{{item.quantity}}" min="1" style="" disabled="">
+                                                <span class="input-group-btn" style="display: table-cell;right: 0;padding: 0;float: left;">
+                                                <a class="btn btn-success" data-dir="up" style="padding: 10px;"><i class="material-icons" style="padding: 0;" (click)="increseQuantity(i,item.quantity)">add</i></a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!-- End .product-image-container -->
+                                    </div>
+                                    <!-- End .product- -->
+                                </div>
+                                <!-- End .droopdowm-menu-wrapper -->
+                                <div class="cart-dropdowm-action">
+                                    <div class="dropdowm-cart-total"><span>TOTAL:</span> {{amount}}</div>
+                                    <a class="btn btn-success" data-toggle="modal" data-target="#checkoutmodal" (click)="checkOut()">CHECKOUT></a>
+                                </div>
+                                <!-- End .cart-dropdown-action -->
+                            </div>
+                            <!-- End .dropdown-menu -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="loader"><img src="./assets/img/orange_circles.gif" style="width: 30%;margin-left: 35%;margin-top: 2%;">
+            </div>
+            <div class="text-center" *ngIf="noProductStatus">
+                <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 2%;">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6" style="padding-top: 30px;margin-bottom: 20px;float: left;" *ngFor="let product of products;let i = index">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="cui-ecommerce--catalog--item--status">
+                                <h4 class="cui-ecommerce--catalog--item--status--title">{{product.discount?product.discount:'0.0'}}%</h4>
+                            </div>
+                           
+                                <div class="cui-ecommerce--catalog--item--status1" >
+                                <h4 class="cui-ecommerce--catalog--item--status1--title" (click)="Product_Detail(product._id)">View</h4>
+                                </div>
+
+                            <div class="product-img grow">
+                                <img src="{{product.images[0]}}">
+                            </div>
+                            <div class="product-text">
+                                <span class="pro-price bg-primary">{{product.price}} ETH</span>
+                                <h5 class="card-title m-b-0">{{product.name}}</h5>
+                                <!-- 
+                                    <small class="text-muted db">globe type chair for rest</small> -->
+                            </div>
+                        </div>
+                        <div class="product-text centerr" style="padding-top: 0px;">
+                            <button class="btn btn-one btn-5a icon-wish" (click)="wishList(product)">
+                                <span>Wishlist</span></button>
+                            <button class="btn btn-two btn-5a icon-add" (click)="addToCart(product)"><span>Add Cart</span></button>
+                            <!-- 
+                                    <button class="btn btn-warning" (click)="buyNow(product)">Buy</button> -->
+                        </div>
+                        <div class="product-text centerr" style="padding-top: 0px;">
+                            <button class="btn btn-three btn-5a icon-cart" (click)="buyNow(product)"><span>Buy</span></button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- notice modal -->
+<div class="modal fade" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notice">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+                <h5 class="modal-title" id="myModalLabel">Please Enter Password</h5>
+            </div>
+            <div class="modal-body">
+            <form [formGroup]="submitForm">
+                <div class="card-content" style="text-align: center;">
+                    <div class="row">
+                        <label class="col-sm-3 label-on-left" style="padding-top: 30px; font-size:14px;font-weight:500;;padding: 33px 0 0 10px;">Current Password</label>
+                        <div class="col-sm-9">
+                            <div class="form-group label-floating is-empty">
+                                <label class="control-label"></label>
+                                <input class="form-control ng-untouched ng-pristine ng-invalid" [(ngModel)]="currentpassword" formControlName="currentPassword" placeholder="Current Password" required="" type="password" ng-reflect-required="" ng-reflect-name="currentPassword" ng-reflect-model="">
+                            </div>
+                        </div>
+                    </div>
+                    <button data-dismiss="modal" class="btn btn-success" style="background:#18d26e;font-weight:500;" (click)="checkOutSubmit(currentpassword)" [disabled]="!submitForm.valid">
+                        <span class="btn-label">
+
+                                
+                            </span> Submit
+                    </button>
+                </div>
+             </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end notice modal -->
+<div class="modal fade" id="noticeAddtocart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notice">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+                <h5 class="modal-title" id="myModalLabel">your Items{{this.cartProduct.length}}</h5>
+                <p> total Amount{{amount}}</p>
+            </div>
+            <div class="modal-body">
+                <div class="card-content" style="text-align: center;">
+                    <div *ngFor="let item of cartProduct;let i = index">
+                        <span>{{item.name}}{{item.price}}</span>
+                        <button (click)="deleteCart(i)">delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Classic Modal -->
+<div class="modal fade" id="whistlistmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notice">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-right: 15px;padding-left: 15px;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> <i class="material-icons">clear</i> </button>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-icon" data-background-color="green"> <i class="material-icons">assignment</i> </div>
+                            <div class="card-content">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4 class="card-title pull-left">WishList</h4></div>
+                                    <div class="col-md-4">
+                                        <h4 class="card-title pull-right">Items({{wishlist.length}})</h4></div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-shopping">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center mbold">PRODUCT</th>
+                                                <th></th>
+                                                <th class="text-center mbold">PRICE</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let wish of wishlist;let i = index">
+                                                <td>
+                                                    <div class="img-container"> <img alt="..." src="{{wish.images[0]}}"> </div>
+                                                </td>
+                                                <td class="td-name"> <a (click)="Product_Detail(wish._id)" style="cursor: pointer;">{{wish.name}}</a>
+                                                </td>
+                                                <td class="td-number text-center" style="text-align: center;"><small>ETH</small> {{wish.price}}</td>
+                                                <td class="td-actions">
+                                                    <button (click)="deleteWishList(i)" class="btn btn-simple" mattooltip="Remove item" type="button" aria-describedby="cdk-describedby-message-5" cdk-describedby-host="" ng-reflect-position="left" ng-reflect-message="Remove item" style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"> <i class="material-icons">close</i> </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  End Modal -->

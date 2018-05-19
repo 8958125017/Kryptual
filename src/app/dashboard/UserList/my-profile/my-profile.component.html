@@ -1,0 +1,73 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="card">
+                    <form [formGroup]="updateForm" (ngSubmit)="updateUserInfo()">
+                       <div _ngcontent-c5="" class="" data-background-color="" style="background: #18d26e;margin-top:-25px;">
+                            <h4 _ngcontent-c5="" class="card-title" style="font-weight: 400;text-align: center;">Update Your Profile</h4>
+                        </div>
+                        <div class="card-content" style="text-align: center;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                        <i class="material-icons">person</i>
+                                    </span>
+                                        <div class="form-group label-floating lft-rff">
+                                            <label>First Name
+                                                <!--  <sup  style="color: red">*</sup> -->
+                                            </label>
+                                            <input class="form-control ng-untouched ng-pristine ng-valid" value formControlName="firstName" [(ngModel)]="updateDetails.firstName" type="text" ng-reflect-name="company" ng-reflect-model="" style="border-bottom: 1px solid #e6e6e6 !important">
+                                            <div style="color:red" *ngIf="!updateForm.controls['firstName'].valid&&updateForm.controls['firstName'].dirty">
+                                                <span *ngIf="updateForm.controls['firstName'].errors['required']">First name is required</span>
+                                                <span *ngIf="updateForm.controls['firstName'].errors['minlength']">First name must be atleast 3 characters</span>
+                                                <span *ngIf="updateForm.controls['firstName'].errors['pattern']&&!updateForm.controls['firstName'].errors['minlength']">First name should be alphabet </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                        <i class="material-icons">person_outline</i>
+                                    </span>
+                                        <div class="form-group label-floating lft-rff">
+                                            <label>Last Name
+                                                <!--  <sup  style="color: red">*</sup> -->
+                                            </label>
+                                            <input class="form-control ng-untouched ng-pristine ng-valid" value formControlName="lastName" [(ngModel)]="updateDetails.lastName" type="text" ng-reflect-name="company" ng-reflect-model="" >
+                                            <div style="color:red" *ngIf="!updateForm.controls['lastName'].valid&&updateForm.controls['lastName'].dirty">
+                                                <span *ngIf="updateForm.controls['lastName'].errors['required']">Last name is required</span>
+                                                <span *ngIf="updateForm.controls['lastName'].errors['minlength']">Last name must be atleast 3 characters</span>
+                                                <span *ngIf="updateForm.controls['lastName'].errors['pattern']&&!updateForm.controls['lastName'].errors['minlength']">Last name should be alphabet </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                        <i class="material-icons">email</i>
+                                    </span>
+                                        <div class="form-group label-floating lft-rff" >
+                                            <label>Email Id
+                                                <!--  <sup  style="color: red">*</sup> -->
+                                            </label>
+                                            <input class="form-control ng-untouched ng-pristine ng-valid" value disabled="" formControlName="email" [(ngModel)]="updateDetails.email" style="border-bottom: 1px dotted #e6e6e6 !important">
+                                            
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+                            <button class="btn btn-success"  [disabled]="!updateForm.valid">
+                                <span class="btn-label">                               
+                            </span> Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
