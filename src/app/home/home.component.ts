@@ -17,7 +17,7 @@ declare const $: any;
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit,AfterViewInit {
   test: Date = new Date();
   private toggleButton: any;
   private sidebarVisible: boolean;

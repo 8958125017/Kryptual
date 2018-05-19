@@ -1214,6 +1214,7 @@ this.deleteTokenid=value;
           return false;
       }
     }
+    
     clearWithdraw(){
      this.withDrawForm.reset();
     }

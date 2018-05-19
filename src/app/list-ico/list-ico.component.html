@@ -407,7 +407,7 @@
                                             </div>
                                             <div *ngIf="!registerForm.controls['tokenValue'].valid && registerForm.controls['tokenValue'].dirty">
                                                 <span *ngIf="registerForm.controls['tokenValue'].errors['required']" class="small">Token supply is required</span>
-                                                <span *ngIf="registerForm.controls['tokenValue'].errors['pattern']" class="small">Token value should be between 1-10000000000 </span>
+                                                <span *ngIf="registerForm.controls['tokenValue'].errors['pattern']" class="small">Token supply should be between 1-10000000000 </span>
                                             </div>
                                             <small>How many tokens will be sold on this tier. Cap of crowdsale equals to sum of supply of all tiers.</small>
                                         </div>
@@ -444,7 +444,7 @@
                                                 <i  class="fa fa-database"></i>
                                                     </span>
                                                     <div class="form-group is-empty" style="padding-right: 20px;">
-                                                        <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Value..." formControlName="val" [(ngModel)]="reservedTokens.val" (keydown)="minus($event)" min="0" type="number" required />
+                                                        <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Value..." formControlName="val" [(ngModel)]="reservedTokens.val" (keydown)="minus($event)" min="0" type="number" />
                                                     </div>
                                                 </div>
                                                 <div *ngIf="!registerForm.controls['val'].valid&&registerForm.controls['val'].dirty"> <span *ngIf="registerForm.controls['val'].errors['required']" class="small">Value is required</span>

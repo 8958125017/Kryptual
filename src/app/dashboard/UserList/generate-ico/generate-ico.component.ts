@@ -94,8 +94,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                   company     : "",
                   description : "",
                   vedio       : "",
-                  website     
-: "",
+                  website     : "",
                   facebook    : "",
                   twitter     : "",
                   linkedin    : "",

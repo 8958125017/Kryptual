@@ -1,4 +1,4 @@
-import { Component, OnInit,NgModule, ElementRef } from '@angular/core';
+import { Component, OnInit,NgModule,AfterViewInit, ElementRef } from '@angular/core';
 declare var $: any;
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService, AuthenticationService ,UserService } from '../Services/index';
@@ -16,7 +16,7 @@ import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-
     templateUrl: 'list-ico.component.html'
 })
 
-export class ListicoComponent implements OnInit {
+export class ListicoComponent implements OnInit,AfterViewInit {
    startDateTime:any;
    endDateTime:any;
    icowizards:ListIcoWizards;
@@ -135,7 +135,7 @@ export class ListicoComponent implements OnInit {
     inversterMinCap:any={
                           mincap:""
                         }
-
+    public imageDataAfterupload:any;
     constructor(
         private http: Http,
         private route: ActivatedRoute,
@@ -348,13 +348,40 @@ export class ListicoComponent implements OnInit {
 
 
 
-   tokenImage(event){
+   // tokenImage(event){
+   //  let reader = new FileReader();
+   //  let file = event.target.files[0];
+   //  reader.onloadend = (e:any) => {
+   //    this.selectedTokenImage = e.target.result;
+   //    this.icowizards.crowdsale.tokenImage = this.selectedTokenImage;
+   //    this.tokImage=true;
+   //  }
+   //   reader.readAsDataURL(file)
+   // }
+
+    tokenImage(event){
+      this.ng4LoadingSpinnerService.show();
     let reader = new FileReader();
     let file = event.target.files[0];
     reader.onloadend = (e:any) => {
       this.selectedTokenImage = e.target.result;
-      this.icowizards.crowdsale.tokenImage = this.selectedTokenImage;
-      this.tokImage=true;
+      var tokImage=this.selectedTokenImage.split(',')[1]      
+      let postData={
+        image : tokImage
+      }
+     const url=this.global_service.basePath + 'merchandise/imageUpload';
+            this.global_service.PostRequest(url, postData).subscribe(response => {
+              this.ng4LoadingSpinnerService.hide();
+             if(response[0].status){
+                if (response[0].json.json().statusCode == 200) {
+                  this.imageDataAfterupload=response[0].json.json().data;                  
+                  this.icowizards.crowdsale.tokenImage = this.imageDataAfterupload;
+                  this.tokImage=true;
+                 }else{
+                   this.global_service.showNotification('top','right',"SOmething went wrong",4,'ti-cross');
+                 }
+             }
+        })      
     }
      reader.readAsDataURL(file)
    }
@@ -386,6 +413,7 @@ export class ListicoComponent implements OnInit {
    }
 
     whitePaper(event){
+       this.ng4LoadingSpinnerService.show();
     let reader = new FileReader();
     let file = event.target.files[0];
     reader.onloadend = (e:any) => {
@@ -397,6 +425,7 @@ export class ListicoComponent implements OnInit {
       }
      const url=this.global_service.basePath + 'merchandise/imageUpload';
             this.global_service.PostRequest(url, postData).subscribe(response => {
+               this.ng4LoadingSpinnerService.hide();
              if(response[0].status){
                 if (response[0].json.json().statusCode == 200) {
                   var whitePaperDataAfterupload=response[0].json.json().data;  
@@ -755,7 +784,7 @@ addressValidate(add:any){
              'ticker': new FormControl('',Validators.compose([Validators.required ,Validators.maxLength(3), Validators.pattern(/^[a-zA-Z0-9]{1,3}$/)])),
              'companyName': new FormControl('',Validators.required),
              'description': new FormControl('',Validators.required),
-             'tokenValue': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|1000000000)(?:\.\d{1,18})?$/)])),
+             'tokenValue': new FormControl('',Validators.compose([ Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|1000000000)(?:\.\d{1,18})?$/)])),
              'tokenSupply': new FormControl(),
              'walletAddress': new FormControl(),
              'tokenDecimals': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|1[0-8])(?:\.\d{1,18})?$/)])),
@@ -766,13 +795,13 @@ addressValidate(add:any){
              'linkedin': new FormControl('',Validators.compose([Validators.pattern(/^https?:\/\/[^\s]+$/)])),
              'website': new FormControl('',Validators.compose([Validators.pattern(/^https?:\/\/[^\s]+$/)])),
              'vedio': new FormControl('',Validators.compose([Validators.pattern(/^https?:\/\/[^\s]+$/)])),     
-             'teamnames': new FormControl('',Validators.compose([Validators.required ,Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]{3,}$/)])),
-             'linkedinname': new FormControl('',Validators.compose([Validators.required ,Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]{3,}$/)])),
-             'designation': new FormControl('',Validators.compose([Validators.required ,Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]{3,}$/)])),
+             'teamnames': new FormControl('',Validators.compose([Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]{3,}$/)])),
+             'linkedinname': new FormControl('',Validators.compose([Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]{3,}$/)])),
+             'designation': new FormControl('',Validators.compose([Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]{3,}$/)])),
              'milestone1': new FormControl(), 
              'milestonedate': new FormControl(),      
              'addr': new FormControl('',Validators.compose([Validators.pattern(/^0x[a-fA-F0-9]{40}$/)])),  
-             'val': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|1000000000)$/)])),
+             'val': new FormControl('',Validators.compose([ Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|1000000000)$/)])),
              'tier': new FormControl('',Validators.required),          
              'supply': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|1000000000)$/)])),
              'rate': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|100000)$/)])),
@@ -821,6 +850,8 @@ addressValidate(add:any){
                       }
                   }
 
-
+   //   ngAfterViewInit() {
+   //     window.scrollTo(0, 0);
+   // }
 
 }
