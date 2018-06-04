@@ -1,10 +1,8 @@
 import { Component, OnInit,NgModule,AfterViewInit, ElementRef } from '@angular/core';
 declare var $: any;
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertService, AuthenticationService ,UserService } from '../Services/index';
 import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Http, Headers, RequestOptions, Response  } from '@angular/http';
-import { EqualValidator } from '../Directives/validation.directive';
 import * as moment from 'moment';
 import { GlobalService } from '../GlobalService';
 import  * as ico   from'../ico_constant';
@@ -17,7 +15,7 @@ import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-
 })
 
 export class ListicoComponent implements OnInit,AfterViewInit {
-   startDateTime:any;
+   startDateTime:any;tokenValue
    endDateTime:any;
    icowizards:ListIcoWizards;
    selectedTeamImage : any;
@@ -101,6 +99,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                          rate: '',
    
    }
+
     crowdsale : any={  
                       walletAddress:"",
                       updatable: "off",
@@ -140,10 +139,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
         private http: Http,
         private route: ActivatedRoute,
         private router: Router,
-        private fb: FormBuilder,
-        private userService: UserService,
-        private authenticationService: AuthenticationService,
-        private alertService: AlertService,
+        private fb: FormBuilder,     
         private activatedRoute: ActivatedRoute,
         private global_service : GlobalService,
         private element: ElementRef,
@@ -207,9 +203,9 @@ export class ListicoComponent implements OnInit,AfterViewInit {
            }
 
 
-                this.crowdsale.startTime=this.crowdsale.startTime.toISOString().substring(0, 19); 
+                this.crowdsale.startTime=moment(this.crowdsale.startTime).format().substring(0, 19); 
                   // this.crowdsale.startTime= moment(this.crowdsale.startTime).format('YYYY-MM-DD'+"T"+'HH:mm:s');
-                this.crowdsale.endTime=this.crowdsale.endTime.toISOString().substring(0, 19);
+                this.crowdsale.endTime=moment(this.crowdsale.endTime).format().substring(0, 19);
                 // this.crowdsale.startTime= moment(this.crowdsale.startTime).format('YYYY-MM-DD HH:mm');
                  
                 // this.crowdsale.endTime= moment(this.crowdsale.endTime).format('YYYY-MM-DD HH:mm'); 
@@ -263,25 +259,25 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                                   }
                                      let data1={
                                      rate : this.pricingStrategy.rate.toString()
-                                    }
-                                   // console.log(data);
-                                   this.icowizards.crowdsale.pricingStrategy.push(data1);
-                                   // this.icowizards.crowdsale.crowdsale.push(data);
+                                    }                                   
+                                                         
                                    if(this.icowizards.crowdsale.crowdsale.length)
                           {
                             if(this.icowizards.crowdsale.crowdsale[this.icowizards.crowdsale.crowdsale.length-1].endTime>data.startTime)
                             {
-
+          
                              this.global_service.showNotification('top','right','Next tier start date should be greater than previous token End Date',4,'ti-cross');
                             }
                             else
                             {
+                               this.icowizards.crowdsale.pricingStrategy.push(data1); 
                              this.icowizards.crowdsale.crowdsale.push(data);
                              
                             }
                           }
                           else
                           {
+                             this.icowizards.crowdsale.pricingStrategy.push(data1); 
                            this.icowizards.crowdsale.crowdsale.push(data);
                            this.global_service.showNotification('top','right','Tier add successfully',2,'ti-cross');
                           }
@@ -295,7 +291,10 @@ export class ListicoComponent implements OnInit,AfterViewInit {
         var index = this.icowizards.crowdsale.crowdsale.findIndex(function(o,index){
           return index === itemNo1;
        })
-       if (index !== -1) this.icowizards.crowdsale.crowdsale.splice(index, 1);
+       if (index !== -1) {
+         this.icowizards.crowdsale.crowdsale.splice(index, 1);
+         this.icowizards.crowdsale.pricingStrategy.splice(index, 1);
+       }
        if(this.icowizards.crowdsale.crowdsale.length==0){
           this.pricingStrategy={
                          rate: '',
@@ -348,19 +347,10 @@ export class ListicoComponent implements OnInit,AfterViewInit {
 
 
 
-   // tokenImage(event){
-   //  let reader = new FileReader();
-   //  let file = event.target.files[0];
-   //  reader.onloadend = (e:any) => {
-   //    this.selectedTokenImage = e.target.result;
-   //    this.icowizards.crowdsale.tokenImage = this.selectedTokenImage;
-   //    this.tokImage=true;
-   //  }
-   //   reader.readAsDataURL(file)
-   // }
+   
 
     tokenImage(event){
-      this.ng4LoadingSpinnerService.show();
+    this.ng4LoadingSpinnerService.show();
     let reader = new FileReader();
     let file = event.target.files[0];
     reader.onloadend = (e:any) => {
@@ -378,7 +368,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                   this.icowizards.crowdsale.tokenImage = this.imageDataAfterupload;
                   this.tokImage=true;
                  }else{
-                   this.global_service.showNotification('top','right',"SOmething went wrong",4,'ti-cross');
+                   this.global_service.showNotification('top','right',"Something went wrong",4,'ti-cross');
                  }
              }
         })      
@@ -412,36 +402,36 @@ export class ListicoComponent implements OnInit,AfterViewInit {
      reader.readAsDataURL(file)
    }
 
-    whitePaper(event){
-       this.ng4LoadingSpinnerService.show();
+ 
+     whitePaperlistico(event){
+       // this.ng4LoadingSpinnerService.show();
     let reader = new FileReader();
     let file = event.target.files[0];
     reader.onloadend = (e:any) => {
       this.selectedWhitePaperImage = e.target.result;
-      this.selectedWhitePaperImage = e.target.result;
-      var whitePaperImage=this.selectedWhitePaperImage.split(',')[1]      
+      console.log()
+      var whitePaperImg=this.selectedWhitePaperImage.split(',')[1]      
       let postData={
-        image : whitePaperImage
+        image : whitePaperImg
       }
      const url=this.global_service.basePath + 'merchandise/imageUpload';
             this.global_service.PostRequest(url, postData).subscribe(response => {
-               this.ng4LoadingSpinnerService.hide();
+             // this.ng4LoadingSpinnerService.hide();
              if(response[0].status){
                 if (response[0].json.json().statusCode == 200) {
-                  var whitePaperDataAfterupload=response[0].json.json().data;  
-                  this.whitepaperStatus=true;                
-                  this.icowizards.crowdsale.whitePaper = whitePaperDataAfterupload;
-                  
-                 }else{
-                   this.global_service.showNotification('top','right',"SOmething went wrong",4,'ti-cross');
+                  var whitepapers=response[0].json.json().data;                  
+                  this.icowizards.crowdsale.whitePaper = whitepapers;//this.domSanitizer.bypassSecurityTrustUrl(whitepapers.changingThisBreaksApplicationSecurity);
+                  this.whitepaperStatus=true;
+                    }else{
+                   this.global_service.showNotification('top','right',"Something went wrong",4,'ti-cross');
                  }
              }
         })     
-            
+      
+  //    this.icowizards.crowdsale.whitePaper = this.domSanitizer.bypassSecurityTrustResourceUrl(this.selectedWhitePaperImage);
     }
-     reader.readAsDataURL(this.selectedWhitePaperImage)
+     reader.readAsDataURL(file)
    }
-
 
     icowizardsDetails(){
      this.icowizards={
@@ -465,7 +455,8 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                                pricingStrategy      : [],                               
                                crowdsale            : [],
                                generalInfo          : "",
-                               whitePaper           : "",                            
+                               whitePaper           : "", 
+                               checkoutItems        : []                          
            },
        }
   }
@@ -473,8 +464,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
 
           
 
-    generateIco(){  
-
+    generateIco(){ 
                   let data={
                                email                : this.company_email.email,
                                tokenImage           : this.icowizards.crowdsale.tokenImage,
@@ -496,19 +486,19 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                                crowdsale            : this.icowizards.crowdsale.crowdsale,
                                generalInfo          : this.generalInfo,
                                whitePaper           : this.icowizards.crowdsale.whitePaper, 
-                               startTime            :this.crowdsale.startTime,
-                               endTime              :this.crowdsale.endTime
-                               
+                               startTime            : this.crowdsale.startTime,
+                               endTime              : this.crowdsale.endTime,
+                               checkoutItems        : this.icowizards.crowdsale.checkoutItems,
                          
                } 
                  const url = this.global_service.basePath + 'users/listICO';
-                 this.ng4LoadingSpinnerService.show();
-                 debugger
+                 this.ng4LoadingSpinnerService.show();                 
                  this.global_service.PostRequest(url,data).subscribe(response=>{
                    console.log(response);
                  this.ng4LoadingSpinnerService.hide();
                   if(response[0].json.json().status==200){  
-                   this.ng4LoadingSpinnerService.hide()    
+                   this.ng4LoadingSpinnerService.hide();    
+                   localStorage['firstLoad'] = true;
               this.global_service.showNotification('top','right',response[0].json.json().message,2,'ti-cross'); 
               this.router.navigateByUrl('/home'); 
               // this.boolRoute=true;
@@ -522,7 +512,6 @@ export class ListicoComponent implements OnInit,AfterViewInit {
            }
 
    pushreservedToken(){
-
    if(this.reservedTokens.val==="" || this.reservedTokens.val===null){
    this.global_service.showNotification('top','right','please enter Reserved Token Value',4,'ti-cross');
    }
@@ -560,10 +549,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                
                    this.icowizards.crowdsale.reservedTokens.push(data);
    }
-
-
-
-   }
+  }
      
      addMorereservedToken(){
        this.reservedTokens={
@@ -579,7 +565,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
           return index === itemNo1;
        })
        if (index !== -1) this.icowizards.crowdsale.reservedTokens.splice(index, 1);
-if(this.icowizards.crowdsale.reservedTokens.length==0){
+      if(this.icowizards.crowdsale.reservedTokens.length==0){
             this.reservedTokens={
                               val : "",
                               addr : ""
@@ -591,8 +577,7 @@ if(this.icowizards.crowdsale.reservedTokens.length==0){
 
     }
 
-    pushteam(){  
-      //debugger;
+    pushteam(){        
       if(!this.team.teamNames){
         this.global_service.showNotification('top','right',"please fill Member Name ",4,'ti-cross');
                 return;
@@ -761,7 +746,9 @@ if(this.icowizards.crowdsale.reservedTokens.length==0){
           }
         })
      }
-addressValidate(add:any){
+
+
+      addressValidate(add:any){
 
         let postData={
                      address:add,
@@ -784,15 +771,15 @@ addressValidate(add:any){
              'ticker': new FormControl('',Validators.compose([Validators.required ,Validators.maxLength(3), Validators.pattern(/^[a-zA-Z0-9]{1,3}$/)])),
              'companyName': new FormControl('',Validators.required),
              'description': new FormControl('',Validators.required),
-             'tokenValue': new FormControl('',Validators.compose([ Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|1000000000)(?:\.\d{1,18})?$/)])),
+             'tokenValue': new FormControl('',Validators.compose([Validators.pattern(/^\s*(?=.*[1-9])\d*(?:\.\d{1,15})?\s*$/)])),
              'tokenSupply': new FormControl(),
              'walletAddress': new FormControl(),
              'tokenDecimals': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|1[0-8])(?:\.\d{1,18})?$/)])),
              'crowdsaleAddress': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^0x[a-fA-F0-9]{40}$/)])),
              'tokenAddress': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^0x[a-fA-F0-9]{40}$/)])),
-             'twitter': new FormControl('',Validators.compose([Validators.pattern(/^https?:\/\/[^\s]+$/)])),
-             'facebook': new FormControl('',Validators.compose([Validators.pattern(/^https?:\/\/[^\s]+$/)])),
-             'linkedin': new FormControl('',Validators.compose([Validators.pattern(/^https?:\/\/[^\s]+$/)])),
+             'twitter': new FormControl('',Validators.compose([Validators.pattern(/(?:https:\/\/)?(?:www\.)?twitter\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-]*)/)])),
+             'facebook': new FormControl('',Validators.compose([Validators.pattern(/(?:https:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-]*)/)])),
+             'linkedin': new FormControl('',Validators.compose([Validators.pattern(/^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/)])),
              'website': new FormControl('',Validators.compose([Validators.pattern(/^https?:\/\/[^\s]+$/)])),
              'vedio': new FormControl('',Validators.compose([Validators.pattern(/^https?:\/\/[^\s]+$/)])),     
              'teamnames': new FormControl('',Validators.compose([Validators.minLength(3), Validators.pattern(/^[a-zA-Z ]{3,}$/)])),
@@ -811,47 +798,14 @@ addressValidate(add:any){
         });
     }
 
-
-     logout() {
-
-            let postData = {
-                    ETHaddress: this.user.EthAddress,
-                    userId: this.user._id
-                };
-
-                const url = this.global_service.basePath + 'api/logout';
-                this.ng4LoadingSpinnerService.show();
-                this.global_service.PostRequest(url, postData).subscribe(response => {
-                    this.ng4LoadingSpinnerService.hide();
-                    if (response[0].json.status == 200) {
-                       // console.log("response = = =" + response[0].json.json().message)
-                        localStorage.clear();
-                        localStorage.removeItem('currentUser');
-                        localStorage.removeItem('token');
-                        localStorage.removeItem('token_link');
-                        this.router.navigateByUrl('/login');
-                      
-                    } else {
-
-                      //  this.messageService.add({ severity: 'success', summary: 'cancel logout' });
-                    }
-
-                })
-    }
-
-
-              minus(e){
-                 // debugger;
-                 //      if (e.keyCode === 190 ) {
-                 //          return false;
-                 //      }
+              minus(e){           
                       if (e.keyCode === 189 ) {
                           return false;
                       }
                   }
 
-   //   ngAfterViewInit() {
-   //     window.scrollTo(0, 0);
-   // }
+     ngAfterViewInit() {
+       window.scrollTo(0, 0);
+   }
 
 }

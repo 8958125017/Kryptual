@@ -60,7 +60,7 @@
                                             </div>
                                         </div>
                                         <div *ngIf="!registerForm.controls['email'].valid&&registerForm.controls['email'].dirty"> <span *ngIf="registerForm.controls['email'].errors['required']" class="small">Email is required</span>
-                                            <span *ngIf="registerForm.controls['email'].errors['pattern']" style="color: red;">Email id is invalid</span>
+                                            <span *ngIf="registerForm.controls['email'].errors['pattern']" class="small">Email id is invalid</span>
                                         </div>
                                     </div>
                                     <div class="col-md-4 pr-2">
@@ -82,7 +82,7 @@
                                                         <i  class="fa fa-file-o"></i>
                                                     </span>
                                             <div style="padding: 7px;">
-                                                <input placeholder="White Paper..." type="file" style="border:0px solid" accept="application/pdf" (change)="whitePaper($event)">
+                                                <input placeholder="White Paper..." type="file" style="border:0px solid" accept="application/pdf" (change)="whitePaperlistico($event)">
                                             </div>
                                         </div>
                                     </div>
@@ -244,7 +244,7 @@
                                                     <table class="table table-hover">
                                                         <thead>
                                                             <tr>
-                                                                <th>ID</th>
+                                                                <th>Id</th>
                                                                 <th>Profile Image</th>
                                                                 <th>Member Name</th>
                                                                 <th>Designation</th>
@@ -352,10 +352,10 @@
                                                         <i  class="fa fa-user-o"></i>
                                                     </span>
                                                 <div class="form-group is-empty">
-                                                    <input class="form-control" style="border-bottom: 0px solid #eee !important; text-transform:uppercase" placeholder="Name..." type="text" formControlName="name" [(ngModel)]="token.name" required />
+                                                    <input class="form-control" style="border-bottom: 0px solid #eee !important; text-transform:uppercase" placeholder="name..." type="text" formControlName="name" [(ngModel)]="token.name" required />
                                                 </div>
                                             </div>
-                                            <div *ngIf="!registerForm.controls['name'].valid && registerForm.controls['name'].dirty"> <span *ngIf="registerForm.controls['name'].errors['required']" class="small">name is required</span>
+                                            <div *ngIf="!registerForm.controls['name'].valid && registerForm.controls['name'].dirty"> <span *ngIf="registerForm.controls['name'].errors['required']" class="small">Name is required</span>
                                                 <span *ngIf="registerForm.controls['name'].errors['pattern']" class="small">Please enter alphanumeric and should not be exceed 28 characters </span>
                                             </div>
                                             <small>The name of your token. Will be used by Etherscan and other token browsers. Be afraid of Trademarks.</small>
@@ -373,7 +373,7 @@
                                             <div *ngIf="!registerForm.controls['ticker'].valid&&registerForm.controls['ticker'].dirty">
                                                 <span *ngIf="registerForm.controls['ticker'].errors['required']" class="small">Ticker is required</span>
                                                 <span *ngIf="registerForm.controls['ticker'].errors['maxLength']" class="small">Ticker length should be 3 alphanumeric</span>
-                                                <span *ngIf="registerForm.controls['ticker'].errors['pattern']" style="color: red;">Please enter alphanumeric and should be maximum 3 characters</span>
+                                                <span *ngIf="registerForm.controls['ticker'].errors['pattern']" class="small">Please enter alphanumeric and should be maximum 3 characters</span>
                                             </div>
                                             <small>The three letter ticker for your token. There are 17,576 combinations for 26 english letters. Be hurry.</small>
                                         </div>
@@ -407,7 +407,7 @@
                                             </div>
                                             <div *ngIf="!registerForm.controls['tokenValue'].valid && registerForm.controls['tokenValue'].dirty">
                                                 <span *ngIf="registerForm.controls['tokenValue'].errors['required']" class="small">Token supply is required</span>
-                                                <span *ngIf="registerForm.controls['tokenValue'].errors['pattern']" class="small">Token supply should be between 1-10000000000 </span>
+                                                <span *ngIf="registerForm.controls['tokenValue'].errors['pattern']" class="small">Token supply should be between 0-10<sup>21</sup> </span>
                                             </div>
                                             <small>How many tokens will be sold on this tier. Cap of crowdsale equals to sum of supply of all tiers.</small>
                                         </div>
@@ -433,7 +433,7 @@
                                                         <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Address..." [(ngModel)]="reservedTokens.addr" type="text" formControlName="addr">
                                                     </div>
                                                 </div>
-                                                <div *ngIf="!registerForm.controls['addr'].valid&& registerForm.controls['addr'].errors['pattern']"> <span style="color:red;">Address is incorrect</span>
+                                                <div *ngIf="!registerForm.controls['addr'].valid&& registerForm.controls['addr'].errors['pattern']"> <span class="small">Address is incorrect</span>
                                                 </div>
                                                 <small>Address where to send reserved tokens</small>
                                             </div>
@@ -468,8 +468,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th>ID</th>
-                                                            <th>Value</th>
+                                                           
                                                             <th>Address</th>
+                                                             <th>Value</th>
                                                             <!--<th>Edit</th> -->
                                                             <th>Remove</th>
                                                         </tr>
@@ -477,8 +478,9 @@
                                                     <tbody>
                                                         <tr *ngFor="let reservedTokens of icowizards.crowdsale.reservedTokens ; let i = index">
                                                             <td>{{i+1}}</td>
-                                                            <td>{{reservedTokens.val ? reservedTokens.val : '--'}}</td>
+                                                            
                                                             <td>{{reservedTokens.addr ? reservedTokens.addr : '--'}}</td>
+                                                            <td>{{reservedTokens.val ? reservedTokens.val : '--'}}</td>
                                                             <!--<td class="text-success"><i class="material-icons" >edit</i></td> -->
                                                             <td class=" text-danger"><i class="material-icons" (click)="popreservedTokens(i)">close</i></td>
                                                         </tr>
@@ -500,10 +502,10 @@
                                                 <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Crowdsale Address..." name="crowdsaleAddress" [(ngModel)]="data.crowdsaleAddress" type="text" formControlName="crowdsaleAddress" (blur)="addressValidate(data.crowdsaleAddress)" required/>
                                             </div>
                                         </div>
-                                        <div *ngIf="!registerForm.controls['crowdsaleAddress'].valid&&registerForm.controls['crowdsaleAddress'].dirty"> <span *ngIf="registerForm.controls['crowdsaleAddress'].errors['required']" style="color:red;">Crowdsale Address is required</span>
+                                        <div *ngIf="!registerForm.controls['crowdsaleAddress'].valid&&registerForm.controls['crowdsaleAddress'].dirty"> <span *ngIf="registerForm.controls['crowdsaleAddress'].errors['required']" class="small">Crowdsale Address is required</span>
                                             <span *ngIf="registerForm.controls['crowdsaleAddress'].errors['pattern']" class="small">Crowdsale Address is incorrect</span>
                                         </div>
-                                        <small>Name of a tier. e.g. PrePreIco PreICO, ICO with bonus A, ICO with bonus B. etc. We simplified that and will increment a number after each tier.
+                                        <small>The address where users will send their Ether to purchase token.
                                     </small>
                                     </div>
                                     <div class="col-md-6 pr-2 ">
@@ -516,10 +518,10 @@
                                                 <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Token Address..." name="tokenAddress" [(ngModel)]="data.tokenAddress" type="text" formControlName="tokenAddress" (blur)="addressValidate(data.tokenAddress)" required/>
                                             </div>
                                         </div>
-                                        <div *ngIf="!registerForm.controls['tokenAddress'].valid&&registerForm.controls['tokenAddress'].dirty"> <span *ngIf="registerForm.controls['tokenAddress'].errors['required']" style="color:red;">Token Address is required</span>
+                                        <div *ngIf="!registerForm.controls['tokenAddress'].valid&&registerForm.controls['tokenAddress'].dirty"> <span *ngIf="registerForm.controls['tokenAddress'].errors['required']" class="small">Token Address is required</span>
                                             <span *ngIf="registerForm.controls['tokenAddress'].errors['pattern']" class="small">Token Address is incorrect</span>
                                         </div>
-                                        <small>Where the money goes after investors transactions. Immediately after each transaction. We recommend to setup a multisig wallet with hardware based signers.</small>
+                                        <small>Address corresponding to the token information.</small>
                                     </div>
                                 </div>
                                 <div class="page 3 ">
@@ -541,7 +543,7 @@
                                                             <input class="form-control" style="border-bottom: 0px solid #eee !important" name="tier" [(ngModel)]="crowdsale.tier" placeholder="Crowdsale Setup Name..." type="text" formControlName="tier" required/>
                                                         </div>
                                                     </div>
-                                                    <div *ngIf="!registerForm.controls['tier'].valid&&registerForm.controls['tier'].dirty"> <span style="color:red;">Tier  is required</span></div>
+                                                    <div *ngIf="!registerForm.controls['tier'].valid&&registerForm.controls['tier'].dirty"> <span class="small">Tier  is required</span></div>
                                                     <small>Name of a tier. e.g. PrePreIco PreICO, ICO with bonus A, ICO with bonus B. etc. We simplified that and will increment a number after each tier.
                                                     </small>
                                                 </div>
@@ -586,7 +588,7 @@
                                                             <owl-date-time #dtPicker1></owl-date-time>
                                                         </div>
                                                     </div>
-                                                    <div *ngIf="!registerForm.controls['endTime'].valid&&registerForm.controls['endTime'].dirty"> <span style="color:red;">End Time  is required</span></div>
+                                                    <div *ngIf="!registerForm.controls['endTime'].valid&&registerForm.controls['endTime'].dirty"> <span class="small">End Time  is required</span></div>
                                                     <small>Date and time when the tier ends. Can be only in the future.</small>
                                                 </div>
                                             </div>
@@ -637,10 +639,11 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>ID</th>
-                                                                <th>tier</th>
-                                                                <th>startTime</th>
-                                                                <th>endTime</th>
-                                                                <th>supply</th>
+                                                                <th>Tier</th>
+                                                                <th>StartTime</th>
+                                                                <th>EndTime</th>
+                                                                <th>Rate</th>
+                                                                <th>Supply</th>
                                                                 <!--   <th>Edit</th> -->
                                                                 <th>Remove</th>
                                                             </tr>
@@ -651,6 +654,7 @@
                                                                 <td>{{crowdsale.tier ? crowdsale.tier : '--'}}</td>
                                                                 <td>{{crowdsale.startTime ? crowdsale.startTime : '--'}}</td>
                                                                 <td>{{crowdsale.endTime ? crowdsale.endTime : '--'}}</td>
+                                                                <td>{{icowizards.crowdsale.pricingStrategy[i].rate ? icowizards.crowdsale.pricingStrategy[i].rate : '--'}}</td>
                                                                 <td>{{crowdsale.supply ? crowdsale.supply : '--'}}</td>
                                                                 <!--    <td class="text-success"><i class="material-icons" (click)="poptier(i)">edit</i></td> -->
                                                                 <td class="text-danger"><i class="material-icons" (click)="poptier(i)">close</i></td>

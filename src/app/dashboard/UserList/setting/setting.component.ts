@@ -1,9 +1,8 @@
   import { Component, OnInit,NgModule } from '@angular/core';
-  import { EqualValidator } from './../../../Directives/validation.directive';
   import { GlobalService } from './../../../GlobalService';
   import * as moment from 'moment';
   import { Router, ActivatedRoute } from '@angular/router';
-  import { AlertService, AuthenticationService ,SetupService,UserService} from '../../../Services/index';
+  
   import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
   import { Http, Headers, RequestOptions, Response  } from '@angular/http';
   import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
@@ -22,10 +21,7 @@
                 private http: Http,
                 private route: ActivatedRoute,
                 private router: Router,
-                private fb: FormBuilder,
-                private _setupService: SetupService,
-                private alertService: AlertService,
-                private userService: UserService ,
+                private fb: FormBuilder,                
                 private global_service:GlobalService
       ) {     
 
@@ -65,6 +61,14 @@
 
             }
           })
+    }
+    enteronsubmit(event){
+                        if((this.updatePassword.currentPassword&&this.updatePassword.newPassword)&&this.updatePassword.confirmNewPassword){
+                                  if((event.keyCode === 13)){
+                                 this.updateUserPassword();
+                                  }                                     
+                     }
+
     }
 
      ngOnInit() {

@@ -51,9 +51,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <p class="hd-p" style="padding-bottom: 15px;">Tier End In</p>
-                                <countdown units="Days | Hours | Minutes | Seconds" end={{investData?.endDate}}></countdown>
+                                <h4> <div class="timemrgin text-success" style="margin-top: 0%;" id="demo9"></div> </h4> 
+                                  <a class="hd-a">{{investData?.generalInfo.website ? investData?.generalInfo.website :'No website link here.'}}</a>
                             </div>
-                            <a class="hd-a">{{investData?.generalInfo.website ? investData?.generalInfo.website :'No website link here.'}}</a>
+                          
                         </div>
                         <div class="card-body">
                             <div class="col-md-12">
@@ -108,7 +109,7 @@
                                                 </label>
                                             </div>
                                             <div class="form-group pull-right">
-                                                <button class="btn btn-success btn-round pull-center" data-toggle="modal" (click)="invest_tokenPassword(investData?.tokenName,buyingToken.amount)" [disabled]="!investForm.valid"><i class="material-icons">navigation</i>Invest</button>
+                                                <button class="btn btn-success btn-round pull-center" data-toggle="modal" (click)="invest_tokenPassword(investData?.tokenName,buyingToken.amount)" [disabled]="!investForm.valid || fundStatus"><i class="material-icons">navigation</i>Invest</button>
                                             </div>
                                         </div>
                                     </div>
@@ -134,7 +135,7 @@
                                                                     <div class="col-sm-9">
                                                                         <div class="form-group label-floating is-empty">
                                                                             <label class="control-label"></label>
-                                                                            <input class="form-control" formControlName="password" [(ngModel)]="passwordDetails.password" type="password" value="">
+                                                                            <input class="form-control" formControlName="password" [(ngModel)]="passwordDetails.password" type="password" value="" (keypress)="enteronsubmit($event)">
                                                                             <div style="color:red" *ngIf="!passwordForm.controls['password'].valid&&passwordForm.controls['password'].dirty">
                                                                                 Password is required
                                                                             </div>

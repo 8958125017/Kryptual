@@ -21,7 +21,7 @@ interface Icowizards {
                 milestone?             : any[],
                 contracts?             : any,
                 team?                  : any[],
-                token?                 : any,
+                token?                 : any
         },
        
 }
@@ -48,6 +48,8 @@ interface ListIcoWizards {
                                         generalInfo?           : any,
                                         whitePaper?            : any,  
                                         pricingStrategy?       : any[],
+                                        checkoutItems?         : any[],
+
                                        },
                          }
        

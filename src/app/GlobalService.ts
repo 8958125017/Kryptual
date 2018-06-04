@@ -8,54 +8,38 @@ import 'rxjs/add/observable/of';
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { ToasterContainerComponent, ToasterService, ToasterConfig} from 'angular2-toaster';
-declare let ga: Function;
-// import { User } from './Models/employee';
-// declare var jQuery: any;
-declare var $: any;
-declare var toastr: any;
-declare var FB: any;
 
+declare let ga: Function;
+declare var $: any;
 @Injectable()
-export class GlobalService {
-    public invalidMoment =  new Date(2018, 1, 11, 9, 30);
-    public min = new Date();
-    // public max = new Date(2018, 3, 21, 20, 30);
-    public msgs: any[] = [];
+export class GlobalService {       
+   private toasterService: ToasterService; 
     user:any;
     userInfo: any;
     userType:any;
     public basePath: string;
     public basePathforReact: string;
-    public refresh_token: string;
-    public basePathLoader: string;
-    public basePathSmallLoader: string;
+    public refresh_token: string;  
     public headers: Headers;
     public requestoptions: RequestOptions;
-    public res: Response;
-    public imageGreenTick:string;
-    public imageRedTick:string;
-    public defaultUserImage:string;
-    public imageUpload:string;
-    public namePattern: string;
-    public emailPattern: string;
-    public nameOnly: string;
-    public passwordPattern: string;
-    public numberOnly: string;
+    public res: Response;  
     public loggedInObs: Rx.Subject<any> = new Rx.Subject<any>();
-    public loggedInVar: boolean = false;
-    public disableMultipleSave:boolean = false;
     isLogedInUser:boolean;
     adminStatus:any[] = [ {id:1,status:'Active'},
-                        {id:2,status:'Inactive'}]
+                          {  id:2,status:'Inactive'}
+                        ]
 
 
     constructor(
                 public http: Http,
                 public router: Router,
-                public toasterService:ToasterService,
+                 toasterService:ToasterService
                ) {
         this.extarsOnLoad();
+        this.toasterService = toasterService
+   
     }
+
 
     /*Check form valid or not by passing form objecrt to it*/
     isFormValid(formName){
@@ -63,30 +47,21 @@ export class GlobalService {
         else return false;
     }
     /*End section*/
+    
 
-    showNotification(from, align, message,color,icon){
-        var type = ['','info','success','warning','danger'];
-        $.notify({
-            icon: icon,
-            message: message,
-        },{
-            autoHide: true,
-            autoHideDelay: 500,
-            // hide animation
-            hideAnimation: 'slideUp',
-            // hide animation duration
-            hideDuration: 100,
-            type: type[color],
-            timer: 100,
-            placement: {
-                from: from,
-                align: align
-            }
-        });
-    }
-
-    showNotifications(type?, title?: string, body?: string) {
-          this.toasterService.pop(type, title, body);
+    showNotification(from, align,message, type, body) {
+        this.toasterService.clear();
+        debugger;
+         if(type==2){
+          this.toasterService.pop('success', "", message);
+         }
+         if(type==4){
+          this.toasterService.pop('error', "", message);
+         }
+         if(type==3){
+          this.toasterService.pop('success', "", message);
+         }
+          
     }
 
     upload(fileToUpload: any) {
@@ -94,6 +69,8 @@ export class GlobalService {
         input.append("file", fileToUpload);
         return this.http.post("/api/uploadFile", input);
     }
+
+    // start google analytics
 
      public emitEvent(eventCategory: string,
                    eventAction: string,
@@ -108,18 +85,12 @@ export class GlobalService {
                                                }
 
 
-    public extarsOnLoad() {
-        this.namePattern = '[a-zA-ZÀ-ÿ0-9._^%$#!@&*][a-zA-ZÀ-ÿ0-9._^%$#!@&* )]{1,300}';
-        this.nameOnly = '[a-zA-zÀ-ÿ0-9@ ][a-zA-zÀ-ÿ0-9@ ]{1,300}$';
-        this.emailPattern = '[a-zA-zÀ-ÿ_.0-9]+@[a-zA-ZÀ-ÿ]+[.][a-zA-ZÀ-ÿ.]+';
-        this.numberOnly = '[0-9.+]{1,200}';
-        this.passwordPattern = '[/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,100})/]';
+    public extarsOnLoad() {      
         this.userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
-
+         
          // LOCAL Server Path
-
         this.basePath = "http://103.201.142.41:4001/";
-         this.basePathforReact ="http://103.201.142.41:3000/";
+        this.basePathforReact ="http://103.201.142.41:3000/";
 
        // LOCAL AWS Server Path
        
@@ -128,19 +99,15 @@ export class GlobalService {
         
        //AWS Path
 
-         // this.basePath = "https://www.kryptual.com:4000/";
+       // this.basePath = "https://www.kryptual.com:4000/";
          // this.basePathforReact ="http://18.188.33.245:3000/";
 
-         
+       //Kunvar
+       // this.basePath = "http://192.168.0.63:4000/";
 
 
 
-        this.imageUpload='http://180.151.103.85:3015/api/admin/upload/image';
-        this.basePathLoader = "assets/images/Loading_icon.gif";
-        this.basePathSmallLoader = "assets/images/small-loader.gif";
-        this.imageGreenTick = "assets/images/Green-Tick-PNG-Picture.png";
-        this.imageRedTick = "assets/images/cancel.jpg";
-        this.defaultUserImage ="assets/images/blue_user.png";
+
         /*Required for Global Level in whole app*/
         this.userType = this.userInfo.UserRole;
         this.loggedInObs.subscribe(res => {
@@ -167,17 +134,11 @@ export class GlobalService {
         });
         return requestoptions;
     }
-     public getAllTokens(){
-      debugger
-       const url = './assets/img/data.json'
-      return this.http.get(url)
-            .map(res => {
-                  return res;
-            });
-    }
+
+  
 
     public PostRequestUnautorized(url: string, data: any): any {
-         let headers = new Headers();
+        let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let requestoptions = new RequestOptions({
             method: RequestMethod.Post,
@@ -197,7 +158,7 @@ export class GlobalService {
 
     public PostRequest(url: string, data: any, flag?: any): any {
         var TOKEN=localStorage.getItem('token');
-         let headers;
+        let headers;
         headers = new Headers();
         headers.append("Content-Type", "application/json");
         headers.append("authorization","jwt "+TOKEN);
@@ -220,6 +181,9 @@ export class GlobalService {
                 this.showNotification('top','right',error.json().err.object,4,'ti-cross');
                 this.router.navigateByUrl('/login');
             }
+           //   if(error.status===0){
+           //     this.showNotification('top','right','Unable to connect to the internet',4,'ti-cross');
+           // }
             return Observable.throw(error);
         });
     }
@@ -258,9 +222,9 @@ export class GlobalService {
         // console.log(a, b, c, d, f, g);
     }
 
-    clearMessage(){
-        //this.toasterService.clear();
-    }
+    // clearMessage(){
+    //     this.toasterService.clear();
+    // }
 
     public logout(){
         const url = this.basePath + "admin/logout" ;
@@ -287,7 +251,6 @@ export class GlobalService {
     }
 
     isLogedIn(){
-
          this.user=JSON.parse(localStorage.getItem('currentUser'));
          if(this.user!=null||this.user!=undefined){
            return true;

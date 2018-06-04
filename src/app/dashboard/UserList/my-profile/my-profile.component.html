@@ -20,8 +20,8 @@
                                             </label>
                                             <input class="form-control ng-untouched ng-pristine ng-valid" value formControlName="firstName" [(ngModel)]="updateDetails.firstName" type="text" ng-reflect-name="company" ng-reflect-model="" style="border-bottom: 1px solid #e6e6e6 !important">
                                             <div style="color:red" *ngIf="!updateForm.controls['firstName'].valid&&updateForm.controls['firstName'].dirty">
-                                                <span *ngIf="updateForm.controls['firstName'].errors['required']">First name is required</span>
-                                                <span *ngIf="updateForm.controls['firstName'].errors['minlength']">First name must be atleast 3 characters</span>
+                                                <span *ngIf="updateForm.controls['firstName'].errors['required']">First Name cannot be left blank</span>
+                                                <span *ngIf="updateForm.controls['firstName'].errors['minlength']">First Name must contain 3-28 characters, only alphabets and no spaces</span>
                                                 <span *ngIf="updateForm.controls['firstName'].errors['pattern']&&!updateForm.controls['firstName'].errors['minlength']">First name should be alphabet </span>
                                             </div>
                                         </div>
@@ -38,8 +38,8 @@
                                             </label>
                                             <input class="form-control ng-untouched ng-pristine ng-valid" value formControlName="lastName" [(ngModel)]="updateDetails.lastName" type="text" ng-reflect-name="company" ng-reflect-model="" >
                                             <div style="color:red" *ngIf="!updateForm.controls['lastName'].valid&&updateForm.controls['lastName'].dirty">
-                                                <span *ngIf="updateForm.controls['lastName'].errors['required']">Last name is required</span>
-                                                <span *ngIf="updateForm.controls['lastName'].errors['minlength']">Last name must be atleast 3 characters</span>
+                                                <span *ngIf="updateForm.controls['lastName'].errors['required']">Last name cannot be left blank</span>
+                                                <span *ngIf="updateForm.controls['lastName'].errors['minlength']">Last Name must contain 3-28 characters, only alphabets and no spaces</span>
                                                 <span *ngIf="updateForm.controls['lastName'].errors['pattern']&&!updateForm.controls['lastName'].errors['minlength']">Last name should be alphabet </span>
                                             </div>
                                         </div>

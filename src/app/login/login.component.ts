@@ -1,7 +1,6 @@
 import { Component, OnInit,NgModule, ElementRef } from '@angular/core';
 declare var $: any;
 import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
-import { AlertService, AuthenticationService } from '../Services/index';
 import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { Http, Headers, RequestOptions, Response  } from '@angular/http';
 import { ToasterContainerComponent, ToasterService, ToasterConfig} from 'angular2-toaster';
@@ -33,10 +32,8 @@ export class LoginComponent implements OnInit {
         private http: Http,
         private route: ActivatedRoute,
         private router: Router,
-        private fb: FormBuilder,
-        private authenticationService: AuthenticationService,
-        private global_service : GlobalService,
-        private alertService: AlertService,
+        private fb: FormBuilder,       
+        private global_service : GlobalService,       
         private element: ElementRef,
         public toasterService:ToasterService,
         private ng4LoadingSpinnerService: Ng4LoadingSpinnerService
@@ -58,8 +55,7 @@ export class LoginComponent implements OnInit {
          }
 
         ngOnInit() {       
-        this.loginFormInit();
-        this.authenticationService.logout1();       
+        this.loginFormInit();             
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
          var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];

@@ -1,9 +1,7 @@
   import { Component, OnInit } from '@angular/core';
-  import { EqualValidator } from '../Directives/validation.directive';
   import { GlobalService } from '../GlobalService';
   import * as moment from 'moment';
   import { Router, ActivatedRoute } from '@angular/router';
-  import { AlertService, AuthenticationService ,SetupService,UserService} from '../Services/index';
   import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
   import { Http, Headers, RequestOptions, Response  } from '@angular/http';
   import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
@@ -45,7 +43,10 @@ status:any;
 active:boolean=true;
 userName:any;
 whitepaperStatus:boolean=false;
-
+videosStatus:boolean=false;
+videoUrlLink:any;
+investDisable:boolean=false;
+ongoingsupply:any = {supply:"0"};
   constructor(
                 private route: ActivatedRoute,
                 private router: Router,
@@ -129,7 +130,7 @@ whitepaperStatus:boolean=false;
               if(response[0].json.json().data.generalInfo.website){
                 this.website=response[0].json.json().data.generalInfo.website;
               }else{
-                this.website="--";
+                this.website=" ";
               }
 
               if(response[0].json.json().data.generalInfo.description){
@@ -154,6 +155,12 @@ whitepaperStatus:boolean=false;
               }else{
                 this.twitterLink="https://www.twitter.com";
               }
+               if(response[0].json.json().data.generalInfo.vedio){
+                 this.videosStatus=true;
+                this.videoUrlLink=response[0].json.json().data.generalInfo.vedio;
+                this.videoUrlLink = this.videoUrlLink.replace("watch?v=", "embed/");                
+                console.log(this.videoUrlLink);
+              }
                
                if(this.tokenData.whitePaper){
                      this.whitepaperStatus=true;     
@@ -165,19 +172,25 @@ whitepaperStatus:boolean=false;
               this.currentdate=new Date().getTime()  ;
               if(newEndDate<this.currentdate){
                this.allTokenStatus="Expired";
+               this.investDisable=true;
               }else if (newStartDate>this.currentdate){
-                this.allTokenStatus="upcomming";
+                this.allTokenStatus="upcoming";
+                this.investDisable=true;
               }else{
                 this.allTokenStatus="Ongoing";
               }
               var startDate=response[0].json.json().data.startTime;
-              var endDate =response[0].json.json().data.endTime;            
-              for(var data of response[0].json.json().data.crowdsale){              
+              var endDate =response[0].json.json().data.endTime;  
+
+
+              var onGoingSupply = 0;          
+              for(var data of this.tokenData.crowdsale){              
                 let objData ={
                               tierName :'',
                               startTime:'',
                               endTime:'',
-                              status:''
+                              status:'',
+                              supply:''
                             };
                         objData.tierName=data.tier;
                         objData.startTime=data.startTime;
@@ -187,13 +200,15 @@ whitepaperStatus:boolean=false;
                    
                    if(this.currentdate<this.startTime)
                    {                     
-                     objData.status="Upcomming";
+                     objData.status="Upcoming";
                    }else if(this.currentdate>this.endTime){
                         objData.status="Expired"; 
                    }
                    else {
+                      onGoingSupply = data.supply;        
                        objData.status="Ongoing";  
                    }
+                   this.ongoingsupply.supply = onGoingSupply; 
                    this.crowdSaleToken.push(objData);
               }
              if(this.tokenData.whitePaper){

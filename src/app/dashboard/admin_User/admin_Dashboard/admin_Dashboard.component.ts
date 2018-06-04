@@ -3,18 +3,15 @@
   import { Router, ActivatedRoute } from '@angular/router';
   import { Http, Headers, RequestOptions, Response  } from '@angular/http';
   import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
-  import * as moment from 'moment';
-  import { EqualValidator } from './../../../Directives/validation.directive';
+  import * as moment from 'moment'; 
   import { GlobalService } from './../../../GlobalService';
   import { TableData } from './../../../md/md-table/md-table.component';
-  import { DatePipe } from '@angular/common';
-  
+  import { DatePipe } from '@angular/common';  
 
-  import { AlertService, AuthenticationService ,SetupService,UserService} from '../../../Services/index';
   declare const $: any;
   declare const paypal: any;
    import  * as ico   from'./../../../ico_constant';
-import { Observable } from 'rxjs/Rx';
+   import { Observable } from 'rxjs/Rx';
   declare interface DataTable {
    dataRows?: string[][];
   }

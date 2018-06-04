@@ -18,7 +18,7 @@
                                             <label>Current Password
                                                 <!--  <sup  style="color: red">*</sup> -->
                                             </label>
-                                            <input class="form-control ng-untouched ng-pristine ng-valid" formControlName="currentPassword" [(ngModel)]="updatePassword.currentPassword" required type="password" value="" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
+                                            <input (change)="enteronsubmit($event)" class="form-control ng-untouched ng-pristine ng-valid" formControlName="currentPassword" [(ngModel)]="updatePassword.currentPassword" required type="password" value="" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
                                             <div style="color:red" *ngIf="!updatePasswordForm.controls['currentPassword'].valid&&updatePasswordForm.controls['currentPassword'].dirty">
                                                 Current Password is required
                                             </div>
@@ -34,7 +34,7 @@
                                             <label>New Password
                                                 <!--  <sup  style="color: red">*</sup> -->
                                             </label>
-                                            <input class="form-control ng-untouched ng-pristine ng-valid" formControlName="newPassword" [(ngModel)]="updatePassword.newPassword" required type="password" value="" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
+                                            <input (change)="enteronsubmit($event)" class="form-control ng-untouched ng-pristine ng-valid" formControlName="newPassword" [(ngModel)]="updatePassword.newPassword" required type="password" value="" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
                                             <div style="color:red" *ngIf="!updatePasswordForm.controls['newPassword'].valid&&updatePasswordForm.controls['newPassword'].dirty">
                                                 <span *ngIf="updatePasswordForm.controls['newPassword'].errors['required']">Password is required</span>
                                                 <span *ngIf="updatePasswordForm.controls['newPassword'].errors['minlength']">NewPassword must be atleast 6 characters</span>
@@ -52,7 +52,7 @@
                                             <label>Confirm Password
                                                 <!--  <sup  style="color: red">*</sup> -->
                                             </label>
-                                            <input class="form-control ng-untouched ng-pristine ng-valid" formControlName="confirmNewPassword" [(ngModel)]="updatePassword.confirmNewPassword" required type="password" value="" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
+                                            <input (change)="enteronsubmit($event)" class="form-control ng-untouched ng-pristine ng-valid" formControlName="confirmNewPassword" [(ngModel)]="updatePassword.confirmNewPassword" required type="password" value="" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
                                             <div style="color:red" *ngIf="!updatePasswordForm.controls['confirmNewPassword'].valid&&updatePasswordForm.controls['confirmNewPassword'].dirty">
                                             </div>
                                             <div *ngIf="updatePasswordForm.controls['confirmNewPassword'].dirty&&updatePasswordForm.hasError('mismatchedPasswords')"><span style="color:red;">New password and confirm new password does not match</span></div>

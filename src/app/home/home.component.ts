@@ -114,6 +114,12 @@ export class HomeComponent implements OnInit,AfterViewInit {
     ngOnInit() {
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+        if( localStorage.getItem('firstLoad') )
+               {  
+               console.log(localStorage.getItem('firstLoad'));  
+               window.location.reload();
+                   }
+         window.scrollTo(0, 0);
     }
 
      
@@ -145,8 +151,8 @@ export class HomeComponent implements OnInit,AfterViewInit {
     }
 
 
-      onGoing(){
-        $('#loader1').show();
+        onGoing(){
+         $('#loader1').show();
          this.tokensList = [];
          this.allTokensix=8;
          this.allStatus=false;    
@@ -188,7 +194,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
         }
 
         all(){
-          $('#loader1').show();
+         $('#loader1').show();
          this.tokensList = [];
          this.allTokensix=8;
          this.allStatus=true;
@@ -236,10 +242,6 @@ export class HomeComponent implements OnInit,AfterViewInit {
                      objData.tokenImage=this.tokenData[i].tokenImage ? this.tokenData[i].tokenImage : './assets/img/No-preview.png';
                      objData.startTime=this.tokenData[i].crowdsale[0].startTime;
                      objData.endTime=this.tokenData[i].crowdsale[this.tokenData[i].crowdsale.length-1].endTime; 
-                     //alert("objData.endTime = = ="+objData.tokenName+" "+objData.tokenTicker+" "+objData.endTime);
-                     // objData.startTime=this.tokenData[i].startTime;
-                     // objData.endTime=this.tokenData[i].endTime; 
-                     // let newEndDate = new Date(objData.endTime).getTime(); 
                      this.counterDemo(objData,i);
                      this.tokensList.push(objData);
                      if( this.allTokensix < this.tokensList.length)
@@ -295,8 +297,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
         }
        
       counterDemo(objectData:any,i:any){ 
-
-      i=++i 
+        i=++i 
         if(this.allStatus==true)
         i = i+'a'
         else if(this.ongoingStatus==true) 
@@ -324,9 +325,6 @@ export class HomeComponent implements OnInit,AfterViewInit {
         else{
           objectData.completeToken = true;
         }
-
-
-
       //------------------------------------------------------------------------------------------
       // if(this.x)
       // window.clearInterval(this.x);              
@@ -343,10 +341,10 @@ export class HomeComponent implements OnInit,AfterViewInit {
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
         
        // Output the result in an element with id="demo"
-            var element = document.getElementById("demo"+i);
+            var element = document.getElementById("demo3"+i);
               if(element){
            //     console.log("iiiiiiiiiiiiiiiiiii:::::::::::::::::::",+i);
-                 document.getElementById("demo"+i).innerHTML = days + "d " + hours + "h "
+                 document.getElementById("demo3"+i).innerHTML = days + "d " + hours + "h "
               + minutes  + "m " + seconds + "s (GMT +5:30)";
               }else{
                 
@@ -356,16 +354,17 @@ export class HomeComponent implements OnInit,AfterViewInit {
         // If the count down is over, write some text 
         if (distance < 0) {
             clearInterval(this.x);
-            var element = document.getElementById("demo"+i);
+            var element = document.getElementById("demo3"+i);
             if(element){
-           //   console.log("in expire iiiiiiiiiiiiiiiiiiiiiiiii:",i)
-             document.getElementById("demo"+i).innerHTML = "EXPIRED";
+           //console.log("in expire iiiiiiiiiiiiiiiiiiiiiiiii:",i)
+             document.getElementById("demo3"+i).innerHTML = "Crowdsale Completed";
             }
           }
         }, 1000);
       }
        ngAfterViewInit() {
-       window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
+       localStorage.removeItem('firstLoad');
    }
           
 }

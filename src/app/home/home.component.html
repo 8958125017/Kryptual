@@ -53,7 +53,7 @@
             </div>
         </div>
     </div>
-    <div class="tkn-list card text-center">
+    <div class="tkn-list card text-center" id="tokenDiv">
         <div class="container-fluid" style="padding-left: 0.1px;padding-right: 0.1px;">
             <div class="row centerr" style="margin: 0 0 30px 0;">
                 <div class="col-md-12">
@@ -121,38 +121,50 @@
                                                     <h6>{{token.tokenSupply ? token.tokenSupply :'--'}}</h6></div>
                                             </div>
                                         </div>
-                                        <div *ngIf="allStatus">
-                                        <div class="price prc" *ngIf="token.ongingToken">
+                                    <!-- Start All Tab -->
+                                    <div *ngIf="allStatus">
+                                        <div class="price prc " *ngIf="token.ongingToken">
                                             <h4 > 
-                                            <div class="timemrgin" id="demo{{i+1+'a'}}"></div> </h4>             
+                                            <div class="timemrgin" id="demo3{{i+1+'a'}}"></div> </h4>             
                                         </div> 
                                         <div *ngIf="token.upcommingToken">
-                                        <button class="btn btn-success btn-thumbnail btn-sm font-weight-bold" (click)="view_ICO(token.id)">View</button>    
-                                        <button class="btn btn-success btn-thumbnail crwdbtn" style="margin-top: 0;">Upcoming</button>
+                                        <div class="price prc" (click)="view_ICO(token.id)" *ngIf="!token.ongingToken"><h4 class="text-danger">Crowdsale Completed</h4></div> 
+                                        <button class="btn btn-success btn-thumbnail crwdbtn" style="margin-top: 0;" (click)="view_ICO(token.id)">Upcoming</button>
                                         </div>
                                         <div >
-                                        <button class="btn btn-success btn-thumbnail viewbtn" (click)="view_ICO(token.id)" *ngIf="token.ongingToken" >View</button>
-                                    </div>
-                                        <p  class="btn btn-danger btn-thumnail crwdbtn " *ngIf="token.completeToken" >Crowdsale Completed</p>
+                                          <button class="btn btn-success btn-thumbnail viewbtn" (click)="view_ICO(token.id)" *ngIf="token.ongingToken" >View</button>
                                         </div>
-
-                                        <div *ngIf="ongoingStatus">
+                                        <div class="price prc" (click)="view_ICO(token.id)" *ngIf="!token.ongingToken"><h4 class="text-danger">Crowdsale Completed</h4></div> 
+                                        <p  class="btn btn-success btn-thumbnail crwdbtn" *ngIf="token.completeToken" (click)="view_ICO(token.id)">View</p>
+                                    </div>
+                                  
+                                     <!-- Start Ongoing tab -->
+                                    <div *ngIf="ongoingStatus">
                                          <div class="price prc"  *ngIf="token.ongingToken">
                                             <h4> 
-                                            <div class="timemrgin" id="demo{{i+1+'o'}}"></div> </h4>             
+                                            <div class="timemrgin" id="demo3{{i+1+'o'}}"></div> </h4>             
                                         </div> 
-                                        <button class="btn btn-success btn-thumnail viewbtn" (click)="view_ICO(token.id)" *ngIf="token.ongingToken">View</button>
-                                      </div>
+                                        <button class="btn btn-success btn-thumnail viewbtn" (click)="view_ICO(token.id)" *ngIf="ongoingStatus">View</button>
+                                    </div>
+                                     
 
+                                     <!-- Start Upcomming Tab -->
                                         <div *ngIf="upcommingStatus"> 
 
-                                        <button class="btn btn-success btn-round" (click)="view_ICO(token.id)">View</button>       <br> 
-                                        <button class="btn btn-success btn-thumbnail viewbtn ng-star-inserted" id="upbtn" >Upcoming</button>
+                                        <div class="price prc" (click)="view_ICO(token.id)" *ngIf="upcommingStatus"><h4 class="">Upcoming</h4></div>
+                                      
+                                        <button class="btn btn-success btn-thumbnail crwdbtn" id="upbtn" (click)="view_ICO(token.id)">View</button>
                                       </div>
+                                      
+
+                                      <!-- Start Expire Status -->
+                                     
                                       <div *ngIf="expierStatus">       
-                                                               
-                                        <button class="btn btn-danger btn-thumnail crwdbtn">Crowdsale Completed</button>
+                                          <div class="price prc" (click)="view_ICO(token.id)" *ngIf="!token.ongingToken"><h4 class="text-danger">Crowdsale Completed</h4></div>                     
+                                        <button class="btn btn-success btn-thumbnail crwdbtn" (click)="view_ICO(token.id)">View</button>
                                       </div>
+
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +172,7 @@
                     </div>
              <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreall">
                 <div class="showmrshow">
-                    <button class="btn btn-success" (click)="seeMore()">
+                    <button class="btn btn-success" (click)="seeMore()" scrollTo href="#tokenDiv">
                         <span class="btn-label"></span> See More
                     </button>
                 </div>
@@ -185,7 +197,7 @@
                 <div class="col-md-4 ">
                     <div class="info info-hover ">
                         <div class="icon icon-primary ">
-                            <img src="../assets/img/live.png " style="width: 15%; ">
+                            <img src="../assets/img/live.png " >
                         </div>
                         <h4 class="info-title ">Create Your ICO</h4>
                         <p class="description ">Now anyone can create an ERC-20 token with Kryptual in less than 3 minutes</p>
@@ -194,7 +206,7 @@
                 <div class="col-md-4 ">
                     <div class="info info-hover ">
                         <div class="icon icon-success ">
-                            <img src="../assets/img/global.png " style="width: 15%; ">
+                            <img src="../assets/img/global.png " >
                         </div>
                         <h4 class="info-title ">Empowering Ecosystem</h4>
                         <p class="description ">Built with highest security standards, we bring to users the entire ecosystem at one place</p>
@@ -203,7 +215,7 @@
                 <div class="col-md-4 ">
                     <div class="info info-hover ">
                         <div class="icon icon-warning ">
-                            <img src="../assets/img/enhance.png " style="width: 15%; ">
+                            <img src="../assets/img/enhance.png " >
                         </div>
                         <h4 class="info-title ">Invest In Verified ICOs</h4>
                         <p class="description ">Now invest in the leading scrutinised and audited ICO calls</p>

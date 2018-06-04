@@ -4,10 +4,11 @@
             <h3 class="title">INVEST ICO</h3>
         </div>
         <div class="row">
-            <div class="col-lg-12" style="display: flex;justify-content: center;align-items: center;">
-                <div class="col-lg-7">
+            <div class="centerr resp">
+                <div class="col-lg-7 col-md-6 col-sm-12 col-12">
                     <input _ngcontent-c2="" class="form-control my-srch" placeholder="Search.." type="text" [(ngModel)]="filterText">
                 </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 col-12">
                 <div class="places-buttons eth-bx-head" style="padding-bottom: 0px;">
                     <div class="col-lg-3 col-md-12 col-sm-12 wdth-eth" style="width: auto;">
                         <div class="card card-stats eth-bx">
@@ -16,13 +17,14 @@
                             </div>
                             <div class="card-content">
                                 <p class="category">TOTAL</p>
-                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="allStatus"> {{tokenLength ? tokenLength: '0'}}</h3>
+                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="allStatus"> {{tokensList.length ? tokensList.length: '0'}}</h3>
                                 <h3 style="margin-left: 100px; " class="card-title" *ngIf="ongoingStatus"> {{onGoingList.length ? onGoingList.length : '0'}}</h3>
                                 <h3 style="margin-left: 100px; " class="card-title" *ngIf="upcommingStatus"> {{upComming.length ? upComming.length : '0'}}</h3>
                                 <h3 style="margin-left: 100px; " class="card-title" *ngIf="expierStatus"> {{expierList.length ? expierList.length : '0'}}</h3>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -53,34 +55,31 @@
             </ul>
         </div>
     </div>
+     
     <div class="row" *ngIf="allStatus">
         <div id="loader1"><img src="./assets/img/orange_circles.gif" style="width: 30%;margin-left: 35%;margin-top: 5%;">
         </div>
         <div class="text-center" *ngIf="noToken1">
             <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of tokensList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false | orderBy: 'endTime'">
+          <div *ngIf="nofoundStatus">
+          <div class="text-center" *ngIf="(tokensList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
+                <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
+            </div>
+          </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of tokensList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false ; let i=index">
             <div class="card card-product cards-bx" data-count="3">
                 <div class="card-image" data-header-animation="true">
                     <a>
                             <img src={{token.tokenImage}} class="img-fluid" alt="">
                         </a>
                 </div>
-                <div class="card-actions" *ngIf="token.ongingToken">
+                <div class="card-actions" >
                     <button class="btn btn-green" type="submit" (click)="invest_ICO(token.id)">INVEST
                         <div class="ripple-container"></div>
                     </button>
                 </div>
-                <div class="card-actions" *ngIf="token.completeToken">
-                    <button class="btn btn-green" type="submit" (click)="invest_ICO(token.id)" disabled>INVEST
-                        <div class="ripple-container"></div>
-                    </button>
-                </div>
-                <div class="card-actions" *ngIf="token.upcommingToken">
-                    <button class="btn btn-green" type="submit" (click)="upcomming_invest_ICO(token.startTime,token.endTime)">INVEST
-                        <div class="ripple-container"></div>
-                    </button>
-                </div>
+                
                 <div class="card-content">
                     <h4 class="card-title">
                             <a >{{token.tokenName}}</a>
@@ -97,11 +96,14 @@
                     </div>
                 </div>
                 <div class="card-footer" *ngIf="token.ongingToken">
-                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;">
-                        (GMT + 5:30)
-                        <countdown units="Days|Hours|Minutes|Seconds" end={{token.endTime}}></countdown>
-                    </div>
+                    <div  style="padding: 0 0px;text-align: center;width:  100%;">
+                <h4> 
+                    <div class="timemrgin text-success" style="margin-top: 0%;" id="demoall{{i+1+'a'}}">
+                        
+                    </div> </h4>
+                            </div>
                 </div>
+               
                 <div class="card-footer" *ngIf="token.completeToken">
                     <div class="price" style="width: 100%;text-align: center;    margin: 25px 0;">
                         <p style="font-size: 18px;padding-top: 16px;background:  #e91e63;padding:  10px;color: #fff;display:  block;font-weight: 700;">Crowdsale Completed</p>
@@ -114,9 +116,9 @@
                 </div>
             </div>
         </div>
-      
-            <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreall">
-                <div class="showmrshow">
+         
+            <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreall ">
+                <div class="showmrshow" *ngIf="!(tokensList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
                     <button class="btn btn-success" (click)="seeMore()">
                         <span class="btn-label"></span> See More
                     </button>
@@ -124,29 +126,31 @@
             </div>
        
     </div>
+
     <div class="row" *ngIf="ongoingStatus">
         <div id="loader2"><img src="./assets/img/orange_circles.gif" style="width: 30%;margin-left: 35%;margin-top: 5%;">
         </div>
         <div class="text-center" *ngIf="noToken2">
             <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of onGoingList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false | orderBy: 'endTime'">
+         <div *ngIf="nofoundStatus">
+      <div class="text-center" *ngIf="(onGoingList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
+                <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
+       </div>
+       </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of onGoingList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false ; let i=index">
             <div class="card card-product cards-bx" data-count="3">
                 <div class="card-image" data-header-animation="true">
                     <a>
                             <img src={{token.tokenImage}} class="img-fluid" alt="">
                         </a>
                 </div>
-                <div class="card-actions" *ngIf="!token.completeToken">
+                <div class="card-actions">
                     <button class="btn btn-green" type="submit" (click)="invest_ICO(token.id)">INVEST
                         <div class="ripple-container"></div>
                     </button>
                 </div>
-                <div class="card-actions" *ngIf="token.completeToken">
-                    <button class="btn btn-green" type="submit" (click)="invest_ICO(token.id)" disabled>INVEST
-                        <div class="ripple-container"></div>
-                    </button>
-                </div>
+              
                 <div class="card-content">
                     <h4 class="card-title">
                             <a href="#pablo">{{token.tokenName}}</a>
@@ -162,21 +166,16 @@
                         <h4>{{token.tokenTicker}}</h4>
                     </div>
                 </div>
-                <div class="card-footer" *ngIf="!token.completeToken">
-                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;">
-                        (GMT + 5:30)
-                        <countdown units="Days|Hours|Minutes|Seconds" end={{token.endTime}}></countdown>
+                <div class="card-footer">
+                    <div  style="padding: 5% 0px;text-align: center;width:  100%;">
+                               <h4> <div class="timemrgin text-success" style="margin-top: 0%;" id="demo{{i}}"></div> </h4>
                     </div>
                 </div>
-                <div class="card-footer" *ngIf="token.completeToken">
-                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;    margin: 25px 0;">
-                        <p style="font-size: 18px;padding-top: 16px;background:  #e91e63;padding:  10px;color: #fff;display:  block;font-weight: 700;">Crowdsale Completed</p>
-                    </div>
-                </div>
+               
             </div>
         </div>
         <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreOngoing">
-                <div class="showmrshow">
+                <div class="showmrshow" *ngIf="!(onGoingList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
                     <button class="btn btn-success" (click)="seeMore()">
                         <span class="btn-label"></span> See More
                     </button>
@@ -186,9 +185,14 @@
     <div class="row" *ngIf="upcommingStatus">
         <div id="loader3"><img src="./assets/img/orange_circles.gif" style="width: 30%;margin-left: 35%;margin-top: 5%;">
         </div>
-        <div class="text-center" *ngIf="noToken3">
+        <div class="text-center" *ngIf="noToken1">
             <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
         </div>
+        <div *ngIf="nofoundStatus">
+         <div class="text-center" *ngIf="(upComming | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
+                <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
+       </div>
+      </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of upComming | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false | orderBy: 'endTime'">
             <div class="card card-product cards-bx" data-count="3">
                 <div class="card-image" data-header-animation="true">
@@ -196,13 +200,9 @@
                             <img src={{token.tokenImage}} class="img-fluid" alt="">
                         </a>
                 </div>
-                <!--   <div class="card-actions" *ngIf="!token.completeToken">
+               
+                <div class="card-actions" *ngIf="upcommingToken">
                     <button class="btn btn-green" type="submit" (click)="invest_ICO(token.id)">INVEST
-                        <div class="ripple-container"></div>
-                    </button>
-                </div> -->
-                <div class="card-actions" *ngIf="token.upcommingToken">
-                    <button class="btn btn-green" type="submit" (click)="upcomming_invest_ICO(token.startTime,token.endTime)">INVEST
                         <div class="ripple-container"></div>
                     </button>
                 </div>
@@ -220,27 +220,22 @@
                         <span>Token Ticker</span>
                         <h4>{{token.tokenTicker}}</h4>
                     </div>
-                </div>
-                <div class="card-footer" *ngIf="!token.upcommingToken">
-                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;">
-                        (GMT + 5:30)
-                        <countdown units="Days|Hours|Minutes|Seconds" end={{token.endTime}}></countdown>
-                    </div>
-                </div>
-                <div class="card-footer" *ngIf="token.upcommingToken">
-                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;margin: 25px 0;">
+                </div>               
+                <div class="card-footer" *ngIf="upcommingToken">
+                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;margin: 25px 0;margin: 5% 0;">
                         <p style="font-size: 18px;padding-top: 16px;background:  #e91e63;padding:  10px;color: #fff;display:  block;font-weight: 700;">Upcoming</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreUpcomming">
-                <div class="showmrshow">
+                <div class="showmrshow" *ngIf="!(upComming | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
                     <button class="btn btn-success" (click)="seeMore()">
                         <span class="btn-label"></span> See More
                     </button>
                 </div>
             </div>
+
     </div>
     <div class="row" *ngIf="expierStatus">
         <div id="loader4"><img src="./assets/img/orange_circles.gif" style="width: 30%;margin-left: 35%;margin-top: 5%;">
@@ -248,6 +243,11 @@
         <div class="text-center" *ngIf="noToken4">
             <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
         </div>
+        <div *ngIf="nofoundStatus">
+        <div class="text-center" *ngIf="(expierList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
+                <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
+       </div>
+       </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of expierList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false | orderBy: 'endTime'">
             <div class="card card-product cards-bx" data-count="3">
                 <div class="card-image" data-header-animation="true">
@@ -255,13 +255,9 @@
                             <img src={{token.tokenImage}} class="img-fluid" alt="">
                         </a>
                 </div>
-                <div class="card-actions" *ngIf="!token.completeToken">
+                
+                <div class="card-actions" >
                     <button class="btn btn-green" type="submit" (click)="invest_ICO(token.id)">INVEST
-                        <div class="ripple-container"></div>
-                    </button>
-                </div>
-                <div class="card-actions" *ngIf="token.completeToken">
-                    <button class="btn btn-green" type="submit" (click)="invest_ICO(token.id)" disabled>INVEST
                         <div class="ripple-container"></div>
                     </button>
                 </div>
@@ -280,21 +276,16 @@
                         <h4>{{token.tokenTicker}}</h4>
                     </div>
                 </div>
-                <div class="card-footer" *ngIf="!token.completeToken">
-                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;">
-                        (GMT + 5:30)
-                        <countdown units="Days|Hours|Minutes|Seconds" end={{token.endTime}}></countdown>
-                    </div>
-                </div>
-                <div class="card-footer" *ngIf="token.completeToken">
-                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;">
+                
+                <div class="card-footer" *ngIf="completeToken">
+                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;margin: 5% 0;">
                         <p style="font-size: 18px;padding-top: 16px;background:  #e91e63;padding:  10px;color: #fff;display:  block;font-weight: 700;">Crowdsale Completed</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreExpired">
-                <div class="showmrshow">
+                <div class="showmrshow" *ngIf="!(expierList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
                     <button class="btn btn-success" (click)="seeMore()">
                         <span class="btn-label"></span> See More
                     </button>

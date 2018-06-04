@@ -1,10 +1,8 @@
   import { Component, OnInit } from '@angular/core';
   import { Router } from '@angular/router';
   import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
-// import { GlobalService } from './../GlobalService';
-  import { EqualValidator } from './../../../Directives/validation.directive';
   import { GlobalService } from './../../../GlobalService';
-//import {DataTableModule} from 'primeng/primeng';
+
   @Component({
     selector: 'app-help',
     templateUrl: './help.component.html',

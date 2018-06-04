@@ -19,16 +19,16 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-          "../node_modules/bootstrap/dist/css/bootstrap.css",
-          "../node_modules/sweetalert2/dist/sweetalert2.css",
-          "../node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
-          "./assets/sass/material-dashboard.scss",
-          "../node_modules/angular-calendar/scss/angular-calendar.scss",
-          "../node_modules/ng-pick-datetime/assets/style/picker.min.css",
-          "./assets/css/demo.css",
-          "./assets/css/demo1.css",
-          "./assets/css/style-dash.css"
-
+        "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/sweetalert2/dist/sweetalert2.css",
+        "../node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
+        "./assets/sass/material-dashboard.scss",
+        "../node_modules/angular-calendar/scss/angular-calendar.scss",
+        "../node_modules/ng-pick-datetime/assets/style/picker.min.css",
+        "./assets/css/demo.css",
+        "./assets/css/demo1.css",
+        "../node_modules/angular2-toaster/toaster.css",
+        "./assets/css/style-dash.css"
       ],
       "scripts": [
         "../node_modules/hammerjs/hammer.min.js",
@@ -58,7 +58,7 @@
         "../node_modules/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js",
         "../node_modules/sweetalert2/dist/sweetalert2.js",
         "../node_modules/jquery-validation/dist/jquery.validate.min.js",
-        "./assets/js/index.js",        
+        "./assets/js/index.js",
         "./assets/js/three.min.js"
       ],
       "environmentSource": "environments/environment.ts",
@@ -91,9 +91,13 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {},
-    "serve":{
-      "port":8070
+    "component": {
+    },
+    "serve": {
+      "port": 8070
     }
+  },
+  "warnings": {
+    "typescriptMismatch": false
   }
 }

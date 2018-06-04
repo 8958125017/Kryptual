@@ -86,6 +86,9 @@ export class InvestComponent implements OnInit {
         });
   }
    eventHandler(e) {
+     if(e.keyCode === 13){
+      this.invest_tokenPassword(this.investData.tokenName,this.buyingToken.amount);
+     }
     if(!((e.keyCode > 95 && e.keyCode < 106)
       || (e.keyCode > 45 && e.keyCode < 58)
       || e.keyCode == 8)) {
@@ -93,16 +96,22 @@ export class InvestComponent implements OnInit {
       }
     }
 
-
+  enteronsubmit(event){
+     if(event.keyCode === 13){
+       this.investInToken(this.investData.tokenName);
+     }        
+   }
+   fundStatus:boolean=false;
   enterTokenValue(event:any){
     if(!this.enablePaypal){
       this.calculatedEth = this.getETHERUM();
-      if(this.calculatedEth > this.ethBalance){       
+      if(this.calculatedEth > this.ethBalance){  
+      this.fundStatus=true;     
         this.global_service.showNotification('top','right','Insufficient fund to buy tokens',4,'ti-cross');
          event.preventDefault();
         return false;
-        
-        
+      }else{
+         this.fundStatus=false; 
       }
     }else{
       this.calculatedEth = this.getDoller();
@@ -159,12 +168,50 @@ export class InvestComponent implements OnInit {
                 this.twitterLink="https://www.twitter.com";
               }
                 this.crowdSaleAddress=this.investData.crowdsaleAddress
-                this.enddate=moment(res.data.endTime).format('LL');
-                this.investData.endDate = this.enddate;
+                //this.enddate=moment(res.data.endTime).format('LL');
+                this.investData.endDate=res.data.endTime;
+                //this.investData.endDate = this.enddate;
+                this.counterDemo(this.investData.endDate);
                 this.getTokenBalanceForInvest(res.data.crowdsaleAddress);
             }
           });
 
+      }
+     x:any;
+     counterDemo(endTime:any){
+      // window.clearInterval(this.x);              
+      this.x = setInterval(function() {
+       this.countDownDateExample=new Date(endTime).getTime();     
+        var now = new Date().getTime();        
+        // Find the distance between now an the count down date
+        var distance = this.countDownDateExample - now;
+       /// console.log("this.countDownDateExample,now::::",this.countDownDateExample,now,i, distance)
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+       // Output the result in an element with id="demo"
+            var element = document.getElementById("demo9");
+              if(element){
+           //     console.log("iiiiiiiiiiiiiiiiiii:::::::::::::::::::",+i);
+                 document.getElementById("demo9").innerHTML = days + "d " + hours + "h "
+              + minutes  + "m " + seconds + "s";
+              }else{
+                
+                // alert("Hello else");
+              }
+        // If the count down is over, write some text 
+        //alert("distance = = "+distance);
+        if (distance < 0) {          
+            clearInterval(this.x);
+            var element = document.getElementById("demo9");
+            if(element){
+                   document.getElementById("demo9").innerHTML = "Time Out";
+            }
+          }
+        }, 1000);
       }
       
   getTokenBalanceForInvest(crowdsaleAddress : any) :any{
@@ -213,16 +260,23 @@ export class InvestComponent implements OnInit {
 
   invest_tokenPassword(tokenName:any,amount:any){
    this.global_service.emitEvent("Token Invest page ", "Input",'Invest button' +" "+ "TokenName"+" "+ tokenName + " Amount" +" "+  amount); 
+   if(this.buyingToken.amount==0){
+      this.global_service.showNotification('top','right',"You can't buy 0 token.",4,'ti-cross');
+   return;
+   }
    $('#noticeModalinvest').modal('show');
-}
+ }
   
 
   investInToken(tokename:any){
-    
+    this.ng4LoadingSpinnerService.show();
       if(this.calculatedEth && this.buyingToken.amount){        
         this.gotoEthPayment();
          this.deductAmount(); 
-        //this.calculatedEth=this.calculatedEth-this.buyingToken.amount;
+        this.calculatedEth=0;
+        this.investForm.reset();
+        this.passwordForm.reset();
+        $('#noticeModalinvest').modal('hide');
       }else{
         this.global_service.showNotification('top','right','Please buy token first!.',4,'ti-cross');
         this.passwordDetails.password ='';
@@ -236,20 +290,24 @@ export class InvestComponent implements OnInit {
                       crowdsaleAddress:this.crowdSaleAddress,
                       userId : this.user._id,                     
                       amount: (this.calculatedEth).toString(),
-                      password : this.passwordDetails.password
+                      password : this.passwordDetails.password,
+                      quantity : this.buyingToken.amount
         };
       
         const url = this.global_service.basePath + 'ETH/buyTokenToUser';
         this.global_service.PostRequest(url , postData).subscribe(response=>{   
             if(response[0].json.json().status==200)
               {
-              
-               this.global_service.showNotification('top','right','You have bought '+this.buyingToken.amount+" tokens!.",2,'ti-cross');
+                this.ng4LoadingSpinnerService.hide();
+               this.passwordDetails={};
+               debugger
+               this.global_service.showNotification('top','right','You have bought '+postData.quantity+" tokens!.",2,'ti-cross');
                  
               }
                else
               {
-                this.buyingToken.amount = '';
+                 this.ng4LoadingSpinnerService.hide();
+                this.passwordDetails={};
                this.global_service.showNotification('top','right',response[0].json.json().message,4,'ti-cross');
               }
         })
@@ -267,16 +325,16 @@ export class InvestComponent implements OnInit {
         console.log("postData   ="+JSON.stringify(postData));
         const url = this.global_service.basePath + 'ETH/WithdrawEth';
         this.global_service.PostRequest(url , postData).subscribe(response=>{
-          debugger
+          
             if(response[0].json.json().status==200)
               {
                this.getBalance();
-               this.buyingToken.amount = '';
+               //this.buyingToken.amount = '';
                // this.global_service.showNotification('top','right','You have bought '+this.buyToken+" tokens!.",2,'ti-cross');
               }
                else
               {
-               
+               this.ng4LoadingSpinnerService.hide();
                this.buyingToken.amount = '';
               // this.global_service.showNotification('top','right',response[0].json.json().message,4,'ti-cross');
               

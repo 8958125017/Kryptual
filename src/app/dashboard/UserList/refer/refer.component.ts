@@ -129,4 +129,10 @@ submittForm(){
         })
   }
 
+              enteronsubmit(event){
+                                if((event.keyCode === 13)&&this.couponCode){
+                                     this.joinNow();
+                                    }
+                            }
+
 }

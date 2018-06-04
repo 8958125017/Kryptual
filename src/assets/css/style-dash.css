@@ -64,7 +64,26 @@
     background-color: #8BC34A !important;
     font-weight: 700 !important;
 }
+  .wzd-card .spc{padding: 2%;}
+  .wzd-card  .fileinput{
+    margin-top: 10%;
+  }
+  .wzd-card .small {
+    padding-top:5px;
+    float: left;
+    width: 100%;
+    font-size: 13px;
+    color:red;
+        text-align: left;
+}
 
+.wzd-card .spc span {
+  word-break: break-all;
+  word-wrap: break-word;
+  float: left;
+  width: 100%;
+  padding: 8px;
+}
 /****************************************************Pagination css****************************************************/
 .pagination>.active>a,
 .pagination>.active>a:focus,
@@ -89,9 +108,14 @@
 }
 
 .eth-bx-head .card-header img {
-    width: 21px;
+    width: 18px;
 }
-
+.eth-bx-head .btn-toolbar > .btn,.eth-bx-head .btn-toolbar > .btn-group,.eth-bx-head .btn-toolbar > .input-group {
+  margin-left: 20px;
+}
+.eth-bx-head .btn-group.mr-2 {
+  margin: 0 1%;
+}
 .eth-bx-head .card.card-stats.eth-bx {
     margin: 0;
     width: auto;
@@ -124,16 +148,10 @@
 }
 
 .eth-bx-head.places-buttons .btn i.material-icons {
-    font-size: 26px;
-    float: left;
-    position: absolute;
-    left: 14px;
-    top: 18px;
+padding-right: 10px;
 }
 
-.eth-bx-head.places-buttons .btn i.material-icons:first-child {
-    left: 20px;
-}
+
 
 .eth-bx-head .card-stats .card-title {
     margin: 0;
@@ -496,17 +514,17 @@ h4.card-title.rft-lff {
     padding-left: 15px;
 }
 
-.my-srch {
-    border-radius: 25px 25px 25px 25px;
-    border: 2px solid #d7d7d7;
-    border-left-style: solid;
-    background: #fff;
-    padding: 14px;
-    padding-left: 20px !important;
-    height: 48px;
 
-    -webkit-box-shadow: 0px 0px 6px #e6e6e6;
-    box-shadow: 0px 0px 6px #e6e6e6;
+.my-srch {
+  border-radius: 40px;
+  border: 0px solid #d7d7d7;
+  border-left-style: solid;
+  background: #fff;
+  padding: 14px;
+  padding-left: 20px !important;
+  height: 50px;
+  -webkit-box-shadow: 0px 0px 6px #607D8B;
+  box-shadow: 0px 0px 6px #607D8B;
 }
 
 
@@ -990,6 +1008,7 @@ i.fa.fa-sign-out.log {
     -webkit-transform:none;
     transform:none;
 }
+.card .card-image img{background: #fff;}
 .cards-bx .card-content {
     float: left;
     width: 37%;
@@ -1589,7 +1608,27 @@ div#Confirmation .card-pricing .card-title {
     margin-top: 10px;
 }
 div#Confirmation .card-pricing label {
-    color: #AAAAAA;
+    color: #AAAAAA;    margin: 1%;
+    float: left;
+    width: 100%;
+}
+div#Confirmation .card-pricing .prm {
+  cursor: pointer;
+  float: left;
+  width: 100%;
+  text-align: center;
+  margin: 7% 0;
+  font-weight: 500;
+  background: #8fb78f;
+  padding: 20px;
+  border: 1px solid;
+  color: #fff;
+}
+div#Confirmation .card-pricing .prm:hover {
+  background: white;
+  padding: 20px;
+  border: 1px solid;
+  color: #8BC34A;
 }
 div#Confirmation label i {
     color: #545454;
@@ -1609,6 +1648,15 @@ div#Confirmation .fa-twitter{
 div#Confirmation .fa-linkedin{
    color:#0082b5;
 } 
+div#Confirmation .primo {
+  border: 2px solid #4CAF50;
+  float: left;
+  width: 100%;
+  padding: 1% 8%;
+  margin: 0px;
+  margin-bottom: 10px;
+
+}
 
 .circular-tier {
     border-radius: 52%;
@@ -3004,7 +3052,7 @@ border-top: 1px solid #636366;
 }
 
 .tkn-list .crwdbtn {
-   margin-top: 25%;
+   margin-top: 2%;
     float: left;
     width: 100%;
     font-weight: 700;
@@ -3017,7 +3065,7 @@ border-top: 1px solid #636366;
     float: left;
 }
 .tkn-list .viewbtn {
-    margin:0 0 6% 0;
+    margin: 2% 0 0 0;
     width: 100%;
     font-weight: 700;
 }
@@ -3027,6 +3075,7 @@ border-top: 1px solid #636366;
  float: left;
  width: 100%;
 }
+
 /*******************************************my css start*/
 .my-head-h{
     width: 100%;
@@ -3195,7 +3244,14 @@ border-top: 1px solid #636366;
 .geinlist  .info.info-hover:after{
     position: relative;
 }
-
+.geinlist .icon-primary img,.geinlist .icon-success img,.geinlist .icon-warning{
+    width: 95px;
+     height: 95px; 
+}
+.geinlist .icon-success{
+    height: auto;
+    width: 20%;
+}
 /****************************************************HOME-> parallax-vi CSS****************************************************/
 
 .parallax-vi {
@@ -3469,7 +3525,7 @@ margin-left: 95px;margin-right: 95px;}
 }
 
 .timemrgin{
-    margin-top: 10%;
+    margin-top: 3%;
    font-weight: 400;
 }
 
@@ -7374,7 +7430,7 @@ display: none;
     .eth-bx-head .card.card-stats.eth-bx {
         margin: 0;
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
     }
     .txt1 {
         padding-left: 0;
@@ -7396,6 +7452,8 @@ display: none;
 }
 
 @media screen and (max-device-width:479px) {
+  .resp{    display: block;margin-bottom:10px;    text-align: center; }
+  .my-srch{margin-bottom: 10px;}
         .round #tawkchat-status-text-container{
         width: 90% !important;
     height: 90% !important;

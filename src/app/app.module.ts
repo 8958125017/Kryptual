@@ -10,10 +10,8 @@ import { ToasterModule, ToasterContainerComponent, ToasterService, ToasterConfig
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 import { SidebarModule } from './sidebar/sidebar.module';
-import { AlertService, AuthenticationService, UserService,SetupService,} from './Services/index';
 import { LoginComponent } from './login/login.component';
 import { GlobalService } from './GlobalService';
-import { CommonService } from './Services/CommonService';
 import { AuthGuard } from './auth-guard.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SignupComponent } from './signup/signup.component';
@@ -22,6 +20,7 @@ import { HomeComponent } from './home/home.component'
 import { ResellerComponent } from './resellerHome/resellerHome.component';
 import { UpdatePasswordComponent } from './updatePassword/updatePassword.component';
 import { ListicoComponent } from './list-ico/list-ico.component';
+import { Error404Component } from './dashboard/error404/error404.component';
 import { rootComponent } from './dashboard/error404/error404.component';
 import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
 import { HomeCrowdsaleComponent } from './home-crowdsale/home-crowdsale.component';
@@ -34,7 +33,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MessageService } from './message.service';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { Safe} from './Pipes/pipe';
+import { Safe,TruncatePipe} from './Pipes/pipe';
 import { RecaptchaModule } from 'ng-recaptcha';
 declare let ga: Function;
 
@@ -70,6 +69,7 @@ let providers ={
     SignupHomeComponent,
     UpdatePasswordComponent,
     rootComponent,
+    Error404Component,
     HomeCrowdsaleComponent,
     FaqComponent,
     PrivacyPolicyComponent,
@@ -78,7 +78,8 @@ let providers ={
     UndermaintenanceComponent,
     HeaderComponent,
     FooterComponent,    
-    Safe
+    Safe,
+    TruncatePipe
   ],
   imports: [
     BrowserAnimationsModule,
@@ -103,14 +104,9 @@ let providers ={
   ],
 
   providers: [
-             AuthGuard,
-             AlertService,
-             AuthenticationService,
-             UserService,
-             SetupService,
+             AuthGuard,   
              ToasterService,
-             GlobalService,
-             CommonService,
+             GlobalService, 
              AuthGuard,
              Ng4LoadingSpinnerService,
              MessageService,
@@ -120,7 +116,7 @@ let providers ={
                  LocationStrategy,
                  useClass: HashLocationStrategy
              },
-             DatePipe,Safe],
+             DatePipe,Safe,TruncatePipe],
   bootstrap: [AppComponent],
 })
 

@@ -1,10 +1,8 @@
 import { Component, OnInit,NgModule, ElementRef } from '@angular/core';
 declare var $: any;
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertService, AuthenticationService ,UserService } from '../Services/index';
 import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Http, Headers, RequestOptions, Response  } from '@angular/http';
-import { EqualValidator } from '../Directives/validation.directive';
 import * as moment from 'moment';
 import { GlobalService } from '../GlobalService';
 import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
@@ -31,19 +29,14 @@ export class SignupComponent implements OnInit {
         private http: Http,
         private route: ActivatedRoute,
         private router: Router,
-        private fb: FormBuilder,
-        private userService: UserService,
-        private authenticationService: AuthenticationService,
-        private alertService: AlertService,
+        private fb: FormBuilder, 
         private activatedRoute: ActivatedRoute,
         private global_service : GlobalService,
-         private element: ElementRef,
+        private element: ElementRef,
         private ng4LoadingSpinnerService: Ng4LoadingSpinnerService
-
-        ) 
+       ) 
     { 
-       this.year=moment(new Date()).format('YYYY');
-        //debugger;
+       this.year=moment(new Date()).format('YYYY');        
         this.http = http          
          this.signUpDetails = { 
             firstName: '',
@@ -93,6 +86,7 @@ export class SignupComponent implements OnInit {
             'investorCode':new FormControl(''),
         }, { validator: this.matchingPasswords('password', 'confirmPassword') });
     }
+
     matchingPasswords(passwordKey: string, confirmPasswordKey: string) {       
         return (group: FormGroup): { [key: string]: any } => {
             let password = group.controls[passwordKey];
@@ -112,15 +106,14 @@ export class SignupComponent implements OnInit {
                 this.global_service.emitEvent("Signup as Investor","Click","Get started button," +this.signUpDetails.firstName + " "+this.signUpDetails.lastName, 1);
             }else{
                 this.global_service.emitEvent("Signup as business","Click","Get started button," +this.signUpDetails.firstName + " "+this.signUpDetails.lastName,  1);
-            }
-      
+            }      
        this.ng4LoadingSpinnerService.show(); 
         const url = this.global_service.basePath + 'api/register';
          this.signUpDetails.email= this.signUpDetails.email.toLowerCase();
          this.signUpDetails.accountType=this.account; 
          console.log("this.signUpDetails = = "+JSON.stringify(this.signUpDetails)); 
           this.global_service.PostRequestUnautorized(url , this.signUpDetails)
-        .subscribe((response) => {  
+          .subscribe((response) => {  
           if(response[0].json.status==200){
           this.ng4LoadingSpinnerService.hide();   
            this.global_service.showNotification('top','right',response[0].json.message,2,'ti-cross');                    
@@ -135,6 +128,6 @@ export class SignupComponent implements OnInit {
      }
 
       home(){
-     window.location.href='https://www.kryptual.com/';
-    }
+             window.location.href='https://www.kryptual.com/';
+      }
 }

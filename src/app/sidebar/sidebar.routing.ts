@@ -14,7 +14,7 @@
   import { ReferComponent } from './../dashboard/UserList/refer/refer.component';
   import { GenerateIcoComponent } from './../dashboard/UserList/generate-ico/generate-ico.component';
   import { CrowdsaleComponent } from './../dashboard/UserList/crowdsale/crowdsale.component';
-  import {  InvestComponent } from './../dashboard/UserList/invest/invest.component';
+  import { InvestComponent } from './../dashboard/UserList/invest/invest.component';
   import { MerchandiseComponent } from '../dashboard/UserList/merchandise/merchandise.component';
   import { ProductDetailComponent } from '../dashboard/UserList/product-detail/product-detail.component';
   import { InvesterReferComponent } from './../dashboard/UserList/invester-refer/invester-refer.component';
@@ -39,8 +39,7 @@
     { path: 'productdetail', component: ProductDetailComponent,canActivate:[AuthGuard] },
     { path: 'adminDashboard', component: AdminDashboardComponent,canActivate:[AuthGuard] },
     { path: 'invester-refer', component: InvesterReferComponent,canActivate:[AuthGuard] },
-    { path: 'login', component:LoginComponent},   
-
+    { path: 'login', component:LoginComponent},
     { path: '404', component: childComponent },
     { path: '**', component: childComponent},
 

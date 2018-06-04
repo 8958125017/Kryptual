@@ -1,10 +1,9 @@
 import { Component, OnInit,NgModule, ElementRef } from '@angular/core';
 declare var $: any;
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertService, AuthenticationService ,UserService } from '../Services/index';
+
 import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Http, Headers, RequestOptions, Response  } from '@angular/http';
-import { EqualValidator } from '../Directives/validation.directive';
 import * as moment from 'moment';
 import { GlobalService } from '../GlobalService';
 import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
@@ -31,10 +30,7 @@ export class ResellerComponent implements OnInit {
         private http: Http,
         private route: ActivatedRoute,
         private router: Router,
-        private fb: FormBuilder,
-        private userService: UserService,
-        private authenticationService: AuthenticationService,
-        private alertService: AlertService,
+        private fb: FormBuilder,  
         private activatedRoute: ActivatedRoute,
         private global_service : GlobalService,
          private element: ElementRef,

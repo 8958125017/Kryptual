@@ -38,7 +38,11 @@ private element: ElementRef,
   ngOnInit() {
   }
 
-  logout() {
+  ngAfterViewInit() {
+       window.scrollTo(0, 0);
+    }
+
+  logout() {    
             let postData = {
                     ETHaddress: this.user.EthAddress,
                     userId: this.user._id

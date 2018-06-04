@@ -1,11 +1,8 @@
 
   import { Component, OnInit } from '@angular/core';
-  //import { DomSanitizer } from '@angular/platform-browser';
-  import { EqualValidator } from './../../../Directives/validation.directive';
   import { GlobalService } from './../../../GlobalService';
   import * as moment from 'moment';
   import { Router, ActivatedRoute } from '@angular/router';
-  import { AlertService, AuthenticationService ,SetupService,UserService} from '../../../Services/index';
   import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
   import { Http, Headers, RequestOptions, Response  } from '@angular/http';
   import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
@@ -43,8 +40,11 @@ twitterLink:any;
 fbStatus:boolean=true;
 crowedSaleStatus:boolean=false
 whitepaperStatus:boolean=false;
-  constructor(
-                //private domSanitizer: DomSanitizer,
+videosStatus:boolean=false;
+videoUrlLink:any;
+investDisable:boolean=false;
+ongoingsupply:any = {supply:"0"};
+  constructor(               
                 private route: ActivatedRoute,
                 private router: Router,
                 private fb: FormBuilder,
@@ -94,21 +94,22 @@ whitepaperStatus:boolean=false;
            if(response[0].json.json().status==200){
              if(response[0].json.json().data){
               this.tokenData=response[0].json.json().data;
-              if(response[0].json.json().data.generalInfo.team.length!=0){              
+              if(this.tokenData.generalInfo.team.length!=0){              
                    this.teamInfoStatus=true;
                    var teamData=response[0].json.json().data.generalInfo.team;                   
                    for(var data of teamData){
+                     debugger
                      let objData={
                          teamImage : '',
-                         linkdinName: '',
+                         linkdinLink: '',
                          designation: ''                                     
                    }                  
-                   if(data.image){
+                   if(data.image){                     
                      objData.teamImage=data.image;
-                   }else{
+                   }else{                     
                      objData.teamImage="./assets/img/default-avatar.png";
                    }
-                   objData.linkdinName=data.linkdinName;
+                   objData.linkdinLink=data.linkdinname;
                    objData.designation=data.designation;
                    this.teamInfo.push(objData);
                    }
@@ -132,7 +133,7 @@ whitepaperStatus:boolean=false;
               if(response[0].json.json().data.generalInfo.website){
                 this.website=response[0].json.json().data.generalInfo.website;
               }else{
-                this.website="--";
+                this.website=" ";
               }
 
               if(response[0].json.json().data.generalInfo.description){
@@ -157,6 +158,12 @@ whitepaperStatus:boolean=false;
               }else{
                 this.twitterLink="https://www.twitter.com";
               }
+              if(response[0].json.json().data.generalInfo.vedio){
+                 this.videosStatus=true;
+                this.videoUrlLink=response[0].json.json().data.generalInfo.vedio;
+                this.videoUrlLink = this.videoUrlLink.replace("watch?v=", "embed/");                
+                console.log(this.videoUrlLink);
+              }
 
               if(this.tokenData.whitePaper){
                      this.whitepaperStatus=true;     
@@ -170,44 +177,53 @@ whitepaperStatus:boolean=false;
                 
               if(newEndDate<this.currentdate){
                this.allTokenStatus="Expired";
+               this.investDisable=true; 
               }else if (newStartDate>this.currentdate){
-                this.allTokenStatus="upcomming";
+                this.allTokenStatus="upcoming";
+                this.investDisable=true; 
               }else{
                 this.allTokenStatus="Ongoing";
+                this.investDisable=false; 
               }
             
-               for(var data of this.tokenData.crowdsale){
+            var onGoingSupply = 0;
+               for(var data of this.tokenData.crowdsale){ 
+               debugger                
                 console.log("data.endTime"+data.startTime+" "+data.endTime);
                 let objData ={
                               tierName :'',
                               startTime:'',
                               endTime:'',
-                              status:''
+                              status:'',
+                              supply:''
                             };
                         objData.tierName=data.tier;
                         objData.startTime=data.startTime;
-                        objData.endTime=data.endTime;                      
+                        objData.endTime=data.endTime;                                            
                         this.startTime=new Date(objData.startTime).getTime();
                         this.endTime=new Date(objData.endTime).getTime();                  
                    
                    if(this.currentdate<this.startTime)
                    {                     
-                     objData.status="Upcomming";
+                        
+                        objData.status="Upcoming";
                    }else if(this.currentdate>this.endTime){
-                        objData.status="Expired"; 
+                        objData.status="Expired";
+                                     
                    }
                    else {
-                       objData.status="Ongoing";  
-                   }
+                         onGoingSupply = data.supply;                      
+                         objData.status="Ongoing";  
+                        }
+                   this.ongoingsupply.supply = onGoingSupply;  
+                                
                    this.crowdSaleToken.push(objData);
               }
-
-                  
             }
           }
         });
     }
-
+    
     fbLInk(){
        this.global_service.emitEvent("Invest ICO Page", "Click", this.facebookLink, 1);
     }

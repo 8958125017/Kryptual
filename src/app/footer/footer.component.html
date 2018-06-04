@@ -141,10 +141,10 @@
                                  <form class="form form-newsletter" [formGroup]="subscribeForm">
                        
                             <div class="form-group">
-                                <input type="email" style="margin-bottom: 3px;" formControlName="user_email" [(ngModel)]="subscribeDetail.user_email" id="suscribeemail" name="email" class="form-control" placeholder="Your Email...">
-                                 <div style="color:red" *ngIf="!subscribeForm.controls['user_email'].valid&&subscribeForm.controls['user_email'].dirty" >
-                                <span *ngIf="subscribeForm.controls['user_email'].errors['required']">Email id is required</span>
-                              <span *ngIf="subscribeForm.controls['user_email'].errors['pattern']">Invalid email id</span>
+                                <input type="email" style="margin-bottom: 3px;" formControlName="email" [(ngModel)]="subscribeDetail.email" id="suscribeemail" name="email" class="form-control" placeholder="Your Email...">
+                                 <div style="color:red" *ngIf="!subscribeForm.controls['email'].valid&&subscribeForm.controls['email'].dirty" >
+                                <span *ngIf="subscribeForm.controls['email'].errors['required']">Email id is required</span>
+                              <span *ngIf="subscribeForm.controls['email'].errors['pattern']">Invalid email id</span>
                             </div>
                             </div>
                             <button type="button" class="btn btn-primary btn-icon btn-round" name="button" (click)="subscribe(subscribeForm.value)" [disabled]="!subscribeForm.valid">

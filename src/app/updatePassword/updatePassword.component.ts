@@ -1,7 +1,6 @@
 import { Component, OnInit,NgModule, ElementRef } from '@angular/core';
   declare var $:any;
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertService, AuthenticationService ,UserService } from '../Services/index';
 import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Http, Headers, RequestOptions, Response  } from '@angular/http';
 import { GlobalService } from '../GlobalService';
@@ -27,10 +26,8 @@ export class UpdatePasswordComponent implements OnInit {
                 private http: Http,
                 private route: ActivatedRoute,
                 private router: Router,
-                private fb: FormBuilder,
-                private alertService: AlertService,
-                private element: ElementRef,
-                private userService: UserService ,
+                private fb: FormBuilder,          
+                private element: ElementRef,               
                  private activatedRoute: ActivatedRoute,
                 private global_service:GlobalService,
                  private ng4LoadingSpinnerService: Ng4LoadingSpinnerService

@@ -5,7 +5,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import { NavbarModule } from './../shared/navbar/navbar.module';
-import { EqualValidator } from './../Directives/validation.directive';
 import { SidebarComponent } from './sidebar.component';
 import { DashboardComponent } from './../dashboard/dashboard.component';
 import { ViewUserComponent } from './../dashboard/UserList/view-user/view-user.component';
@@ -22,7 +21,6 @@ import { InvestComponent } from './../dashboard/UserList/invest/invest.component
 import { childComponent } from './../dashboard/error404/error404.component';
 import { routing } from './sidebar.routing';
 import { AuthGuard } from './../auth-guard.service';
-import { CountDown} from "ng2-date-countdown";
 import { SelectModule } from 'ng2-select';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FilterPipe,SortByPipe,OrderByDate,RoundPipe,DatexPipe,SafeHtml} from './../Pipes/pipe';
@@ -54,7 +52,6 @@ import { AdminDashboardComponent } from '../dashboard/admin_User/admin_Dashboard
         RoundPipe,
         SafeHtml,
         DatexPipe,
-        EqualValidator,
         SidebarComponent,
         DashboardComponent,
         ViewUserComponent,
@@ -64,7 +61,6 @@ import { AdminDashboardComponent } from '../dashboard/admin_User/admin_Dashboard
         HelpComponent,
         InvestIcoComponent,
         childComponent,
-        CountDown,
         SendtokenComponent,
         ReferComponent,
         GenerateIcoComponent,

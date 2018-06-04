@@ -20,7 +20,7 @@
                                             </div>
                                             <div class="col-md-4 paddleft">
                                                 <h4 class="margbottm0 margtop15">{{tokenData?.tokenName}}</h4>
-                                                <span>{{website ? website :'--'}}</span>
+                                               <span><a href={{website}} target="_blank">{{website}}</a></span>
                                             </div>
                                             <!-- <div class="col-md-4">
                                                 <div class="ico-font-color">
@@ -43,9 +43,10 @@
                             </div>
                             </div>
                         </div>
-                        <div class="card card-pricing" style="background: #000 !important;">
-                        
-                            <iframe src="https://www.youtube.com/embed/fwqa_XYzxdg" width="560" height="315" frameborder="0"webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <div class="card card-pricing" style="background: #000 !important;" *ngIf="videosStatus">
+                         <iframe class="whitepaperiframe" [src]="videoUrlLink | safe" width="560" height="315" frameborder="0" allowfullscreen style="float: left;width: 100%;">
+                        </iframe>
+                         <!--    <iframe src="videoUrlLink | safe" width="560" height="315" frameborder="0"webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
                         </div>
                         <!-- Team Start -->
                         <div class="team-1" *ngIf="teamInfoStatus">
@@ -81,7 +82,7 @@
                         <!-- Road map -->
                         <div class="row" *ngIf="milestoneStatus">
                             <div class="col-md-8 ml-auto mr-auto text-center">
-                                <h2 class="title">Roadmap</h2>
+                                <h2 class="title">Milestone</h2>
                             </div>
                         </div>
                         <div class="row" *ngIf="milestoneStatus">
@@ -139,7 +140,9 @@
                                 <p style="font-weight: bold; margin: 6px; font-size: 14px;"> <i class="fa fa-thumbs-up" style="font-size: 18px; color: #ffa500;"></i> CROWDSALE</p> 
                             </div>
                         </div>
-                       
+                       <div class="head-st-rt">
+                            <p style="margin-bottom: -5px; font-size: 15px; margin-left: 15px;font-weight: 500;">{{ongoingsupply?.supply ? ongoingsupply?.supply :'--'}}&nbsp;{{tokenData?.tokenTicker}}</p>
+                        </div>
                     </div>
                     <div class="en-name1">
                         <p class="pull-left" style="font-weight: bold;">Status</p>
@@ -147,7 +150,7 @@
                     </div>
                     <div class="en-name1">
                         <p class="pull-left" style="font-weight: bold;">Goal</p>
-                        <p class="pull-right" style="font-weight: 500;">{{tokenData?.tokenSupply ? tokenData?.tokenSupply :'--'}}</p>
+                        <p class="pull-right" style="font-weight: 500;">{{ongoingsupply?.supply ? ongoingsupply?.supply :'--'}}</p>
                     </div>
                     <div class="en-name1">
                         <p class="pull-left" style="font-weight: bold;">Crowdsale Details</p>
@@ -196,7 +199,7 @@
                         </div>
                        
                         <div class="my-bt-card1">
-                           <button (click)="gotToInvestToken(tokenData._id,tokenData.tokenName,tokenData.tokenAddress)"class="btn btn-primary btn-round pull-center"  data-toggle="modal" style="background-color: #fa7132;">Invest </button>
+                           <button (click)="gotToInvestToken(tokenData._id,tokenData.tokenName,tokenData.tokenAddress)"class="btn btn-primary btn-round pull-center"  data-toggle="modal" style="background-color: #fa7132;" [disabled]="investDisable">Invest </button>
                        </div>
                          <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                   <div class="modal-dialog modal-notice">

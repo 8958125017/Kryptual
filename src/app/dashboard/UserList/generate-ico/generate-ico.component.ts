@@ -3,11 +3,10 @@
  import { Router, ActivatedRoute } from '@angular/router';
  import { Http, Headers, RequestOptions, Response  } from '@angular/http';
  import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
- import { GlobalService } from './../../../GlobalService';
+ import { GlobalService } from './../../../GlobalService'; 
+ import { DomSanitizer } from '@angular/platform-browser';
  import  * as ico   from'./../../../ico_constant';
  import  * as moment from 'moment';
- import { DomSanitizer } from '@angular/platform-browser';
-
  declare const $: any;
 
 
@@ -27,41 +26,51 @@ interface FileReaderEvent extends Event {
 })
 
 export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
- icowizards:Icowizards;
- pushIndextire:boolean=false;
+ icowizards:Icowizards; 
  editTireIndex:any;
  selectedTeamImage : any;
  selectedTokenImage:any;
+ imageDataAfterupload:any;
  ethBalance:any;
+ name:any; 
+ designation:any;
+ linkedinname:any;
+ teamImages:any;
+ promoCode:any;
+ length:any;
+  postData:any;
+ generalInfoForm: FormGroup;
+ withDrawForm: FormGroup;
+ withdrawDetails: WithdrawDetail; 
+ totalValue : number = 6500;
+ purchaseItems : any[];
+ transtFees:any;
+ user: any;
+ counter:number = 0;
+ userToken:any;
+ coupenbalance:any;
+ dollerBalance:any
+ 
+ ethrate:any;
+ password : any;
+ editTokenId:any;
+    
+ itemname:any;
+ startDateTime:any;
+ endDateTime:any;
+
+ withdrawDialog: boolean = false;
+ pushIndextire:boolean=false;
  teamCard:boolean=false;
  teamList:boolean=true;
  roadmapCard:boolean=false;
  roadmapList:boolean=true;
  reservedToken:boolean=false;
  reservedTokenList:boolean=true;
- name:any;
- whitepaper : 'whitepaper';
- designation:any;
- linkedinname:any;
- teamImages:any;
- promoCode:any;
- length:any;
  tierBoolean:boolean=false;
  promo:boolean=false;
  hidebutton1:boolean=true;
  hidebutton2:boolean=false;
- generalInfoForm: FormGroup;
- purchaseItems : any[];
- totalValue : number = 6500;
-
- transtFees:any;
- user: any;
- counter:number = 0;
- withdrawDialog: boolean = false;
- withDrawForm: FormGroup;
- withdrawDetails: WithdrawDetail;
- ethrate:any;
- password : any;
  reseradd:boolean=false;
  startDateValid:boolean=false;
  currentDate:any;
@@ -74,22 +83,36 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
  resToken:boolean=false
  noBussiness:boolean=false;
  teamselect:boolean=false;
-
  milesto:boolean=false;
  decimalValid:boolean=false;
  tierCard:boolean=true;
- addBoolean:boolean=false;
- userToken:any;
- coupenbalance:any;
- dollerBalance:any
+ addBoolean:boolean=false; 
  checkSavetier:boolean=false;
  startTimeStatus:boolean=false;
  endTimeStatus:boolean=false;
  addStatus:boolean=false;
  selectedWhitePaperImage:any;
  totalbalanceBefore :boolean=true;
- totalbalanceAfter :boolean=false;
- public imageDataAfterupload:any;
+ totalbalanceAfter :boolean=false; 
+ teamlinkedUrl:boolean=false;
+ whitepaperStatus:boolean=false;
+ websiteUrl:boolean=false;
+ videoUrl:boolean=false
+ facebookUrl:boolean=false
+ twitterUrl:boolean=false
+ linkedinUrl:boolean=false
+ nextButtons:boolean=false;
+ resSave:boolean=false;
+ tierSave:boolean=false;
+ tempVar:boolean=false;
+ tempVarDeci:boolean=false;
+ minVarDeci:boolean=false;
+ tierEditDelete:boolean=true;
+ teamSave:boolean=true;
+ tokensStatuss:boolean=false;
+ tokentikerstatus:boolean=false;
+ tokendecimalstatus=false;
+ cmpStatus:boolean=false;
  generalInfo:any={
                   company     : "",
                   description : "",
@@ -190,17 +213,9 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                     
     public min = new Date();
     public min1 = new Date();
-    editTokenId:any;
-    whitepaperStatus:boolean=false;
-    websiteUrl:boolean=false;
-    videoUrl:boolean=false
-    facebookUrl:boolean=false
-    twitterUrl:boolean=false
-    linkedinUrl:boolean=false
-    itemname:any;
-    startDateTime:any;
-    endDateTime:any;
-// constructor start
+    
+     whitepaper : 'whitepaper';
+    stepCounter : number = 1;
   constructor(
                   private http: Http,
                   private route: ActivatedRoute,
@@ -269,8 +284,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
       };
           const url = this.global_service.basePath + 'api/getCrowdsale';
            this.global_service.PostRequest(url,postData).subscribe(response=>{            
-            if(response[0].json.json().statusCode==200){  
-            debugger;                    
+            if(response[0].json.json().statusCode==200){                                  
               this.tierCard=false;
               this.addBoolean=true;
               let generalInfo=response[0].json.json().result;        
@@ -324,9 +338,9 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
 
     saveDraft(){
                 this.global_service.emitEvent("Generate ICO Page", "Click", 'Save as draft', 1);
-                if(this.icowizards.crowdsale.crowdsale.length==0){
-                   this.global_service.showNotification('top','right','please fill at last one tier and save',3,'ti-cross');
-                }else{
+                // if(this.icowizards.crowdsale.crowdsale.length==0){
+                //    this.global_service.showNotification('top','right','please fill atleast one tier and save',3,'ti-cross');
+                // }else{
                      this.ng4LoadingSpinnerService.show();
                      this.icowizards.crowdsale.generalInfo.push(this.generalInfo);
                      this.token.reservedTokensInput=this.reservedTokensInput;
@@ -346,7 +360,6 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
               if(response[0].json.json().status==200){
                 this.global_service.showNotification('top','right',response[0].json.json().message,2,'ti-cross');
                  this.ng4LoadingSpinnerService.hide();
-                 // let ID = response[0].json.json().result._id;
                  this.router.navigateByUrl('/dashboard/view-user');
 
               }else{
@@ -354,7 +367,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                  this.global_service.showNotification('top','right',response[0].json.json().message,4,'ti-cross');
               }
              });
-            }
+           // }
            }
 
       withdrawDetail() {
@@ -371,7 +384,11 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
          this.withdrawDialog = true;
       }
 
+
+
       addressValidate(add:any){
+        this.resSave=true;
+        this.nextButtons=true;
         let postData={
                      address:add,
         }
@@ -379,8 +396,15 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
             this.global_service.PostRequest(url, postData).subscribe(response => {
               let res=response;
               if(res[0].status==200){
-                if(res[0].json.json().status==400){
+                if(res[0].json.json().status==400){                 
                   this.global_service.showNotification('top','right',res[0].json.json().message,4,'ti-cross');
+                  this.resSave=true;
+                  this.nextButtons=true;
+                }else{
+                  if(this.reservedTokensInput.val){
+                  this.resSave=false;
+                  this.nextButtons=false;
+                  }
                 }
               }
             });
@@ -388,18 +412,15 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
 
 
       pushtier(){
+       
                      if(this.pushIndextire){
                        this.pushEditTire();
-                       this.pushIndextire=false;
+                     
                        return;
                      }
-
-           //debugger;
-                   this.global_service.emitEvent("Generate ICO Page", "Click", "Save tier click", 1);
-                   this.crowdsale.startTime=this.crowdsale.startTime.toISOString().substring(0, 19); 
-                  // this.crowdsale.startTime= moment(this.crowdsale.startTime).format('YYYY-MM-DD'+"T"+'HH:mm:s');
-                   this.crowdsale.endTime=this.crowdsale.endTime.toISOString().substring(0, 19); 
-                  // this.crowdsale.endTime= moment(this.crowdsale.endTime).format('YYYY-MM-DD'+"T"+'HH:mm:s');                   
+                   this.global_service.emitEvent("Generate ICO Page", "Click", "Save tier click", 1);      
+                   this.crowdsale.startTime= moment(this.crowdsale.startTime).format().substring(0, 19); ;
+                   this.crowdsale.endTime= moment(this.crowdsale.endTime).format().substring(0, 19); ;                   
                     if(!this.crowdsale.tier){
                       this.global_service.showNotification('top','right','tier should be required',4,'ti-cross');
                     }
@@ -413,16 +434,18 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                     }
                      else if(!this.pricingStrategy.rate)
                     {
-                      this.global_service.showNotification('top','right','rate should be required',4,'ti-cross');
+                      this.global_service.showNotification('top','right','rate should be required1',4,'ti-cross');
                     }
                     else if(!this.crowdsale.supply)
                     {
                       this.global_service.showNotification('top','right','supply should be required',4,'ti-cross');
                     }
                     else if(this.crowdsale.startTime<this.currentDate){
+                      this.nextButtons=false;
                       this.global_service.showNotification('top','right','Start date should be greater than current date',4,'ti-cross');
                     }
                     else if(this.crowdsale.endTime<this.crowdsale.startTime){
+                      this.nextButtons=false;
                       this.global_service.showNotification('top','right','End date should be greater than start date',4,'ti-cross');
                     }
 
@@ -454,7 +477,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                                      rate : this.pricingStrategy.rate.toString()
                                     }
 
-                          this.icowizards.crowdsale.pricingStrategy.push(data1);
+                         
                           this.counter++;
                           if(this.counter>1){
                                delete data.walletAddress;
@@ -465,28 +488,43 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                           {
                             if(this.icowizards.crowdsale.crowdsale[this.icowizards.crowdsale.crowdsale.length-1].endTime>data.startTime)
                             {
-
+                             
                              this.global_service.showNotification('top','right','Next tier start date should be greater than previous token End Date',4,'ti-cross');
                             }
                             else
                             {
                              this.tierCard=false;
+                             this.tierSave=false;
+                             this.nextButtons=false;
+                             this.tierEditDelete=true;
+                             this.icowizards.crowdsale.pricingStrategy.push(data1);
                              this.icowizards.crowdsale.crowdsale.push(data);
                              
                             }
                           }
                           else
                           {
+                           this.nextButtons=false;
+                           this.tierSave=false;
+                           this.icowizards.crowdsale.pricingStrategy.push(data1);
                            this.icowizards.crowdsale.crowdsale.push(data);
+                           console.log("rate length"+this.icowizards.crowdsale.pricingStrategy.length);
+                           console.log("rate length"+this.icowizards.crowdsale.crowdsale.length);
                            this.global_service.showNotification('top','right','Tier add successfully',2,'ti-cross');
                           }
                     }
        }
 
-
+       onsaveButton(){
+         this.nextButtons=true;
+         this.tierSave=true;
+      }
 
        addTier(){
+         this.tierEditDelete=false;
+         this.nextButtons=true;
          this.pushIndextire=false;
+         this.tierSave=true;
           this.crowdsale={
                            tier : "",
                            supply : "",
@@ -518,7 +556,9 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
        editTire(i){
          this.tierCard=true;
          this.pushIndextire=true;
+         //this.tierSave=true;
          this.editTireIndex=i;  
+         this.nextButtons=true;
         //this.crowdsale.startTime= this.icowizards.crowdsale.crowdsale[i].startTime;
          //this.crowdsale.endTime=this.icowizards.crowdsale.crowdsale[i].endTime;
          this.crowdsale={
@@ -549,6 +589,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
        }
 
         pushEditTire(){
+          
           if(!this.crowdsale.tier){
                       this.global_service.showNotification('top','right','tier should be required',4,'ti-cross');
                    return;
@@ -573,43 +614,44 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                       this.global_service.showNotification('top','right','supply should be required',4,'ti-cross');
                     return;
                     }
-              // debugger;
-                 //  this.crowdsale.startTime= moment(this.crowdsale.startTime).format('YYYY-MM-DD'+"T"+'HH:mm:s'); 
-                    this.crowdsale.startTime=this.crowdsale.startTime;                 
-                  // this.crowdsale.endTime= moment(this.crowdsale.endTime).format('YYYY-MM-DD'+"T"+'HH:mm:s');
-                    this.crowdsale.endTime=this.crowdsale.endTime;
-            if(this.crowdsale.startTime>this.crowdsale.endTime){
-              this.global_service.showNotification('top','right','End time should be greater than start time',4,'ti-cross');
-              return;
-            }
-         if(this.icowizards.crowdsale.crowdsale.length == 1){
-            let data={
-                                     tier : this.crowdsale.tier,
-                                     supply : this.crowdsale.supply.toString(),
-                                     walletAddress : this.crowdsale.walletAddress,
-                                     startTime : this.crowdsale.startTime,
-                                     endTime : this.crowdsale.endTime,
-                                     whitelistdisabled : "yes",
-                                     updatable: "off",
-                                     whiteListElements :[],
-                                     whitelist:  [],
-                                     whiteListInput: {
-                                                       addr      : '',
-                                                       min       : 0,
-                                                       mx        : 0
-                                                     },
-                                  }
+              
+                   this.crowdsale.startTime= moment(this.crowdsale.startTime).format().substring(0, 19); ;
+                   this.crowdsale.endTime= moment(this.crowdsale.endTime).format().substring(0, 19); ; 
+                    if(this.crowdsale.startTime>this.crowdsale.endTime){
+                      this.global_service.showNotification('top','right','End time should be greater than start time',4,'ti-cross');
+                      return;
+                    }
+                   if(this.icowizards.crowdsale.crowdsale.length == 1){
+                      let data={
+                                               tier : this.crowdsale.tier,
+                                               supply : this.crowdsale.supply.toString(),
+                                               walletAddress : this.crowdsale.walletAddress,
+                                               startTime : this.crowdsale.startTime,
+                                               endTime : this.crowdsale.endTime,
+                                               whitelistdisabled : "yes",
+                                               updatable: "off",
+                                               whiteListElements :[],
+                                               whitelist:  [],
+                                               whiteListInput: {
+                                                                 addr      : '',
+                                                                 min       : 0,
+                                                                 mx        : 0
+                                                               },
+                                            }
 
                           let data1={
                                      rate : this.pricingStrategy.rate.toString()
                                     }
                       this.icowizards.crowdsale.pricingStrategy.splice(this.editTireIndex, 1, data1);
                       this.icowizards.crowdsale.crowdsale.splice(this.editTireIndex, 1, data);
-                      this.tierCard=false;
+                        this.pushIndextire=false;
+                      this.tierCard=false;    
+                        this.nextButtons=false;                  
                       this.global_service.showNotification('top','right','Tier edit successfully',2,'ti-cross');
+                    
                       return; 
          }
-         else if((this.icowizards.crowdsale.crowdsale.length-1)==0){
+         else if((this.editTireIndex==0)&&(this.editTireIndex<this.icowizards.crowdsale.crowdsale.length)){
            
                if((this.crowdsale.startTime<this.icowizards.crowdsale.crowdsale[this.editTireIndex+1].startTime)&&(this.crowdsale.endTime<this.icowizards.crowdsale.crowdsale[this.editTireIndex+1].startTime)){
                                  
@@ -635,8 +677,11 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                                     }
                       this.icowizards.crowdsale.pricingStrategy.splice(this.editTireIndex, 1, data1);
                       this.icowizards.crowdsale.crowdsale.splice(this.editTireIndex, 1, data);
+                        this.pushIndextire=false;
                       this.tierCard=false;
+                      this.nextButtons=false;
                       this.global_service.showNotification('top','right','Tier edit successfully',2,'ti-cross');
+                   //   this.tierNextButton=true;
                       return;
 
                }else{
@@ -645,6 +690,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                }
           
           }else if(this.editTireIndex==(this.icowizards.crowdsale.crowdsale.length-1)){
+
                  if((this.crowdsale.startTime>this.icowizards.crowdsale.crowdsale[this.editTireIndex-1].endTime)&&(this.crowdsale.endTime>this.icowizards.crowdsale.crowdsale[this.editTireIndex-1].endTime)){
                                  
                            let data={
@@ -669,8 +715,11 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                                     }
                       this.icowizards.crowdsale.pricingStrategy.splice(this.editTireIndex, 1, data1);
                       this.icowizards.crowdsale.crowdsale.splice(this.editTireIndex, 1, data);
+                        this.pushIndextire=false;
                       this.tierCard=false;
+                      this.nextButtons=false;
                       this.global_service.showNotification('top','right','Tier edit successfully',2,'ti-cross');
+                      
                       return;
 
                }else{
@@ -682,7 +731,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
 
 
           }else{
-      
+       
                      if((this.crowdsale.startTime<this.icowizards.crowdsale.crowdsale[this.editTireIndex+1].startTime)&&(this.crowdsale.endTime<this.icowizards.crowdsale.crowdsale[this.editTireIndex+1].startTime)){
                           if((this.crowdsale.startTime>this.icowizards.crowdsale.crowdsale[this.editTireIndex-1].endTime)&&(this.crowdsale.endTime>this.icowizards.crowdsale.crowdsale[this.editTireIndex-1].endTime)){       
                            let data={
@@ -692,7 +741,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                                      startTime : this.crowdsale.startTime,
                                      endTime : this.crowdsale.endTime,
                                      whitelistdisabled : "yes",
-                                     updatable: "off",
+                                    updatable: "off",
                                      whiteListElements :[],
                                      whitelist:  [],
                                      whiteListInput: {
@@ -705,10 +754,13 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                           let data1={
                                      rate : this.pricingStrategy.rate.toString()
                                     }
+
                       this.icowizards.crowdsale.pricingStrategy.splice(this.editTireIndex, 1, data1);
                       this.icowizards.crowdsale.crowdsale.splice(this.editTireIndex, 1, data);
+                        this.pushIndextire=false;
                       this.tierCard=false;
                       this.global_service.showNotification('top','right','Tier edit successfully',2,'ti-cross');
+                     this.nextButtons=false;
                       return;
                     }
 
@@ -720,25 +772,29 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
           }
          
        }
-                  setIndex(i){
-                   this.editTireIndex=i;
-                  }
 
-                   deleteTire(){
-                    if(this.editTireIndex==0){
-                      this.global_service.showNotification('top','right','First tier cannot be deleted',4,'ti-cross');
-                      return;
-                    }
-                   this.icowizards.crowdsale.pricingStrategy.splice(this.editTireIndex, 1);
-                   this.icowizards.crowdsale.crowdsale.splice(this.editTireIndex, 1);
-                      
-                   }
+    setIndex(i){
+     this.editTireIndex=i;
+    }
 
-                  closetierbox(){
-                    this.tierCard=false;
-                    this.pushIndextire=false;
-                    this.addBoolean=true;
-                 }
+     deleteTire(){
+      if(this.editTireIndex==0){
+        this.global_service.showNotification('top','right','First tier cannot be deleted',4,'ti-cross');
+        return;
+      }
+
+     this.icowizards.crowdsale.pricingStrategy.splice(this.editTireIndex, 1);
+     this.icowizards.crowdsale.crowdsale.splice(this.editTireIndex, 1);
+        
+     }
+
+      closetierbox(){
+        this.tierCard=false;
+        this.pushIndextire=false;
+        this.tierEditDelete=true;
+        this.addBoolean=true;
+        this.nextButtons=false;
+      }
 
       poptier(itemNo1){
           var index = this.icowizards.crowdsale.crowdsale.findIndex(function(o,index){
@@ -746,6 +802,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
           })
           if (index != this.icowizards.crowdsale.crowdsale.length) {
             this.icowizards.crowdsale.crowdsale.splice(index, 1);
+            this.icowizards.crowdsale.pricingStrategy.splice(index, 1);
           }else{
             this.global_service.showNotification('top','right','You can not removed tiers',4,'ti-cross');
           }
@@ -781,15 +838,19 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
 
       addteam(){
        this.team={};
+       this.nextButtons=true;
        this.teamCard=true;
+
      }
 
+
      closeTeamCard(){
+         this.nextButtons=false;
            this.teamCard=false;
         }
-
+editTeamIndex:any=-1;
     pushteam(){
-      debugger
+       this.nextButtons=false;
            if(this.team.image==undefined){
              this.team.image="assets/img/default-avatar.png";
            }
@@ -804,35 +865,66 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                                              linkedinname  :this.team.linkedinname,
                                              image : this.team.image
                                            }
-                                 this.icowizards.crowdsale.team.push(data);
+                                            if(this.editTeamIndex !== -1){
+                                            this.icowizards.crowdsale.team.splice(this.editTeamIndex, 1,data);
+                                            return;
+                                          }
+                                 else
+                                            {
+                                              this.icowizards.crowdsale.team.push(data);
+                                            }
                                  
                                 }else{
                                       this.teamselect=true;
                }
             }
-
-    popteam(itemNo1){
-        var index = this.icowizards.crowdsale.team.findIndex(function(o,index){
+imgteam:any;
+  popteam(itemNo1){
+              var index = this.icowizards.crowdsale.team.findIndex(function(o,index){
           return index === itemNo1;
        })
-       if (index !== -1) this.icowizards.crowdsale.team.splice(index, 1);
+       if (index !== -1) {this.icowizards.crowdsale.team.splice(index, 1);
+       
+       }
+       if(this.icowizards.crowdsale.team.length===0){
+            this.team={};
+            this.editTeamIndex=-1;
+            this.imgteam=null;
+           }
+
     }
 
+  editteam(itemNo){
+      this.editTeamIndex=itemNo;
+      this.teamCard=true;
+      //this.nextButtons=true;
+      this.team={};
+      this.team.teamname= this.icowizards.crowdsale.team[this.editTeamIndex].name;
+      this.team.designation=this.icowizards.crowdsale.team[this.editTeamIndex].designation;
+      this.team.linkedinname=this.icowizards.crowdsale.team[this.editTeamIndex].linkedinname;
+      this.team.image=this.icowizards.crowdsale.team[this.editTeamIndex].image;
+      this.imgteam=this.team.image;     
+    }
  
 
     addroadmap(){
+      this.nextButtons=true;
          this.milestone={
            dim : "tokens"
          };
          this.milestone.milestonedate=new Date();
          this.roadmapCard=true;
+         this.editIndexRoadmap =-1;
     }
 
+   
     closeRoadMapCard(){
+      this.nextButtons=false;
        this.roadmapCard=false;
     }
 
     pushroadmap(){
+      this.nextButtons=false;
        this.milestone.milestonedate= moment(this.milestone.milestonedate).format('YYYY-MM-DD');
         if(this.milestone.milestone1){
            this.roadmapCard=false;
@@ -843,27 +935,60 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
              milestone1  :this.milestone.milestone1,
              milestonedate : this.milestone.milestonedate
        }
-       this.icowizards.crowdsale.milestone.push(data);
+       if(this.editIndexRoadmap !== -1){
+                                            this.icowizards.crowdsale.milestone.splice(this.editIndexRoadmap, 1,data);
+                                            return;
+                                          }
+                                          else
+                                            {
+                                              this.icowizards.crowdsale.milestone.push(data);
+                                            }
         }else{
          this.milesto=true;
         }
     }
-
-   poproadmap(itemNo){
+    
+    poproadmap(itemNo){
          var index = this.icowizards.crowdsale.milestone.findIndex(function(o,index){
          return index === itemNo;
       })
-      if (index !== -1) this.icowizards.crowdsale.milestone.splice(index, 1);
+      if (index !== -1) {this.icowizards.crowdsale.milestone.splice(index, 1);}
+      if(this.icowizards.crowdsale.milestone.length===0){
+            this.milestone={};
+            this.editIndexRoadmap=-1;
+           }
+  }
+
+  editIndexRoadmap:any=-1;
+  editroadmap(item){
+    this.editIndexRoadmap=item;
+    this.roadmapCard=true;
+    this.milestone={};
+    this.milestone.milestone1=this.icowizards.crowdsale.milestone[this.editIndexRoadmap].milestone1;
+    this.milestone.milestonedate=this.icowizards.crowdsale.milestone[this.editIndexRoadmap].milestonedate;
   }
 
   addreservedToken(){
+       this.nextButtons=true;
        this.reservedTokensInput={
          dim : "tokens"
        };
        this.reservedToken=true;
+       this.editreservedIndex=-1;
   }
 
-   pushreservedToken(){                     
+ 
+
+   closeResTokenCard(){
+         this.nextButtons=false;
+           this.reservedToken=false;
+        }
+
+editreservedIndex:any=-1;
+
+   
+   pushreservedToken(){  
+   this.nextButtons=false;                      
                   if(this.reservedTokensInput.addr[0]!=='0'||this.reservedTokensInput.addr[1]!=='x'){
                     this.global_service.showNotification('top','right','address should start from 0x',4,'ti-cross');
                   }else if(this.reservedTokensInput.addr.length<42){
@@ -873,17 +998,42 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
      this.reservedToken=false;
      this.reservedTokenList=true;
      this.resToken=true;
-     let data={
-        val  :this.reservedTokensInput.val,
-        addr : this.reservedTokensInput.addr,
-        dim : this.reservedTokensInput.dim
-    }
-    this.reservedElements.props.addr = data.addr;
-    this.reservedElements.props.dim = data.dim;
-    this.reservedElements.props.val = data.val;
-    this.reservedElements.props.num = 0;
-    this.token.reservedTokensElements.push(this.reservedElements);
-    this.token.reservedTokens.push(this.reservedTokensInput);
+          if(this.editreservedIndex !== -1){          
+                                                                                    
+                                                this.reservedElements={
+                                                             _owner : null,
+                                                               props : {
+                                                                            val : this.reservedTokensInput.val,
+                                                                            dim : this.reservedTokensInput.dim,
+                                                                            addr : this.reservedTokensInput.addr,
+                                                                            num : 0
+                                                                        },
+                                                                        ref : null,
+                                                                        key : "0"
+                                                                       }
+                                           this.token.reservedTokensElements.splice(this.editreservedIndex, 1,this.reservedElements);
+                                           this.token.reservedTokens.splice(this.editreservedIndex, 1,this.reservedTokensInput);
+                                            return;
+                                          }
+                                          else
+                                            {
+                                                  this.reservedElements={
+                                                                        _owner : null,
+                                                                        props : {
+                                                                            val : this.reservedTokensInput.val,
+                                                                            dim : this.reservedTokensInput.dim,
+                                                                            addr : this.reservedTokensInput.addr,
+                                                                            num : 0
+                                                                        },
+                                                                        ref : null,
+                                                                        key : "0"
+                                                                       }
+                                                    this.token.reservedTokensElements.push(this.reservedElements);
+                                                    this.token.reservedTokens.push(this.reservedTokensInput);
+                                                    this.reservedTokensInput={}; 
+
+                                            }
+     
      }else{
        this.global_service.showNotification('top','right','please enter required fields',4,'ti-cross');
      }
@@ -891,14 +1041,31 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
 
    }
 
+
+
    popreservedToken(itemNo){
        var index = this.token.reservedTokens.findIndex(function(o,index){
          return index === itemNo;
       })
        ;
-      if (index !== -1) this.token.reservedTokens.splice(index, 1);
+      if (index !== -1) {
+        this.token.reservedTokens.splice(index, 1);
+        this.token.reservedTokensElements.splice(index, 1);
+      }
    }
 
+
+     editReserved(i){    
+     this.reservedTokensInput={};
+     this.editreservedIndex=i;
+     this.reservedToken=true;
+     this.reservedTokensInput.addr=this.token.reservedTokens[this.editreservedIndex].addr;
+     this.reservedTokensInput.val=this.token.reservedTokens[this.editreservedIndex].val;
+     this.reservedTokensInput.dim=this.token.reservedTokens[this.editreservedIndex].dim;                                    
+     
+   }
+
+   
   applyPromo(){
     this.global_service.emitEvent("Generate ICO Page ", "Click", this.promoCoupen.coupon, 1);
     if(this.icowizards.crowdsale.crowdsale.length==0){
@@ -915,7 +1082,8 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
         };
         const url = this.global_service.basePath + 'users/Addcoupon';
         this.global_service.PostRequest(url, postData).subscribe(response => {
-            if (response[0].json.status == 200) {
+            if (response[0].json.json().status == 200) {
+              
               this.ng4LoadingSpinnerService.hide();
               this.promo=false;
               this.coupenbalance=response[0].json.json().balance;
@@ -941,7 +1109,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
   checkETHBalance(){
     this.global_service.emitEvent("Generate ICO Page ", "Click", 'Confirm Button', 1);
                      if(this.icowizards.crowdsale.crowdsale.length==0){
-                       this.global_service.showNotification('top','right','please fill at last one tier and save',3,'ti-cross');
+                       this.global_service.showNotification('top','right','please fill atleast one tier and save',3,'ti-cross');
                      }
                      // else if(this.ethBalance<(this.totalValue/this.ethrate)){                         
                      //       this.global_service.showNotification('top','right','you have insufficient ETH please buy ETH first',4,'ti-cross');
@@ -961,13 +1129,13 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
          const url = this.global_service.basePath + 'api/verifyPassword';
             this.global_service.PostRequest(url, postData).subscribe(response => {
             if (response[0].json.json().status == 200) {
-              this.totalValue=(this.totalValue/this.ethrate);
+              this.totalValue=(this.totalValue/this.ethrate);             
               if(this.totalValue){                
                 this.totalbalanceAfter=true;
                 this.totalbalanceBefore=false;
               }
               this.ng4LoadingSpinnerService.hide();
-              this.sendtoReact();
+              this.validateCrowedSaleData();
              } else
               {
                 this.ng4LoadingSpinnerService.hide();
@@ -982,33 +1150,43 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
 
 
 
-  sendtoReact(){    
+  validateCrowedSaleData(){    
     this.ng4LoadingSpinnerService.show();
     this.token.decimals=this.token.decimals.toString();
-    // this.token.supply=this.crowdsale.supply.toString(),
     this.icowizards.crowdsale.investorMinCap = this.inversterMinCap.mincap;
     this.icowizards.crowdsale.generalInfo = this.generalInfo;
     this.token.reservedTokensInput=this.reservedTokensInput;
 
     this.icowizards.crowdsale.token=this.token;
     this.icowizards.crowdsale.contracts = ico.FILE_CONTENTS.files.contracts;    
-       let data={
+       this.postData={
         state  :this.icowizards.crowdsale,
         userId : this.user._id,
         token : this.userToken
     }
-    const url = this.global_service.basePath + 'api/saveCrowdsale';
+   const url = this.global_service.basePath + 'ETH/validateGenerateIco';
+    this.global_service.PostRequest(url,this.postData).subscribe(response=>{
+   
+      var res=response[0].json.status;
+      if(res==200){
+       this.sendtoReact();
+      }else{
+        this.ng4LoadingSpinnerService.hide();
+        this.global_service.showNotification('top','right',response[0].json.json().message,4,'ti-cross');
+      }
+    });
+    
+  }
+  sendtoReact(){
+    const url = this.global_service.basePath + 'api/saveCrowdsale';  
+    console.log("FINAL DATA = = "+JSON.stringify(this.postData));
     debugger
-    console.log("FINAL DATA = = "+JSON.stringify(data));
-    this.global_service.PostRequest(url,data).subscribe(response=>{
-     if(response[0].json.json().status==200){
-       debugger
+    this.global_service.PostRequest(url,this.postData).subscribe(response=>{
+     if(response[0].json.json().status==200){     
        this.withdrawEth();
         this.ng4LoadingSpinnerService.hide();
         let ID = response[0].json.json().result._id;
-       // console.log("response[0].json.json().result._id = = "+response[0].json.json().result._id);
-        //window.location.href = this.global_service.basePathforReact +"4"+"?userId="+ID;
-         window.location.href = this.global_service.basePathforReact +"4"+"?userId="+this.user._id+"="+ID;
+        window.location.href = this.global_service.basePathforReact +"4"+"?userId="+this.user._id+"="+ID;
      }else{
        this.ng4LoadingSpinnerService.hide();
         this.global_service.showNotification('top','right',response[0].json.json().message,4,'ti-cross');
@@ -1060,8 +1238,8 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
    tokenImage(event){
       this.ng4LoadingSpinnerService.show();
     let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend = (e:any) => {
+    let file = event.target.files[0];   
+    reader.onloadend = (e:any) => {      
       this.selectedTokenImage = e.target.result;
       var tokImage=this.selectedTokenImage.split(',')[1]      
       let postData={
@@ -1084,8 +1262,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
      reader.readAsDataURL(file)
    }
 
-   teamImage(event){
-     debugger;
+   teamImage(event){    
       this.ng4LoadingSpinnerService.show();
     let reader = new FileReader();
     let file = event.target.files[0];
@@ -1156,20 +1333,19 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
 
     withdrawFormInit() {
         this.withDrawForm = this.fb.group({
-            'amount': new FormControl('',Validators.compose([Validators.required,Validators.pattern(/^.?(0|[0-9]\d*)(\.\d+)?$/)])),
-            'toAddress': new FormControl('', Validators.required),
+            // 'amount': new FormControl('',Validators.compose([Validators.required,Validators.pattern(/^.?(0|[0-9]\d*)(\.\d+)?$/)])),
+            // 'toAddress': new FormControl('', Validators.required),
             'password':  new FormControl('', Validators.required)
         });
     }
 
-
-
+      
+      
 
      ngOnInit() {
        var _this = this;
-
-     this.withdrawFormInit();
-     this.saveCrowdsaleForm()
+       this.withdrawFormInit();
+      // this.saveCrowdsaleForm()
         const $validator = $('.wizard-card form').validate({
             rules: {
                   company: {
@@ -1179,95 +1355,26 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
               description: {
                   required: true
               },
-              vedio:{
-                     validator: function (v)   // return true or false.
-                      {
-                          var data = document.forms["icoForm"]["vedio"].value
-                          var urlregex = new RegExp(
-                                "^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.){1}([0-9A-Za-z]+\.)");
-                          if(urlregex.test(data)){
-                              _this.videoUrl=false;
-                          }else{
-                              _this.videoUrl=true;
-                          }
-                      }
-                   },
-
-                    website:{
-                     validator: function (v)   // return true or false.
-                      {
-                          var data = document.forms["icoForm"]["website"].value
-                          var urlregex = new RegExp(
-                             "^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.){1}([0-9A-Za-z]+\.)");
-                          if(urlregex.test(data)){
-                              _this.websiteUrl=false;
-                          }else{
-                              _this.websiteUrl=true;
-                          }
-                      }
-                   },
-
-                   facebook:{
-                     validator: function (v)   // return true or false.
-                      {
-                          var data = document.forms["icoForm"]["facebook"].value
-                          var urlregex = new RegExp(
-                                "^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.){1}([0-9A-Za-z]+\.)");
-                          if(urlregex.test(data)){
-                              _this.facebookUrl=false;
-                          }else{
-                              _this.facebookUrl=true;
-                          }
-                      }
-                   },
+              
 
 
-                    twitter:{
-                     validator: function (v)   // return true or false.
-                      {
-                          var data = document.forms["icoForm"]["twitter"].value
-                          var urlregex = new RegExp(
-                                "^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.){1}([0-9A-Za-z]+\.)");
-                          if(urlregex.test(data)){
-                              _this.twitterUrl=false;
-                          }else{
-                              _this.twitterUrl=true;
-                          }
-                      }
-                   },
-
-                   linkedin:{
-                     validator: function (v)   // return true or false.
-                      {
-                          var data = document.forms["icoForm"]["linkedin"].value
-                          var urlregex = new RegExp(
-                                "^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.){1}([0-9A-Za-z]+\.)");
-                          if(urlregex.test(data)){
-                              _this.linkedinUrl=false;
-                          }else{
-                              _this.linkedinUrl=true;
-                          }
-                      }
-                   },
-
-
-                teamname: {
-                    required: true,
+                   teamname: {
+                      required: true,
                     },
 
                 name:{
-                    required: true,
-                    minlength: 1,
-                    maxlength:30,
-                    validator: function (v) {
-                      var data = document.forms["icoForm"]["name"].value
-                      var t = /^[a-zA-Z_\-]+$/;
-                if (data.match(/\s/g)) {
-                  _this.space=true;
-                }else{
-                  _this.space=false;
-                }
-                  }
+                        required: true,
+                        minlength: 1,
+                        maxlength:30,
+                        validator: function (v) {
+                          var data = document.forms["icoForm"]["name"].value
+                          var t = /^[a-zA-Z_\-]+$/;
+                          if (data.match(/\s/g)) {
+                            _this.space=true;
+                          }else{
+                            _this.space=false;
+                          }
+                      }
                 },
 
                 ticker: {
@@ -1393,8 +1500,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
             },
 
             onInit: function(tab: any, navigation: any, index: any){
-
-              // check number of tabs and fill the entire row
+          
               let $total = navigation.find('li').length;
               let $wizard = navigation.closest('.wizard-card');
               let $first_li = navigation.find('li:first-child a').html();
@@ -1444,21 +1550,23 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
               $('.moving-tab').css('transition','transform 0s');
            },
 
-            onTabClick : function(tab: any, navigation: any, index: any){
-
+            onTabClick : function(tab: any, navigation: any, index: any){                    
                 const $valid = $('.wizard-card form').valid();
-
-                if (!$valid) {
+                var _this=this;
+                if (!$valid ||_this.nextButtons || index==0 ) {
                     return false;
                 } else {
                     return true;
                 }
             },
-
+            
             onTabShow: function(tab: any, navigation: any, index: any) {
-                let $total = navigation.find('li').length;
-                let $current = index + 1;
+               
+             
+              
 
+                let $total = navigation.find('li').length;                 
+                let $current = index + 1;          
                 const $wizard = navigation.closest('.wizard-card');
 
                 // If it's the last tab then hide the last button and show the finish instead
@@ -1566,26 +1674,22 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                 $(this).find('[type="checkbox"]').attr('checked', 'true');
             }
         });
-
         $('.set-full-height').css('height', 'auto');
-
       }
+
        ngOnChanges(changes: SimpleChanges) {
         const input = $(this);
-
         if (input[0].files && input[0].files[0]) {
             const reader: any = new FileReader();
-
             reader.onload = function (e: FileReaderEvent) {
                 $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
             };
             reader.readAsDataURL(input[0].files[0]);
         }
       }
+
       ngAfterViewInit() {
-
         $( window ).resize( () => { $('.wizard-card').each(function(){
-
             const $wizard = $(this);
             const index = $wizard.bootstrapWizard('currentIndex');
             let $total = $wizard.find('.nav li').length;
@@ -1634,14 +1738,15 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
             });
             });
         });
+      
+       
       }
 
-    saveCrowdsaleForm() {
-                     this.generalInfoForm = this.fb.group({
-                       'company'     : new FormControl('', Validators.required)
-
-                     });
-                 }
+    // saveCrowdsaleForm() {
+    //                      this.generalInfoForm = this.fb.group({
+    //                        'company'     : new FormControl('', Validators.required)
+    //                      });
+    //              }
 
 
    icowizardsDetails(){
@@ -1676,17 +1781,35 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
 
      onCompanyName(cpmName:any){
       this.global_service.emitEvent("Generate ICO Page ", "blur",'Company name'+" "+cpmName, 1);
+      this.cmpStatus=false;
      }
 
      ontokenName(tokenName:any){
        this.global_service.emitEvent("Generate ICO Page ", "blur",'Token Name'+" "+tokenName, 1);
+       if(tokenName&&this.nextButtons){
+         this.nextButtons=false
+         this.tokensStatuss=false;
+       }
      }
 
      ontokenTiker(tokenTiker:any){
       this.global_service.emitEvent("Generate ICO Page ", "blur",'Token Tiker'+" "+tokenTiker, 1);
+      if(tokenTiker&&this.nextButtons){
+        this.tokentikerstatus=false;
+         this.nextButtons=false
+       }
+     }
+     ontokenDecimal(tokendecimal:any){
+       if(tokendecimal&&this.nextButtons){
+        this.tokendecimalstatus=false;
+         this.nextButtons=false
+       }
      }
      onTierInfo(tierIfo:any){
        this.global_service.emitEvent("Generate ICO Page ", "blur","Tier Info"+" "+tierIfo, 1);
+       if(tierIfo&&this.nextButtons){
+         this.nextButtons=false
+       }
      }
 
     getBalance(){
@@ -1709,13 +1832,253 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
 
 
 
- decimals(e){
-   debugger;
+    decimals(e){
         if (e.keyCode === 190 ) {
             return false;
         }
         if (e.keyCode === 189 ) {
             return false;
         }
+    }
+
+    minus(e){           
+              if (e.keyCode === 189 ) 
+              {
+                 return false;
+              }
+            }
+
+      urlValidation(event,val){   
+        if(!event.target.value){
+          if(val=="videoLink"){
+           this.videoUrl=false;
+           if(this.websiteUrl||this.facebookUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl){
+               this.nextButtons=true;
+           }else{
+             this.nextButtons=false;
+           }
+           
+         }else if(val=="webLink"){
+           this.websiteUrl=false;
+           if(this.videoUrl||this.facebookUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl){
+               this.nextButtons=true;
+           }else{
+             this.nextButtons=false;
+           }
+         }else if(val=="fb"){
+           this.facebookUrl=false;
+           if(this.videoUrl||this.websiteUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl){
+               this.nextButtons=true;
+           }else{
+             this.nextButtons=false;
+           }
+         }else if(val=="twitLink"){
+           this.twitterUrl=false;
+           if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.linkedinUrl||this.teamlinkedUrl){
+               this.nextButtons=true;
+           }else{
+             this.nextButtons=false;
+           }
+         }else if(val=="linkedLink"){
+           this.linkedinUrl=false;
+            if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.twitterUrl||this.teamlinkedUrl){
+               this.nextButtons=true;
+           }else{
+             this.nextButtons=false;
+           }
+         }else if(val=="teamLink"){
+           this.teamlinkedUrl=false;
+           if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.linkedinUrl||this.teamlinkedUrl){
+               this.nextButtons=true;
+           }else{
+             this.nextButtons=false;
+           }          
+           this.teamSave=false;
+         }else if(val=="resValue"){          
+           this.nextButtons=true;
+           this.resSave=true;
+           }else{
+           this.resSave=false;
+           this.nextButtons=false;
+         }
+        }else if(event.target.value){
+          var urlregex = new RegExp("^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.){1}([0-9A-Za-z]+\.)");
+                     
+                      if(val=="videoLink"){
+                         if(urlregex.test(event.target.value)){
+                              this.videoUrl=false;
+                              this.nextButtons=false;
+                          }else{
+                              this.videoUrl=true;
+                              this.nextButtons=true;
+                          }
+                        }else if(val=="webLink"){
+                          if(urlregex.test(event.target.value)){
+                              this.websiteUrl=false;
+                              this.nextButtons=false;
+                          }else{
+                              this.websiteUrl=true;
+                              this.nextButtons=true;
+                          }
+                        }else if(val=="fb"){
+                          if(urlregex.test(event.target.value)){
+                               this.facebookUrl=false;
+                              this.nextButtons=false;
+                          }else{
+                              this.facebookUrl=true;
+                              this.nextButtons=true;
+                          }
+                        }else if(val=="twitLink"){
+                          if(urlregex.test(event.target.value)){
+                              this.twitterUrl=false;
+                              this.nextButtons=false;
+                          }else{
+                              this.twitterUrl=true;
+                              this.nextButtons=true;
+                          }
+                        }else if(val=="linkedLink"){
+                          if(urlregex.test(event.target.value)){
+                              this.linkedinUrl=false;
+                              this.nextButtons=false;
+                          }else{
+                              this.linkedinUrl=true;
+                              this.nextButtons=true;
+                          }
+                        }else if(val=="teamLink"){
+                          if(urlregex.test(event.target.value)){
+                              this.teamlinkedUrl=false;
+                              this.nextButtons=false;
+                              this.teamSave=false;
+                          }else{
+                             this.teamlinkedUrl=true;
+                              this.nextButtons=true;
+                              this.teamSave=true;
+                          }
+                        }else if(val=="resValue"){
+                             if(val.length>0 && this.reservedTokensInput.addr){
+                               this.nextButtons=false;
+                                this.resSave=false;                                
+                             }else{
+                               this.nextButtons=true;
+                                this.resSave=true;   
+                             }
+                         }else{
+                              this.teamlinkedUrl=true;
+                              this.teamSave=true;
+                              this.nextButtons=true;
+                          }
+          
+        }
+       
+      }
+      
+
+      enterOnSubmit(event){
+        if((event.keyCode===13)&&this.withdrawDetails.password){
+             this.checkPassword();
+        }
+
+      }
+    
+    // changeStep(currentClickStep){ 
+    //   if(currentClickStep==1){
+    //     this.stepCounter=1;
+    //   }else if(currentClickStep==2){
+    //     this.stepCounter=2;
+    //   }else if(currentClickStep==3){
+    //      this.stepCounter=3;
+    //   }else if(currentClickStep==4){
+    //      this.stepCounter=4;
+    //   }
+     
+    // }
+
+    previousClick(){ 
+     window.scrollTo(0, 0);  
+      this.stepCounter--;      
+       if(this.stepCounter===0){
+         this.stepCounter++;
+       }
+      if(this.stepCounter===1){
+       this.nextButtons = false; 
+       if(this.space){
+          this.space=false;
+          this.tempVar=true;
+        }else{
+          this.tempVar=false;
+        }
+
+        if(this.decimalValid){
+          this.decimalValid=false;
+          this.tempVarDeci=true;
+        }else{
+          this.tempVarDeci=false;
+        }
+        
+      }else if(this.stepCounter===2){
+         this.nextButtons = false; 
+         if(this.mincap){
+           this.mincap=false;
+            this.minVarDeci=true;
+         }else{
+            this.minVarDeci=false;
+         }
+      }
+    }
+
+    discStatus:boolean=false;
+
+     nextClick(){   
+       window.scrollTo(0, 0);  
+       if(this.stepCounter===1){
+          if(this.generalInfo.company&&this.generalInfo.description)
+            {
+             this.cmpStatus=false;
+             this.discStatus=false;
+             this.stepCounter++;   
+                console.log("this.stepCounter 2 = = "+this.stepCounter);          
+            }
+       }
+      else if(this.stepCounter===2){
+        if(this.token.name&&this.token.ticker&&this.token.decimals){       
+          this.stepCounter++;           
+             console.log("this.stepCounter 3 = = "+this.stepCounter);
+        }
+        
+        if(this.reservedToken){
+           this.nextButtons = true;
+         
+        }
+        if(this.tempVar){
+          this.space=true;
+        }else{
+          this.space=false;
+        }
+        if(this.tempVarDeci){
+          this.decimalValid=true;
+        }else{
+          this.decimalValid=false;
+        }
+        
+      }else if(this.stepCounter===3){                
+      if(this.icowizards.crowdsale.crowdsale.length>=1&&this.inversterMinCap.mincap) {
+         this.stepCounter++; 
+            console.log("this.stepCounter 4 = = "+this.stepCounter);           
+       }         
+           
+        if(this.tierCard){
+          this.nextButtons = true;
+        
+        }
+        if(this.minVarDeci){
+          this.mincap=true;
+        }else{
+          this.mincap=false;
+        }
+        
+      }
+      else if(this.stepCounter===4){
+      window.scrollTo(0, 0);
+      }                       
     }
 }

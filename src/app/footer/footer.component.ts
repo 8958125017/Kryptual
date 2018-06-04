@@ -17,15 +17,15 @@ export class FooterComponent implements OnInit,AfterViewInit {
   public contactDetail:ContactDetail;
   year:any;
   subscribeDetail :any={
-            user_email:''
+            email:''
            }
   constructor(
               private element: ElementRef,
-        private global_service : GlobalService,
-        private http: Http,
-        private route: ActivatedRoute,
-        private router: Router,
-        private fb: FormBuilder,
+              private global_service : GlobalService,
+              private http: Http,
+              private route: ActivatedRoute,
+              private router: Router,
+              private fb: FormBuilder
   	) { 
            this.contactDetail = {
             email:'',
@@ -53,11 +53,10 @@ export class FooterComponent implements OnInit,AfterViewInit {
     }
     subscribeFormInit(){
       this.subscribeForm = this.fb.group({
-            'user_email': new  FormControl('',Validators.compose([Validators.required,Validators.pattern(/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,8}|[0-9]{1,3})(\]?)$/)])),
+            'email': new  FormControl('',Validators.compose([Validators.required,Validators.pattern(/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,8}|[0-9]{1,3})(\]?)$/)])),
         });
     }
-    sendMessage(){
-    
+    sendMessage(){    
          const url = this.global_service.basePath + 'api/contactUs';
          this.global_service.PostRequestUnautorized(url , this.contactDetail)
          .subscribe((response) => {
@@ -76,7 +75,7 @@ export class FooterComponent implements OnInit,AfterViewInit {
          .subscribe((response) => {
           if(response[0].json.status==200){
               this.subscribeForm.reset();
-               this.global_service.showNotification('top','right',response[0].json.message,2,'ti-cross');   
+               this.global_service.showNotification('top','right',response[0].json.message,2,'ti-cross');  
 
              }else{
                this.subscribeForm.reset();
@@ -87,7 +86,7 @@ export class FooterComponent implements OnInit,AfterViewInit {
      }
     
     ngAfterViewInit() {
-
+       window.scrollTo(0, 0);
     }
     fbLink(){
       window.open('https://www.facebook.com',"_blank"); 

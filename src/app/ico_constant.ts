@@ -120,6 +120,11 @@ export const TRUNC_TO_DECIMALS = {
 	DECIMALS18: -18
 }
 
+// Gaurav used for auto logout
+export const sessionTime = {
+ time: 1 //session expire after, time+1 mintutes
+}
+
 export const frontEndURL = 'http://103.201.142.41:90/krptual_dist/#/login'
 // export const reactAppURL = 'http://103.201.142.41:4000/'
 export const reactAppURL = 'http://192.168.0.165:4000/'

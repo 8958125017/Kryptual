@@ -15,8 +15,8 @@
                                             <img class="img" src={{tokenData?.tokenImage}}>
                                             </div>
                                             <div class="col-md-4 paddleft">
-                                                <h4 class="margbottm0 margtop15">{{tokenData?.tokenName}}</h4>
-                                                <span>{{website ? website :'--'}}</span>
+                                                <h4 class="margbottm0 margtop15">{{tokenData?.tokenName}}</h4>                                              
+                                                <span><a href={{website}} target="_blank">{{website}}</a></span>
                                             </div>
                                             <!-- <div class="col-md-4">
                                                 <div class="ico-font-color">
@@ -39,10 +39,11 @@
                             </div>
                             </div>
                         </div>
-                        <!-- <div class="card card-pricing" style="background: #000 !important;" *ngIf="!iframeStatus">
-                        
-                            <iframe src="tokenData.generalInfo.vedio" width="560" height="315" frameborder="0"webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        </div> -->
+
+                        <div class="card card-pricing" style="background: #000 !important;" *ngIf="videosStatus">
+                         <iframe class="whitepaperiframe" [src]="videoUrlLink | safeHtml" width="560" height="315" frameborder="0" allowfullscreen style="float: left;width: 100%;">
+                        </iframe>                         
+                        </div>
                            
                         <!-- Team Start -->
                         <div class="team-1" *ngIf="teamInfoStatus">
@@ -57,17 +58,16 @@
                                     *ngFor="let team of teamInfo">
                                         <div class="card-profile card-plain" style="margin-bottom: 0px;">
                                             <div class="card-avatar" style="margin-bottom: 10px;">
-                                            
-                                                <a >    
+                                                <a>    
                                                  <img class="img img-raised" src={{team.teamImage}}>
                                                 </a>
                                             </div>
                                             <div class="card-body">
                                                 <h4 class="card-title" style="margin-bottom: 15px;">{{team.linkdinName}}</h4>
                                                 <h6 class="category text-success">{{team.designation}}</h6>
-                                               <!--  <div class="card-footer">
-                                                    <a href="{{team.linkdinName}}" class="btn btn-icon btn-success btn-round" target="_blank" (click)="teamLinkdenLInk()"><i class="fa fa-linkedin"></i></a>
-                                                </div> -->
+                                                <div class="card-footer">
+                                                    <a href="{{team.linkdinLink}}" class="btn btn-icon btn-success btn-round" target="_blank" (click)="teamLinkdenLInk()"><i class="fa fa-linkedin"></i></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                         <!-- Road map -->
                         <div class="row" *ngIf="milestoneStatus">
                             <div class="col-md-8 ml-auto mr-auto text-center">
-                                <h2 class="title">Roadmap</h2>
+                                <h2 class="title">Milestone</h2>
                             </div>
                         </div>
                         <div class="row" *ngIf="milestoneStatus">
@@ -136,8 +136,11 @@
                                 <p style="font-weight: bold; margin: 6px; font-size: 14px;"> <i class="fa fa-thumbs-up" style="font-size: 18px; color: #ffa500;"></i> CROWDSALE</p> 
                             </div>
                         </div>
-                       <div class="head-st-rt">
+                      <!--  <div class="head-st-rt">
                             <p style="margin-bottom: -5px; font-size: 15px; margin-left: 15px;font-weight: 500;">{{tokenData?.tokenSupply ? tokenData?.tokenSupply :'--'}} {{tokenData?.tokenTicker}}</p>
+                        </div> -->
+                        <div class="head-st-rt">
+                            <p style="margin-bottom: -5px; font-size: 15px; margin-left: 15px;font-weight: 500;">{{ongoingsupply?.supply ? ongoingsupply?.supply :'--'}}&nbsp;{{tokenData?.tokenTicker}}</p>
                         </div>
                     </div>
                     <div class="en-name1">
@@ -146,8 +149,9 @@
                     </div>
                     <div class="en-name1">
                         <p class="pull-left" style="font-weight: bold;">Goal</p>
-                        <p class="pull-right" style="font-weight: 500;">{{tokenData?.tokenSupply ? tokenData?.tokenSupply :'--'}}</p>
+                        <p class="pull-right" style="font-weight: 500;">{{ongoingsupply?.supply ? ongoingsupply?.supply :'--'}}</p>
                     </div>
+
                     <div class="en-name1">
                         <p class="pull-left" style="font-weight: bold;">Crowdsale Details</p>
                        
@@ -202,7 +206,7 @@
                         </div>
                         
                         <div class="my-bt-card1">
-                            <button (click)="gotToInvest(tokenData._id,tokenData.tokenName,tokenData.tokenAddress)" class="btn btn-primary btn-round pull-center" style="background-color: #fa7132;">Invest </button>
+                            <button (click)="gotToInvest(tokenData._id,tokenData.tokenName,tokenData.tokenAddress)" class="btn btn-primary btn-round pull-center" style="background-color: #fa7132;" [disabled]="investDisable">Invest </button>
                         </div>
                     </div>
                 </div>  

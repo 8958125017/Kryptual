@@ -1,9 +1,7 @@
   import { Component, OnInit,NgModule ,Input,Output, EventEmitter} from '@angular/core';
-  import { EqualValidator } from './../../../Directives/validation.directive';
   import { GlobalService } from './../../../GlobalService';
-  import * as moment from 'moment';
-  import { Router, ActivatedRoute } from '@angular/router';
-  import { AlertService, AuthenticationService ,SetupService,UserService} from '../../../Services/index';
+  import * as moment from 'moment';  import { Router, ActivatedRoute } from '@angular/router';
+
   import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
   import { Http, Headers, RequestOptions, Response  } from '@angular/http';
  import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
@@ -29,10 +27,7 @@ import { MessageService } from './../../../message.service';
                 private http: Http,
                 private route: ActivatedRoute,
                 private router: Router,
-                private fb: FormBuilder,
-                private _setupService: SetupService,
-                private alertService: AlertService,              
-                private userService: UserService ,
+                private fb: FormBuilder,            
                 private global_service:GlobalService,
                 private ng4LoadingSpinnerService: Ng4LoadingSpinnerService,
                 private messgage : MessageService

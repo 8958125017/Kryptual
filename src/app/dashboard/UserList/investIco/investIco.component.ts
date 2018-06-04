@@ -65,70 +65,118 @@ import 'rxjs/add/observable/fromEvent';
    upcommingsix:any=6;
    completesix:any=6;
    tokenLength:any;
+   // changes 
+     x:any;
+   allparam:any;
+   ongoingToken:boolean=false;
+   upcommingToken:boolean=false;
+   completeTimer:any={token : false};
+   completeToken:boolean=false;
+   nofoundStatus:boolean=false;
     constructor(public global_service: GlobalService,public router: Router, public fb:FormBuilder) {
       this.currentDate = moment(new Date()).format("YYYY-MM-DD HH:mm");
       var status = this.global_service.isLogedIn();
          if(status==false){
            this.router.navigateByUrl('/login');
          }
-      this.tokenImage="assets/images/No-preview.png";
+     this.tokenImage="assets/images/No-preview.png";
      this.counter=0;
      this.user=JSON.parse(localStorage.getItem('currentUser'));
-     this.getToken();
-      this.name = `Angular! v${VERSION.full}`
+     this.allparam="all"
+     this.getToken(this.allparam);
+     this.name = `Angular! v${VERSION.full}`
     }
 
-      getToken(){
-        this.tokensList = [];
+      getToken(value:any){    
+        this.nofoundStatus=false;    
+        this.tokensList =[];
         this.onGoingList=[];
-        this.upComming=[];
-        this.expierList=[];
+        this.upComming  =[];
+        this.expierList =[];
 
-       const url = this.global_service.basePath + 'api/getAllTokens';
-             this.global_service.GetRequest(url).subscribe(response=>{
-               debugger
-             $('#loader1').hide();
-              $('#loader2').hide();
-              $('#loader3').hide();
-              $('#loader4').hide();            
-             if(response[0].json.status==200){
-               debugger
-                this.tokenData=response[0].json.data;
-                this.tokenLength=response[0].json.data.length;
-                if(this.tokenLength){
-                  for(var i=0;i<this.tokenData.length;i++){
-                   let objData ={
-                     id:'',
-                     tokenName :'',
-                     tokenTicker:'',
-                     tokenAddress:'',
-                     tokenSupply :'',
-                     startTime:'',
-                     endTime:'',
-                     tokenImage:'',
-                     completeToken:false,
-                     ongingToken:false,
-                     upcommingToken:false
-                  };
-                     objData.id = this.tokenData[i]._id ? this.tokenData[i]._id : '--';
-                     objData.tokenName=this.tokenData[i].tokenName ? this.tokenData[i].tokenName : '--';
-                     objData.tokenTicker=this.tokenData[i].tokenTicker ? this.tokenData[i].tokenTicker :'--';
-                     objData.tokenAddress=this.tokenData[i].tokenAddress ? this.tokenData[i].tokenAddress : '--';
-                     objData.tokenSupply=this.tokenData[i].tokenSupply ? this.tokenData[i].tokenSupply : '--';
-                     objData.tokenImage=this.tokenData[i].tokenImage ? this.tokenData[i].tokenImage : './assets/img/No-preview.png';
-                     objData.startTime=this.tokenData[i].startTime;
-                     objData.endTime=this.tokenData[i].endTime;
-                     this.endtime=this.tokenData[i].endTime;
-                     let newStartDate = new Date(objData.startTime).getTime();
-                     let newEndDate=new Date(objData.endTime).getTime();
-                     let time=new Date().getTime() ;   
-                     if(newEndDate<time){
-                       this.complete=true;
-                       objData.completeToken = true;
-                       objData.ongingToken=false;
-                       objData.upcommingToken=false;
-                       this.expierList.push(objData);                      
-                       if( this.completesix < this.expierList.length)
+       const url = this.global_service.basePath + 'api/getAllTokens?page='+value;
+       this.global_service.GetRequest(url).subscribe(response=>{          
+
+        $('#loader1').hide();
+        $('#loader2').hide();
+        $('#loader3').hide();
+        $('#loader4').hide();           
+        debugger 
+       if(response[0].json.status==200){               
+          this.tokenData=response[0].json.data;
+          this.tokenLength=response[0].json.data.length;      
+          if(this.tokenLength){
+            for(var i=0;i<this.tokenData.length;i++){
+             let objData ={
+               id:'',
+               tokenName :'',
+               tokenTicker:'',
+               tokenAddress:'',
+               tokenSupply :'',
+               startTime:'',
+               tokenRate:'',
+               endTime:'',
+               tokenImage:'',
+               completeToken:false,
+               ongingToken:false,
+               upcommingToken:false
+            };
+               objData.id = this.tokenData[i]._id ? this.tokenData[i]._id : '--';
+               objData.tokenName=this.tokenData[i].tokenName ? this.tokenData[i].tokenName : '--';
+               objData.tokenTicker=this.tokenData[i].tokenTicker ? this.tokenData[i].tokenTicker :'--';
+               objData.tokenAddress=this.tokenData[i].tokenAddress ? this.tokenData[i].tokenAddress : '--';
+               objData.tokenSupply=this.tokenData[i].tokenSupply ? this.tokenData[i].tokenSupply : '--';
+               objData.tokenRate=this.tokenData[i].tokenRate;
+               objData.tokenImage=this.tokenData[i].tokenImage ? this.tokenData[i].tokenImage : './assets/img/No-preview.png';
+               objData.startTime=this.tokenData[i].crowdsale[0].startTime;
+               objData.endTime=this.tokenData[i].crowdsale[this.tokenData[i].crowdsale.length-1].endTime; 
+               
+               if(value=="all"){
+                  //this.nofoundStatus=false;  
+                  $('#loader1').hide();
+                  this.ongoingToken=true;
+                  this.counterDemoforAll(objData,i);
+                  this.nofoundStatus=true;
+                  this.tokensList.push(objData);
+                   if( this.allTokensix < this.tokensList.length)
+                     {
+                        this.seemoreall=true;   
+                        this.tokensList=this.tokensList.slice(0,this.allTokensix);
+                     }else if( this.allTokensix > this.tokensList.length){
+                       this.seemoreall=false;                     
+                     }  
+               }else if(value=="ongoing"){     
+               //this.nofoundStatus=false;            
+                  this.tokensList=[];
+                  this.counterDemo(objData,i);
+                  $('#loader1').hide();
+                  this.nofoundStatus=true;
+                  this.onGoingList.push(objData);
+                          if( this.ongoingsix < this.onGoingList.length)
+                       {
+                        this.seemoreOngoing=true;
+                        this.onGoingList=this.onGoingList.slice(0,this.ongoingsix);
+                      }else if(this.ongoingsix > this.onGoingList.length) {
+                       this.seemoreOngoing=false;
+                     }              
+               } else if(value=="upcomming"){
+                  this.upcommingToken=true;
+                  $('#loader1').hide();
+                  this.nofoundStatus=true;
+                  this.upComming.push(objData);
+                  if( this.upcommingsix < this.upComming.length)
+                     {
+                       this.seemoreUpcomming=true;
+                        this.upComming=this.upComming.slice(0,this.upcommingsix);
+                     }else if( this.upcommingsix > this.upComming.length){
+                       this.seemoreUpcomming=false;                     
+                     }
+               }else if(value=="expire"){
+                  this.completeToken=true;
+                  $('#loader1').hide();
+                  this.nofoundStatus=true;
+                  this.expierList.push(objData);
+                  if( this.completesix < this.expierList.length)
                        {
                         this.seemoreExpired=true;
                         this.expierList=this.expierList.slice(0,this.completesix);
@@ -136,86 +184,54 @@ import 'rxjs/add/observable/fromEvent';
                        {
                         this.seemoreExpired=false;
                        }
-                     }
-                    else if(newStartDate>time){
-                      this.complete=false;
-                      objData.completeToken = false;
-                      objData.upcommingToken=true;                     
-                      this.upComming.push(objData);
-                      if( this.upcommingsix < this.upComming.length)
-                     {
-                       this.seemoreUpcomming=true;
-                        this.upComming=this.upComming.slice(0,this.upcommingsix);
-                     }else if( this.upcommingsix > this.upComming.length){
-                       this.seemoreUpcomming=false;                     
-                     }
-
-                     }else{
-                       this.complete=false;
-                       objData.completeToken = false;
-                       objData.ongingToken=true;
-                       objData.upcommingToken=false;                       
-                       let endTimes=new Date(this.endtime).getTime()  ;                       
-                       objData.endTime=moment(endTimes).format('LL');          
-                       this.onGoingList.push(objData);
-                        if( this.ongoingsix < this.onGoingList.length)
-                     {
-                       this.seemoreOngoing=true;
-                        this.onGoingList=this.onGoingList.slice(0,this.ongoingsix);
-                     }else if(this.ongoingsix > this.onGoingList.length) {
-                       this.seemoreOngoing=false;
-                     }
-                     }
-                        this.tokensList.push(objData);                        
-                    if( this.allTokensix < this.tokensList.length)
-                     {
-                        this.seemoreall=true;   
-                        this.tokensList=this.tokensList.slice(0,this.allTokensix);
-                     }else if( this.upcommingsix > this.tokensList.length){
-                       this.seemoreall=false;                     
-                     }                  
-                 }
-                    
-                } else{
-                this.noToken1=true;
-                }
-
-                if (this.tokensList.length==0){
-                  this.noToken1=true;
-                } else{
-                  this.noToken1=false;
-                }
-                  if(this.onGoingList.length==0){
-                   this.noToken2=true;
-                 }else{
-                   this.noToken2=false;
-                 }
-                 
-                 if(this.upComming.length==0){
-                    this.noToken3=true;
-                  }else{                    
-                     this.noToken3=false;
-                  }
-                     if(this.expierList.length==0){
-                    this.noToken4=true;
-                  }else{ 
-                     this.noToken4=false;
-                  }                  
+               }
+              }    
             }else{
-
-              this.isDataFound = false;
+              this.noToken1=true;
             }
-          })
-       }
-        invest_ICO(value:any){
+          }else{
+               this.isDataFound = false;
+          }
+        })
+      }
+
+        invest_ICO(value:any){         
             // this.global_service.emitEvent("Invest ICO Page", "Click",'Invest button'+ " "+tokenName, 1);
             this.router.navigate(['/dashboard/crowdsale', { 'id': value }]);
         }
-        upcomming_invest_ICO(startDate:any,endDate:any){        
-           let fromDate=moment(startDate).format("YYYY-MM-DD HH:mm");
-           let toDate=moment(endDate).format("YYYY-MM-DD HH:mm");           
-           this.global_service.showNotification('top','right','Crowdsale has not started yet!, crowdsale will be on ' + fromDate +" "+ 'to' +" "+ toDate,2,'ti-cross');
-        }
+
+        // upcomming_invest_ICO(startDate:any,endDate:any){        
+        //    let fromDate=moment(startDate).format("YYYY-MM-DD HH:mm");
+        //    let toDate=moment(endDate).format("YYYY-MM-DD HH:mm");           
+        //    this.global_service.showNotification('top','right','Crowdsale has not started yet!, crowdsale will be on ' + fromDate +" "+ 'to' +" "+ toDate,2,'ti-cross');
+        // }
+
+         seeMore(){
+           if(this.allStatus){
+             this.nofoundStatus=false;
+           this.allTokensix+=this.extra;
+            $('#loader1').show();             
+            this.getToken("all");
+          }
+          if(this.ongoingStatus){
+            this.nofoundStatus=false;
+           this.ongoingsix+=this.extra;
+            $('#loader2').show();             
+            this.getToken("ongoing");
+          }
+          if(this.upcommingStatus){
+            this.nofoundStatus=false;
+           this.upcommingsix+=this.extra;
+            $('#loader3').show();             
+            this.getToken("upcomming");
+          }
+          if(this.expierStatus){
+            this.nofoundStatus=false;
+            this.completesix+=this.extra;
+            $('#loader4').show();
+            this.getToken("expire");
+          }
+      }
         onGoing(){
          this.global_service.emitEvent("Invest ICO Page", "Click", "Ongoing Tab", 1);
          this.onGoingList=[];
@@ -228,7 +244,8 @@ import 'rxjs/add/observable/fromEvent';
          this.seemoreUpcomming=false;
          this.seemoreExpired=false;
          this.seemoreOngoing=false;
-         this.getToken();
+         this.allparam="ongoing"
+         this.getToken(this.allparam);
         }
 
         upCommings(){
@@ -243,7 +260,9 @@ import 'rxjs/add/observable/fromEvent';
          this.seemoreOngoing=false;         
          this.seemoreExpired=false;
          this.seemoreUpcomming=false;
-         this.getToken();
+         this.allparam="upcomming"
+         this.getToken(this.allparam);
+        
         }
 
         expier(){
@@ -258,7 +277,8 @@ import 'rxjs/add/observable/fromEvent';
          this.seemoreOngoing=false;
          this.seemoreUpcomming=false;
          this.seemoreExpired=false;
-         this.getToken();
+         this.allparam="expire"
+         this.getToken(this.allparam);
         }
 
         all(){
@@ -273,28 +293,117 @@ import 'rxjs/add/observable/fromEvent';
          this.seemoreUpcomming=false;
          this.seemoreExpired=false;
          this.seemoreall=false;
-         this.getToken();
+         this.allparam="all"
+         this.getToken(this.allparam);
         }
          ngOnInit() {
 
-         }
-      seeMore(){
-      if(this.allStatus){
-       this.allTokensix+=this.extra;
-        this.getToken();
+        }
+   
+     
+     counterDemo(objectData:any,i:any){                  
+      this.x = setInterval(function() {
+       this.countDownDateExample=new Date(objectData.endTime).getTime();     
+        var now = new Date().getTime();        
+       
+        var distance = this.countDownDateExample - now;
+    
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+       // Output the result in an element with id="demo"
+            var element = document.getElementById("demo"+i);
+              if(element){         
+                 document.getElementById("demo"+i).innerHTML = days + "d " + hours + "h "
+              + minutes  + "m " + seconds + "s (GMT +5:30)";
+              }else{
+                
+                
+              }
+        // If the count down is over, write some text 
+    
+        if (distance < 0) {          
+            clearInterval(this.x);
+            var element = document.getElementById("demo"+i);
+            if(element){
+                   document.getElementById("demo"+i).innerHTML = "Crowdsale Completed";                  
+            }
+          }
+        }, 1000);
       }
-      if(this.ongoingStatus){
-       this.ongoingsix+=this.extra;
-        this.getToken();
-      }
-      if(this.upcommingStatus){
-       this.upcommingsix+=this.extra;
-        this.getToken();
-      }
-      if(this.complete){
-       this.completesix+=this.extra;
-        this.getToken();
+  
+
+      counterDemoforAll(objectData:any,i:any){  
+      i=++i
+       if(this.allStatus==true)
+         i = i+'a'
+         else if(this.ongoingStatus==true) 
+         i = i+'o'
+        else if(this.upcommingStatus==true) 
+         i = i+'u'
+         var end=new Date(objectData.endTime).getTime();
+      // console.log("--------------------------------------",typeof this.countDownDateExample)
+        // Get todays date and time
+        var now = new Date().getTime();
+        
+        // Find the distance between now an the count down date
+        var distances1 = end - now;
+    
+       if(distances1>0)
+        {
+        objectData.ongingToken  = true;   
+        if(new Date(objectData.startTime).getTime()-now>0)
+          {
+             objectData.upcommingToken = true;
+             objectData.ongingToken  = false;
+          }
+        }
+        else{
+          objectData.completeToken = true;
+        }                
+       var self = this; 
+      this.x = setInterval(function() {
+       this.countDownDateExample=new Date(objectData.endTime).getTime();     
+        var now = new Date().getTime();        
+       
+        var distance = this.countDownDateExample - now;
+       
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+       // Output the result in an element with id="demo"
+            var element = document.getElementById("demoall"+i);
+              if(element){
+           //     console.log("iiiiiiiiiiiiiiiiiii:::::::::::::::::::",+i);
+                 document.getElementById("demoall"+i).innerHTML = days + "d " + hours + "h "
+              + minutes  + "m " + seconds + "s (GMT +5:30)";
+               self.completeTimer.token=false;
+              }else{
+                
+                
+              }
+        // If the count down is over, write some text 
+        // alert("distance = = "+distance);
+        if (distance < 0) { 
+                 
+            clearInterval(this.x);
+            var element = document.getElementById("demoall"+i);
+            if(element){
+                   document.getElementById("demoall"+i).innerHTML = "Crowdsale Completed";
+                   
+                    self.completeTimer.token=true;
+            }
+          }
+        }, 1000);
       }
 
-  }
+      ngAfterViewInit() {
+       window.scrollTo(0, 0);
+        
+   }
+      
 }

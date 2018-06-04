@@ -127,8 +127,14 @@
                         });
                     }
 
-                    checkAddress(){
-
+                    checkAddress(){                                           
+                         if(this.sendTokenDetail.toAddress[0]!=='0'||this.sendTokenDetail.toAddress[1]!=='x'){
+                        this.global_service.showNotification('top','right','address should start from 0x',4,'ti-cross');
+                         return;
+                       }else if(this.sendTokenDetail.toAddress.length<42){
+                     this.global_service.showNotification('top','right','address length should be 42',4,'ti-cross');
+                         return;
+                           }
                          if(this.crowdsaleAddress){
                            $('#noticeModa1232').modal('show');
                          }else{
@@ -185,6 +191,11 @@
                            }
                      })
                  }
+                 enteronsend(event){
+                   if(event.keyCode === 13){
+                                      this.sendTokens();
+                                     }
+                 }
 
                  withdrawFormInit() {
                      this.sendTokenForm = this.fb.group({
@@ -193,12 +204,22 @@
                      });
                  }
                  eventHandler(e) {
+                  this.enteronsubmit(e);
                   if(!((e.keyCode > 95 && e.keyCode < 106)
                     || (e.keyCode > 45 && e.keyCode < 58)
                     || e.keyCode == 8)) {
                       return false;
                   }
                   }
+                  enteronsubmit(event){                    
+                    if(this.sendTokenDetail.toAddress&&this.sendTokenDetail.amount){
+                                  if(event.keyCode === 13){
+                                      this.checkAddress();
+                                     } 
+
+                                   }
+                                            
+                           }
 
                  passwordFormInit() {
                      this.passwordForm = this.fb.group({

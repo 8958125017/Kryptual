@@ -4,10 +4,9 @@
   import { Http, Headers, RequestOptions, Response  } from '@angular/http';
   import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
   import * as moment from 'moment';
-  import { EqualValidator } from './../../../Directives/validation.directive';
   import { GlobalService } from './../../../GlobalService';
   import { TableData } from './../../../md/md-table/md-table.component';
-  import { AlertService, AuthenticationService ,SetupService,UserService} from '../../../Services/index';
+  
   declare const $: any;
   declare const paypal: any;
    import  * as ico   from'./../../../ico_constant';
@@ -90,7 +89,9 @@ import { Observable } from 'rxjs/Rx';
     completesix:any=6;
     deleteTokenid:any;
     whitepaperStatus:boolean=false;
-   teamStatus:boolean=false;
+    teamStatus:boolean=false;
+    totalTokenSupply : number = 0;     
+    allparam:any;
 
    // paypalButtonStatus:boolean=true;
     text:any = {
@@ -125,8 +126,7 @@ import { Observable } from 'rxjs/Rx';
                 private router: Router,
                 private fb: FormBuilder,
                 private global_service:GlobalService,
-                private activatedRoute: ActivatedRoute,
-                private _setupService: SetupService,
+                private activatedRoute: ActivatedRoute,              
                 private ng4LoadingSpinnerService: Ng4LoadingSpinnerService
                )
                {
@@ -152,7 +152,7 @@ import { Observable } from 'rxjs/Rx';
                    this.getEthereumFromUSD();
                    this.getBalance();
                    this.getTransactionsByAccount();
-                   this.getTokenByUserId();
+                   this.getToken("ongoing");
                    // this.getTokenBalanceByAddress();
                   }
                    this.tokenInfo();
@@ -204,7 +204,7 @@ import { Observable } from 'rxjs/Rx';
                }
             }
              minus(e){
-                 // debugger;
+               
                  //      if (e.keyCode === 190 ) {
                  //          return false;
                  //      }
@@ -319,7 +319,8 @@ import { Observable } from 'rxjs/Rx';
          }
        }
 
-      Ongoing(){       
+      Ongoing(){  
+      $('#loader1').show();     
          this.global_service.emitEvent("Dashbard Page", "Click", "Ongoing Tab", 1);
          this.currentToken =[];
          this.ongoing = true;
@@ -330,11 +331,12 @@ import { Observable } from 'rxjs/Rx';
          this.seemoreIncomplete=false;
          this.seemoreUpcomming=false;
          this.seemoreExpired=false;
-         this.seemoreOngoing=false;
-         this.getTokenByUserId();
+         this.seemoreOngoing=false;         
+         this.getToken("ongoing");
       }
 
-      Completed(){       
+      Completed(){  
+      $('#loader3').show();     
         this.global_service.emitEvent("Dashbard Page", "Click", "Completed Tab", 1);
         this.completedToken =[];
         this.ongoing = false;
@@ -346,10 +348,11 @@ import { Observable } from 'rxjs/Rx';
         this.seemoreUpcomming=false;
         this.seemoreExpired=false;
         this.seemoreOngoing=false;
-        this.getTokenByUserId();
+        this.getToken("expire");
 
      }
-     upcomming(){        
+     upcomming(){ 
+     $('#loader2').show();       
        this.global_service.emitEvent("Dashbard Page", "Click", "Upcomming Tab", 1);
         this.upcommingToken =[];
         this.upcommings=true;
@@ -361,13 +364,14 @@ import { Observable } from 'rxjs/Rx';
         this.seemoreUpcomming=false;
         this.seemoreExpired=false;
         this.seemoreOngoing=false;
-        this.getTokenByUserId();
+        this.getToken("upcomming");
 
      }
 
-     InCompleted(){        
+     InCompleted(){ 
+     $('#loader4').show();       
        this.global_service.emitEvent("Dashbard Page", "Click", "Incompleted Tab", 1);
-       this.incompleteICO=[]
+       this.incompleteICO=[];
        this.ongoing = false;
        this.upcommings=false;
        this.complete = false;
@@ -383,21 +387,24 @@ import { Observable } from 'rxjs/Rx';
      }
 seeMore(){
   if(this.incomplete){
-     $('#loader3').show(); 
+     $('#loader4').show(); 
    this.incompletesix+=this.extra;
     this.getIncompleteICO();
   }
   if(this.ongoing){
+    $('#loader1').show();
    this.ongoingsix+=this.extra;
-    this.getTokenByUserId();
+    this.getToken("ongoing");
   }
   if(this.upcommings){
+    $('#loader2').show();
    this.upcommingsix+=this.extra;
-    this.getTokenByUserId();
+    this.getToken("upcomming");
   }
   if(this.complete){
+    $('#loader3').show();
    this.completesix+=this.extra;
-    this.getTokenByUserId();
+    this.getToken("expire");
   }
   
 }
@@ -414,127 +421,176 @@ makeCrowedSaleFinal(data:any){
        });
     }
 
-    // get token by user id
+    //......................................................................
+    tokenData:any[]=[];
+    x:any;
+    j:any=0;
 
-    getTokenByUserId(){
+
+     cadd:any;
+     getToken(value:any){        
+       let postData ={
+          userId : this.user._id,
+      };
+      this.tokenData =[];        
       this.completedToken =[];
       this.currentToken =[];
       this.upcommingToken=[];
-      let postData ={
-          userId : this.user._id,
-      };
+        const url = this.global_service.basePath + 'ETH/getTokenByUserId?page='+value;
+          this.global_service.PostRequest(url , postData).subscribe(response=>{ 
+             if(response[0].json.status==200){
+                this.tokenData=response[0].json.json().data;               
+                if(response[0].json.json().data.length)
+                {
+                  for(var i=0;i<this.tokenData.length;i++){ 
+                  //this.j=i;                     
+                   let objData ={
+                     id:'',
+                     tokenName :'',
+                     tokenTicker:'',
+                     tokenAddress:'',
+                     tokenSupply :'',
+                     startTime:'',
+                     tokenRate:'',
+                     endTime:'',
+                     tokenImage:'',
+                     crowedsaleAdress:'',
+                     completeToken:false,
+                     ongingToken:false,
+                     upcommingToken:false
+                  };
+                     objData.id = this.tokenData[i]._id ? this.tokenData[i]._id : '--';
+                     objData.tokenName=this.tokenData[i].tokenName ? this.tokenData[i].tokenName : '--';
+                     objData.tokenTicker=this.tokenData[i].tokenTicker ? this.tokenData[i].tokenTicker :'--';
+                     objData.tokenAddress=this.tokenData[i].tokenAddress ? this.tokenData[i].tokenAddress : '--';
+                     objData.tokenSupply=this.tokenData[i].tokenSupply ? this.tokenData[i].tokenSupply : '--';
+                     objData.tokenRate=this.tokenData[i].tokenRate;
+                     objData.tokenImage=this.tokenData[i].tokenImage ? this.tokenData[i].tokenImage : './assets/img/No-preview.png';
+                     objData.startTime=this.tokenData[i].crowdsale[0].startTime;
+                     objData.endTime=this.tokenData[i].crowdsale[this.tokenData[i].crowdsale.length-1].endTime; 
+                     objData.crowedsaleAdress=this.tokenData[i].crowdsaleAddress;
+                     
+                      if(value=="ongoing"){
+                       this.counterDemo(objData,i);
+                       }   
+                       if(value=="expire"){
+                       this.makeCrowedSaleFinal(objData.crowedsaleAdress);
+                       }                   
+                     
+             
+                 }   
 
-    const url = this.global_service.basePath + 'ETH/getTokenByUserId';
-    this.global_service.PostRequest(url , postData).subscribe(response=>{
-    $('#loader1').hide();
-    $('#loader2').hide();
-    debugger
-    if(response[0].json.status == 200)
-      {
+                        if(value=="ongoing"){
+                              $('#loader1').hide();
+                             this.currentToken=this.tokenData;
+                             this.ongoing=true;
+                             this.ongoingTokenStatus=false;
+                            if(this.currentToken.length===6){
+                                  this.seemoreOngoing=false; 
+                             }
+                            else if( this.ongoingsix > this.currentToken.length) {
+                                    this.seemoreOngoing=false;                                                         
+                             }else if(this.ongoingsix <this.currentToken.length) {
+                                this.seemoreOngoing=true;
+                                this.currentToken=this.currentToken.slice(0,this.ongoingsix);
+                              }
+                                              
+
+                               }else if(value=="upcomming"){
+                                  $('#loader2').hide();
+                                  this.upcommingToken=this.tokenData;
+                                  this.upcommings=true;
+                                  this.upcommingTokenStatus=false;
+                                 if(this.upcommingToken.length===6){
+                                      this.seemoreUpcomming=false; 
+                                 }
+                                else if( this.upcommingsix > this.upcommingToken.length) {
+                                        this.seemoreUpcomming=false;                                                         
+                                 }else if(this.upcommingsix <this.upcommingToken.length) {
+                                    this.seemoreUpcomming=true;
+                                    this.upcommingToken=this.upcommingToken.slice(0,this.upcommingsix);
+                                  }
+
+
+                               }else if(value=="expire"){
+                                  $('#loader3').hide();
+                            // alert("this.tokenData"+this.cadd);
+                            //this.makeCrowedSaleFinal(objData.crowedsaleAdress);
+                             this.completedToken=this.tokenData;
+                             this.complete=true;
+                             this.completeTokenStatus=false;
+                             if(this.completedToken.length===6){
+                                  this.seemoreExpired=false; 
+                             }
+                            else if( this.completesix > this.completedToken.length) {
+                                    this.seemoreExpired=false;                                                         
+                             }else if(this.completesix <this.completedToken.length) {
+                                this.seemoreExpired=true;
+                                this.completedToken=this.completedToken.slice(0,this.completesix);
+                              }
+
+                               }
+
+                    
+                } else{
+                          this.seemoreOngoing=false;
+                          this.seemoreUpcomming=false;;
+                          this.seemoreExpired=false;
+                           if(value=="ongoing"){  
+                           $('#loader1').hide();                           
+                             this.ongoing=true;
+                             this.ongoingTokenStatus=true;                             
+                               }else if(value=="upcomming"){
+                                 $('#loader2').hide();
+                             this.upcommings=true;
+                             this.upcommingTokenStatus=true;                             
+                               }else if(value=="expire"){
+                                 $('#loader3').hide();
+                             this.complete=true;
+                             this.completeTokenStatus=true;                             
+                               }
+                }
+            }else{
+             
+            }
+          })
+       }
+
+     counterDemo(objectData:any,i:any){
+      // window.clearInterval(this.x);              
+      this.x = setInterval(function() {
+       this.countDownDateExample=new Date(objectData.endTime).getTime();     
+        var now = new Date().getTime();        
+        // Find the distance between now an the count down date
+        var distance = this.countDownDateExample - now;
+       /// console.log("this.countDownDateExample,now::::",this.countDownDateExample,now,i, distance)
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
         
-        if(response[0].json.json().data){     
-   
-        if(response[0].json.json().data.length!=0)
-          {
-          
-            for(var data of response[0].json.json().data)
-            {
-             this.enddate=moment(data.endTime).format('LL');
-             this.lastDate=moment(data.endTime).format("YYYY-MM-DD HH:mm");
-              
-              let newStartDate = new Date(data.startTime).getTime() ;
-              let newEndDate=new Date(data.endTime).getTime();
-              let time=new Date().getTime() ;
-
-              data.endTime = this.enddate;
-
-             if((newStartDate<time) && (newEndDate < time))
-             {
-               
-                this.noImageForcurrentToken=false;
-                this.makeCrowedSaleFinal(data.crowdsaleAddress);               
-                this.completedToken.push(data);
-                if( this.completesix < this.completedToken.length)
-                     {
-                        this.seemoreExpired=true;
-                        this.completedToken=this.completedToken.slice(0,this.completesix);
-                     }else if(this.completesix > this.completedToken.length){
-                           this.seemoreExpired=false;
-                     }
-
-             }
-
-             else  if((newStartDate<time) && (newEndDate>time) && (newEndDate-time)>0 && (time-newStartDate) >0)
-             {
-               
-               this.currentToken.push(data);
-                if( this.ongoingsix < this.currentToken.length)
-                     {
-                        this.seemoreOngoing=true;
-                        this.currentToken=this.currentToken.slice(0,this.ongoingsix);
-                     }else if(this.ongoingsix > this.currentToken.length) {
-                       this.seemoreOngoing=false;
-                     }
-
-
-             }else if (newStartDate>time){
-                this.upcommingToken.push(data);
-                if( this.upcommingsix < this.upcommingToken.length)
-                     {
-                       this.seemoreUpcomming=false;
-                        this.upcommingToken=this.upcommingToken.slice(0,this.upcommingsix);
-                     }else if( this.upcommingsix > this.upcommingToken.length){
-                       this.seemoreUpcomming=false;                     
-                     }
-             }            
-                data.tokenImage=data.tokenImage;
-              
-            }         
-            if (this.completedToken.length)
-              {
-              this.completeTokenStatus=false;
-
+       // Output the result in an element with id="demo"
+            var element = document.getElementById("demo5"+i);
+              if(element){
+           //     console.log("iiiiiiiiiiiiiiiiiii:::::::::::::::::::",+i);
+                 document.getElementById("demo5"+i).innerHTML = days + "d " + hours + "h "
+              + minutes  + "m " + seconds + "s (GMT +5:30)";
               }else{
-               this.completeTokenStatus=true;
+                
+                // alert("Hello else");
               }
-
-             if (this.currentToken.length)
-              {
-               this.ongoingTokenStatus=false;
-
-             }else{
-               // this.seemore=false;
-               this.ongoingTokenStatus=true;
-             }
-             if (this.upcommingToken.length)
-              {
-               this.upcommingTokenStatus=false;
-             }else{
-               this.upcommingTokenStatus=true;
-             }
-
+        // If the count down is over, write some text 
+        //alert("distance = = "+distance);
+        if (distance < 0) {          
+            clearInterval(this.x);
+            var element = document.getElementById("demo5"+i);
+            if(element){
+                   document.getElementById("demo5"+i).innerHTML = "Crowdsale Completed";
+            }
           }
-        else
-        { 
-          // this.seemore=false;
-          this.completeTokenStatus=true;
-          this.ongoingTokenStatus=true;
-          this.upcommingTokenStatus=true;
-         
-        }
-      }else{
-        // this.seemore=false;
-        this.ongoingTokenStatus=true;
-        this.completeTokenStatus=true;
-        this.upcommingTokenStatus=true;
+        }, 1000);
       }
-      }
-      else
-      {
-            alert("No Data found");
-      }
-    })
-    }
 
         // get completeICO
 
@@ -542,25 +598,24 @@ makeCrowedSaleFinal(data:any){
       let postData={
          userId:this.user._id
       }
-      this.incompleteICO=[]
+      this.incompleteICO=[];
       const url = this.global_service.basePath + 'api/inCompleteICO';
       this.global_service.PostRequest(url,postData).subscribe(response=>{
-         $('#loader3').hide();       
-          debugger
+         $('#loader4').hide();       
+       
             if(response[0].json.status==200)
               {
-                 
-                 if(response[0].json.json().data.length!=0)
+                 let res =  response[0].json.json().data;
+                 if(res.length!=0)
                 {
-                
-                    for(var data of response[0].json.json().data)
+                    for(var data of res[0].crowdsale.crowdsale)
                       {
-                         // if(!data.crowdsale.image.length){
-                         //   data.crowdsale.image="assets/img/No-preview.png";
-                         // }
-                         this.incompleteICO=response[0].json.json().data;
+                         this.totalTokenSupply = this.totalTokenSupply + parseInt(data.supply);
                          console.log("this.incompleteICO = = "+JSON.stringify(this.incompleteICO[2]));
                      }
+
+                     this.incompleteICO=response[0].json.json().data;
+
                      if( this.incompletesix < this.incompleteICO.length)
                      {
                         this.seemoreIncomplete=true;
@@ -791,7 +846,7 @@ getTokenBalanceAndName(){
         });
     }
 
-    getTokenInfoByTokenId(value:any){
+    getTokenInfoByTokenId(value:any){      
       this.ng4LoadingSpinnerService.show();
       this.updateTokenForm.reset();
       this.editToken_Id=value;
@@ -802,9 +857,9 @@ getTokenBalanceAndName(){
                   tokenId:value
                };
            const url = this.global_service.basePath + 'Eth/getTokenInfoByTokenId';
-           this.global_service.PostRequest(url , postData).subscribe(response=>{
-            if(response[0].status==200){
-               this.ng4LoadingSpinnerService.hide();
+           this.global_service.PostRequest(url , postData).subscribe(response=>{             
+              this.ng4LoadingSpinnerService.hide();
+            if(response[0].json.json().status==200){              
                 var data = response[0].json.json().data;
                   if(!data.tokenImage)
                      this.updateDetails.editTokenImage="assets/img/No-preview.png";                   
@@ -852,7 +907,7 @@ getTokenBalanceAndName(){
            const url = this.global_service.basePath + 'ETH/updateTokenInformationByTokenId';
            this.global_service.PostRequest(url , postData).subscribe(response=>{
             if(response[0].status==200){
-              this.getTokenByUserId();
+              this.getToken("ongoing");
               this.updateTokenForm.reset();
               this.global_service.showNotification('top','right',response[0].json.json().message,2,'ti-cross');
              }else{
@@ -923,7 +978,9 @@ this.deleteTokenid=value;
                this.ng4LoadingSpinnerService.hide();
             if(response[0].json.status==200){
                this.global_service.showNotification('top','right',response[0].json.json().message,2,'ti-cross');
-               this.getTokenByUserId();
+               if(this.ongoing){this.Ongoing();}
+               if(this.upcommings){this.upcomming();}
+               if(this.complete){this.Completed();}               
             }else{
               this.global_service.showNotification('top','right',response[0].json.json().message,2,'ti-cross');
             }
@@ -941,7 +998,7 @@ this.deleteTokenid=value;
                this.ng4LoadingSpinnerService.hide();
             if(response[0].json.status==200){
                this.global_service.showNotification('top','right',response[0].json.json().message,2,'ti-cross');
-               this.getIncompleteICO();
+               this.InCompleted();
             }else{
               this.global_service.showNotification('top','right',response[0].json.json().message,2,'ti-cross');
             }
