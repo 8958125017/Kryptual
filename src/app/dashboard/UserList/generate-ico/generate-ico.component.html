@@ -65,7 +65,7 @@
                                                 <label>COMPANY NAME
                                                     <sup style="color: red">*</sup>
                                                 </label>
-                                                <input name="company" [(ngModel)]="generalInfo.company" type="text" class="form-control" (blur)="onCompanyName(generalInfo.company)">
+                                                <input name="company" [(ngModel)]="generalInfo.company" type="text" class="form-control" (blur)="onCompanyName(generalInfo.company)" minlength="3" maxlength="50">
                                                 <div *ngIf="cmpStatus">
                                                         <span class="small" style="color:red;">Must be a valid URL!</span>
                                                     </div>
@@ -81,7 +81,7 @@
                                                 <label>DESCRIPTION
                                                     <sup style="color: red">*</sup>
                                                 </label>
-                                                <input name="description" [(ngModel)]="generalInfo.description" type="text" class="form-control">
+                                                <input name="description" [(ngModel)]="generalInfo.description" type="text" class="form-control" minlength="20" maxlength="100">
                                                 <div *ngIf="discStatus">
                                                         <span class="small" style="color:red;">Must be a valid URL!</span>
                                                 </div>
@@ -490,7 +490,7 @@
                                                     <label>NAME
                                                         <sup style="color: red">*</sup>
                                                     </label>
-                                                    <input name="name" [(ngModel)]="token.name" style='text-transform:uppercase' type="text" class="form-control" (blur)="ontokenName(token.name)">
+                                                    <input name="name" [(ngModel)]="token.name" style='text-transform:uppercase' type="text" class="form-control" (blur)="ontokenName(token.name)" maxlength="15">
                                                     <div >
                                                         <span class="small" *ngIf="space">Sorry, you are not allowed to enter any spaces</span>
                                                         <span class="small" *ngIf="tokensStatuss">Please enter the tier name..</span>

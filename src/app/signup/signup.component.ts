@@ -81,7 +81,7 @@ export class SignupComponent implements OnInit {
             'email': new FormControl('',Validators.compose([Validators.required,Validators.pattern(/^[a-zA-Z][-_.a-zA-Z0-9]{3,29}\@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,15}|[0-9]{1,3})(\]?)$/)])),
             'password': new FormControl('',Validators.compose([Validators.required,Validators.minLength(6), Validators.maxLength(16),Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,100})/)])),
             'confirmPassword':new FormControl('', Validators.required),
-            'captcha': new FormControl(''),
+            'recaptchaReactive': new FormControl(null, Validators.required),
             'referralUser':new FormControl(''),
             'investorCode':new FormControl(''),
         }, { validator: this.matchingPasswords('password', 'confirmPassword') });

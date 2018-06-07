@@ -51,41 +51,40 @@
                                                         <div class="col-sm-7">
                                                             <div class="form-group label-floating is-empty">
                                                                 <label class="control-label"></label>
-                                                                <!--             <input  class="form-control ng-untouched ng-pristine ng-valid" disabled=""
-                                       formcontrolname="email" 
-                                        
-                                       type="text" value={{referData}}> -->
+                                               
                                                                 <input class="form-control" disabled="" name="coupon" type="text" value={{referData}}>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="social-reff">
-                                                        <ul>
-                                                            <li>
-                                                                <button  scope="public_profile,email"
-  onlogin="checkLoginState();" class="btn btn-just-icon btn-round btn-facebook" >
-                                                                    <i class="fa fa-facebook"> </i> </button>
-                                                            </li>
-                                                            <li>
-                                                                <button class="btn btn-just-icon btn-round btn-google" (click)="signIn('google')">
-                                                                    <i class="fa fa-google"> </i>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button class="btn btn-just-icon btn-round btn-linkedin" (click)="signIn('linkedin')">
-                                                                    <i class="fa fa-linkedin"></i>
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <button class="btn btn-just-icon btn-round btn-twitter" (click)="signIn('twitter')">
-                                                                    <i class="fa fa-twitter"></i>
-                                                                </button>
-                                                            </li>
-    <!-- <fb:login-button 
-  scope="public_profile,email"
-  onlogin="checkLoginState();">
-</fb:login-button> -->
-                                                        </ul>
+
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'facebook'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                   [icon]="faFacebookSquare"
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'twitter'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'google'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'linkedin'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'pinterest'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+
                                                     </div>
                                                 </div>
                                             </div>

@@ -47,8 +47,8 @@ export class FooterComponent implements OnInit,AfterViewInit {
             'name': new FormControl('', Validators.required),
             'email': new FormControl('',Validators.compose([Validators.required,Validators.pattern(/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,8}|[0-9]{1,3})(\]?)$/)])),
             'message': new FormControl('', Validators.required),
-            'subject': new FormControl('', Validators.required),
-            'captcha': new FormControl('')
+            'subject': new FormControl('', Validators.required),           
+            'recaptchaReactive': new FormControl(null, Validators.required)
         });
     }
     subscribeFormInit(){

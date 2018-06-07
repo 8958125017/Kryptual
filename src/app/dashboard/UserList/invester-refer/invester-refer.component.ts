@@ -7,11 +7,7 @@ import * as moment from 'moment';
 import { GlobalService } from './../../../GlobalService';
 import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
 import { AuthService } from "angular2-social-login";
-import { FacebookParams} from './FacebookParams';
-import { GooglePlusParams} from './GooglePlusParams';
-import { LinkedinParams} from './LinkedinParams';
-import { PinterestParams} from './PinterestParams';
-import { TwitterParams} from './TwitterParams';
+
 
 
 
@@ -30,7 +26,7 @@ sub : any;
 coupenStatus:boolean=true;
 linkStatus:boolean=false;
 kryptualPoints:any;
-
+socialUrl:any;
     constructor(
         private router: Router,
         private global_service : GlobalService,
@@ -42,8 +38,8 @@ kryptualPoints:any;
           if(status==false){
            this.router.navigateByUrl('/login');
           }
-      this.user=JSON.parse(localStorage.getItem('currentUser'));
-       this.getPoints();
+        this.user=JSON.parse(localStorage.getItem('currentUser'));
+      
                 if(this.user!=null||this.user!=undefined)
                    {
                       if(this.user.accountType == "Investor")
@@ -53,9 +49,14 @@ kryptualPoints:any;
                       {
                         this.accountType=true;
                       }
-                   this.refferalCall();
-                  
+                      debugger;
+                  this.socialUrl="http://52.66.185.83/#/sharepoints?userId="+this.user._id ;
+                //    this.socialUrl= window.location.host+"/#/sharepoints?userId="+this.user._id ;
+                  // this.socialUrl=this.global_service.basePath + '#/sharepoints?userId='+this.user._id ;
                   }
+                    this.refferalCall();
+                     this.getPoints();
+                  
 
     }
 

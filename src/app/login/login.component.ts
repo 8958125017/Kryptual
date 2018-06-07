@@ -3,7 +3,6 @@ declare var $: any;
 import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
 import { FormsModule, FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { Http, Headers, RequestOptions, Response  } from '@angular/http';
-import { ToasterContainerComponent, ToasterService, ToasterConfig} from 'angular2-toaster';
 import { GlobalService } from '../GlobalService';
 import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
 import * as moment from 'moment';
@@ -33,9 +32,9 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder,       
-        private global_service : GlobalService,       
+        private global_service : GlobalService,  
         private element: ElementRef,
-        public toasterService:ToasterService,
+
         private ng4LoadingSpinnerService: Ng4LoadingSpinnerService
         )   { 
             this.year=moment(new Date()).format('YYYY');
@@ -43,8 +42,8 @@ export class LoginComponent implements OnInit {
             this.sidebarVisible = false;
             this.http = http;
             this.loginDetail = {           
-            email:'',
-            password: '',
+                email:'',
+                password: '',
            }
              this.router.events.subscribe(event => {
              if (event instanceof NavigationEnd) {
@@ -55,8 +54,10 @@ export class LoginComponent implements OnInit {
          }
 
         ngOnInit() {       
-        this.loginFormInit();             
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+        this.loginFormInit();
+            
+      
          var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
 

@@ -13,7 +13,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { ResellerComponent } from './resellerHome/resellerHome.component';
 import { ListicoComponent } from './list-ico/list-ico.component';
 import { UndermaintenanceComponent } from './undermaintenance/undermaintenance.component';
-
+import { SharepointsComponent } from './sharepoints/sharepoints.component';
 
 export const AppRoutes: Routes = [
     {
@@ -72,6 +72,9 @@ export const AppRoutes: Routes = [
     {
         path: 'undermaintenance',
         component: UndermaintenanceComponent
+    },
+    {   path: 'sharepoints',        
+        component: SharepointsComponent   
     }
 ];
 

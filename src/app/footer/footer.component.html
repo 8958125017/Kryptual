@@ -89,9 +89,9 @@
                                             </div>
                                         </div>
                                         <div class="footer text-center ">
-                                            <div class="col-md-6 " style="    margin-left: 11%;">
-                                                <re-captcha (resolved)="resolved($event)" formControlName="captcha" siteKey="6LdAm04UAAAAABRwz2yNS5P2yLKpxxL47nDqN_sT"></re-captcha>
-                                               <!--  <re-captcha (resolved)="resolved($event)"  siteKey="6LdAm04UAAAAABRwz2yNS5P2yLKpxxL47nDqN_sT"></re-captcha> -->
+                                            <div class="col-md-6 " style="    margin-left: 11%;">                                                
+                                                 <re-captcha  formControlName="recaptchaReactive" ></re-captcha>
+                                              
                                             </div>
                                             <div class="col-md-12 ">
                                                 <button class="btn btn-primary btn-round " [disabled]="!contactForm.valid" (click)="sendMessage(contactForm.value)">Send Message</button>

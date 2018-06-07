@@ -58,15 +58,16 @@ export class AppComponent implements OnInit{
                     userId: JSON.parse(localStorage.getItem('currentUser'))._id
                 };
                 const url = self.global_service.basePath + 'api/logout';
+                clearInterval(idleInterval); 
                 self.global_service.PostRequest(url, postData).subscribe(response => {
                   self.global_service.showNotification('top','right','Your session has expired due to inactivity',2,'ti-cross');
                     if (response[0].json.status == 200) {                        
                         localStorage.clear();
                         localStorage.removeItem('currentUser');
                         localStorage.removeItem('token');
-                        localStorage.removeItem('token_link');
-                        clearInterval(idleInterval);                        
+                        localStorage.removeItem('token_link');                                               
                         self.router.navigateByUrl('/login');
+                        window.location.reload();
                     } else {
                       
                     }

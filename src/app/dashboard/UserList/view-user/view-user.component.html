@@ -630,7 +630,7 @@
                                                     </span>
                                                     <div class="form-group label-floating" style="text-align: left;">
                                                         <label>Eth Address</label>
-                                                        <input class="form-control ng-untouched ng-pristine ng-valid" formControlName="toAddress" [(ngModel)]="withdrawDetails.toAddress"
+                                                        <input (blur)="addressValidate(withdrawDetails.toAddress)" class="form-control ng-untouched ng-pristine ng-valid" formControlName="toAddress" maxlength="42" [(ngModel)]="withdrawDetails.toAddress"
                                                             type="text" value="" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
                                                     </div>
                                                 </div>
@@ -671,7 +671,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12 text-center">
-                                                <button type="button" class="btn btn-success btn-round" data-dismiss="modal" [disabled]="!withDrawForm.valid" (click)="sendTransaction()">SUBMIT</button>
+                                                <button type="button" class="btn btn-success btn-round" data-dismiss="modal" [disabled]="!withDrawForm.valid || validateButton" (click)="sendTransaction()">SUBMIT</button>
                                             </div>
                                             <!-- <div class="col-sm-12">
 <button type="button" class="btn btn-success btn-round" data-dismiss="modal" (click)="onCancel()">CANCEL</button>

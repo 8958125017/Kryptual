@@ -34,9 +34,11 @@ import { MessageService } from './message.service';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { Safe,TruncatePipe} from './Pipes/pipe';
-import { RecaptchaModule } from 'ng-recaptcha';
+import { RecaptchaModule ,RECAPTCHA_SETTINGS } from 'ng-recaptcha';
+import {RecaptchaFormsModule} from 'ng-recaptcha/forms';
 declare let ga: Function;
-
+import { SharepointsComponent } from './sharepoints/sharepoints.component';
+import { ShareButtonModule } from '@ngx-share/button';
 let providers ={
     // "google": {
     //            "clientId": "230815267664643",
@@ -48,7 +50,7 @@ let providers ={
     //            },
     "facebook":
                {
-                    "clientId": "230815267664643",
+                 "clientId": "230815267664643",
                  "secretId" : "2c81eac86dca6cd36f4a02ffa2ccaac7",
                  "apiVersion": 'v2.10'
               }
@@ -77,7 +79,8 @@ let providers ={
     ResellerComponent,
     UndermaintenanceComponent,
     HeaderComponent,
-    FooterComponent,    
+    FooterComponent,   
+    SharepointsComponent, 
     Safe,
     TruncatePipe
   ],
@@ -94,13 +97,15 @@ let providers ={
     ReactiveFormsModule,
     ToasterModule.forRoot(),
     RecaptchaModule.forRoot(),
+    RecaptchaFormsModule,
     HttpModule,
     HttpClientModule,
     ScrollToModule,
     BrowserModule, 
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
-    
+    ShareButtonModule.forRoot()
+
   ],
 
   providers: [
@@ -116,6 +121,14 @@ let providers ={
                  LocationStrategy,
                  useClass: HashLocationStrategy
              },
+
+              {
+             provide: RECAPTCHA_SETTINGS,
+              useValue: { 
+                siteKey: '6LdAm04UAAAAABRwz2yNS5P2yLKpxxL47nDqN_sT',
+                          } 
+             },
+
              DatePipe,Safe,TruncatePipe],
   bootstrap: [AppComponent],
 })

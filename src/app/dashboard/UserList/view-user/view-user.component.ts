@@ -1015,7 +1015,7 @@ this.deleteTokenid=value;
         };
         const url = this.global_service.basePath + 'ETH/withdrawEth';
         this.global_service.PostRequest(url, postData).subscribe(response => {
-
+debugger
             if (response[0].json.json().status == 200) {
               this.global_service.showNotification('top','right',"ETH withdraw successfully",2,'ti-cross');
               this.getBalance();
@@ -1275,4 +1275,25 @@ this.deleteTokenid=value;
     clearWithdraw(){
      this.withDrawForm.reset();
     }
+    public validateButton:boolean=false;
+     addressValidate(add:any){
+        
+        let postData={
+                     address:add,
+        }
+        const url = this.global_service.basePath + 'api/validateAddress';
+            this.global_service.PostRequest(url, postData).subscribe(response => {
+              let res=response;
+              if(res[0].status==200){
+                if(res[0].json.json().status==400){  
+                 this.validateButton=true;               
+                  this.global_service.showNotification('top','right',res[0].json.json().message,4,'ti-cross');
+                  
+                }else{
+                  this.validateButton=false; 
+                }
+              }
+            });
+      }
+
 }

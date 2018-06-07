@@ -509,11 +509,43 @@ h4.card-title.rft-lff {
     margin: -14px 0 0 -14px;
 }
 
+/***social share***/
+
+.social-reff{
+    margin-bottom: 20px;
+}
 .social-reff ul li {
     display: inline;
     padding-left: 15px;
 }
-
+button.sb-wrapper.sb-facebook.sb-show-icon{
+    background-color: #4267b2;
+    border-radius: 10px;    border: 0px solid;
+    padding: 15px;
+}
+button.sb-wrapper.sb-twitter.sb-show-icon {
+    background-color:#00acef;
+    border-radius: 10px;
+    padding: 15px;    border: 0px solid;
+}
+button.sb-wrapper.sb-google.sb-show-icon {
+    background-color: #d34836;
+    border-radius: 10px;
+    padding: 15px;    border: 0px solid;
+}
+button.sb-wrapper.sb-linkedin.sb-show-icon{
+    background-color: #0077B5;
+    border-radius: 10px;
+    padding: 15px;    border: 0px solid;
+}
+button.sb-wrapper.sb-pinterest.sb-show-icon {
+    background-color: #c8232c;
+    border-radius: 10px;    border: 0px solid;
+    padding: 15px;display: none;
+}
+fa-icon.ng-fa-icon {
+    color: #fff;
+}
 
 .my-srch {
   border-radius: 40px;

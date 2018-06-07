@@ -11,6 +11,7 @@ import { ToasterContainerComponent, ToasterService, ToasterConfig} from 'angular
 
 declare let ga: Function;
 declare var $: any;
+
 @Injectable()
 export class GlobalService {       
    private toasterService: ToasterService; 
@@ -25,7 +26,7 @@ export class GlobalService {
     public res: Response;  
     public loggedInObs: Rx.Subject<any> = new Rx.Subject<any>();
     isLogedInUser:boolean;
-    adminStatus:any[] = [ {id:1,status:'Active'},
+    adminStatus:any[] = [ {  id:1,status:'Active'},
                           {  id:2,status:'Inactive'}
                         ]
 
@@ -137,7 +138,7 @@ export class GlobalService {
 
   
 
-    public PostRequestUnautorized(url: string, data: any): any {
+    public PostRequestUnautorized(url?: string, data?: any): any {
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let requestoptions = new RequestOptions({

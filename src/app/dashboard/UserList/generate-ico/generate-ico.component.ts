@@ -1350,10 +1350,14 @@ editreservedIndex:any=-1;
             rules: {
                   company: {
                   required: true,
+                  minlength: 3,
+                  maxlength: 50
 
               },
               description: {
-                  required: true
+                  required: true,
+                  minlength: 20,
+                  maxlength: 100
               },
               
 
@@ -1365,7 +1369,7 @@ editreservedIndex:any=-1;
                 name:{
                         required: true,
                         minlength: 1,
-                        maxlength:30,
+                        maxlength:15,
                         validator: function (v) {
                           var data = document.forms["icoForm"]["name"].value
                           var t = /^[a-zA-Z_\-]+$/;

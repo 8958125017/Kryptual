@@ -28,6 +28,7 @@ import { MerchandiseComponent } from '../dashboard/UserList/merchandise/merchand
 import { ProductDetailComponent } from '../dashboard/UserList/product-detail/product-detail.component';
 import { ImageZoomModule} from 'angular2-image-zoom';
 import { AdminDashboardComponent } from '../dashboard/admin_User/admin_Dashboard/admin_Dashboard.component';
+import { ShareButtonModule } from '@ngx-share/button';
 @NgModule({
     imports: [
         RouterModule,
@@ -40,7 +41,8 @@ import { AdminDashboardComponent } from '../dashboard/admin_User/admin_Dashboard
         ReactiveFormsModule,
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
-        ImageZoomModule
+        ImageZoomModule,
+        ShareButtonModule.forRoot()
        ],
 
     providers: [AuthGuard, { provide: LocationStrategy, useClass: HashLocationStrategy }, DatePipe],
