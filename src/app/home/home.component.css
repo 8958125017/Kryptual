@@ -1,0 +1,22 @@
+.main-home {
+
+   background: #fff;
+   width: 100%;
+   position: relative;
+   height: 100%;
+   float: left;
+}
+
+.tkn-list{
+   background: #fff;
+}
+
+
+.crdfunding {
+   position: absolute;
+   left: 0;
+   right: 0;
+   margin: 0 auto;
+   top: 15%;
+
+}

@@ -1,10 +1,10 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="row invest-cdpg">
+        <div class="row invest-cdpg d-block">
             <div class="col-md-8">
                 <div class="card" style="margin: 0;margin-bottom: 30px;float: left;">
                     <div class="card-content">
-                        <div class="row">
+                        <div class="row d-block">
                             <div class="col-md-3">
                                 <img class="img" src={{tokenData?.tokenImage}}>
                             </div>
@@ -12,13 +12,13 @@
                                 <h3>{{tokenData?.tokenName}}</h3>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row d-block">
                             <div class="pro-txt">
                                 <p>{{description? description : '--'}}
                                 </p>
                             </div>
                         </div>
-                        <div class="row margtop20">
+                        <div class="row margtop20 d-block">
                             <div class="col-md-6">
                                 <h5>Total Supply : <span class="colorgray">{{investData?.tokenSupply}}</span></h5>
                                 
@@ -45,38 +45,57 @@
                     <div class="card card-pricing">
                         <div class="card-body">
                             <p class="hd-p">Count Hidden</p>
-                            <h2 class="text-left ">{{tokenBalance ? tokenBalance :'0.00'}}</h2>
-                            <h4 class="text-left">{{investData?.tokenTicker}}</h4>
+                            <h2>{{tokenBalance ? tokenBalance :'0.00'}}</h2>
+                            <h4>{{investData?.tokenTicker}}</h4>
                         </div>
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row d-block">
                                 <p class="hd-p" style="padding-bottom: 15px;">Tier End In</p>
-                                <h4> <div class="timemrgin text-success" style="margin-top: 0%;" id="demo9"></div> </h4> 
+                                <h4> <div class="timemrgin text-info" style="margin-top: 0%;" id="demo9"></div> </h4> 
                                   <a class="hd-a">{{investData?.generalInfo.website ? investData?.generalInfo.website :'No website link here.'}}</a>
                             </div>
                           
                         </div>
                         <div class="card-body">
                             <div class="col-md-12">
-                                <div class="social">
-                                
-                                    <a href="{{facebookLink}}" target="_blank" class="btn btn-icon btn-facebook btn-round"  (click)="fbLInk()"><i class="fa fa-facebook-square"></i></a>
-                                    <a href="{{twitterLink}}" target="_blank" class="btn btn-icon btn-twitter btn-round margleft30" (click)="twittLInk()"><i class="fa fa-twitter"></i></a>
-                                    <a href="{{linkedinLink}}" target="_blank" class="btn btn-icon btn-linkedin btn-round margleft30" (click)="linkLInk()"><i class="fa fa-linkedin"></i></a>
-
-
-                                </div>
+                               <div class="text-center">
+                    <share-button [theme]="'modern-dark'"
+                                                   [button]="'facebook'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                   [icon]="faFacebookSquare"
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'twitter'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'google'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'linkedin'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'pinterest'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button> </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row invest-cdpg">
+        <div class="row invest-cdpg d-block">
             <div class="col-md-12">
                 <div class="card" style="background: #fff;">
                     <div class="card-content">
-                        <div class="row">
+                        <div class="row d-block">
                             <div class="col-md-12">
                                 <div class="card-body" style="padding: 0">
                                     <div class="col-md-6 pull-left">
@@ -87,7 +106,7 @@
                                     </div>
                                 </div>
                                 <form [formGroup]="investForm">
-                                    <div class="row" style="padding-top: 20px;">
+                                    <div class="row d-block" style="padding-top: 20px;">
                                         <div class="col-md-3 col-md-offset-2 col-sm-4">
                                             <h5 class="rft-rff">Amount Of Pay Token</h5>
                                         </div>
@@ -109,7 +128,7 @@
                                                 </label>
                                             </div>
                                             <div class="form-group pull-right">
-                                                <button class="btn btn-success btn-round pull-center" data-toggle="modal" (click)="invest_tokenPassword(investData?.tokenName,buyingToken.amount)" [disabled]="!investForm.valid || fundStatus"><i class="material-icons">navigation</i>Invest</button>
+                                                <button class="btn btn-info btn-round pull-center" data-toggle="modal" (click)="invest_tokenPassword(investData?.tokenName,buyingToken.amount)" [disabled]="!investForm.valid || fundStatus"><i class="material-icons">navigation</i>Invest</button>
                                             </div>
                                         </div>
                                     </div>
@@ -120,19 +139,20 @@
                             <div class="modal-dialog modal-notice mdbx-wd">
                                 <div class="modal-content">
                                     <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">Confirm Password</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
-                                        <h5 class="modal-title" id="myModalLabel">Confirm Password</h5>
+                                        
                                     </div>
                                     <div class="modal-body">
                                         <div class="instruction">
-                                            <div class="row">
+                                            <div class="row d-block">
                                                 <div class="col-md-12">
-                                                    <div class="card modalch2" style="margin-bottom: 0;">
+                                                    
                                                         <form [formGroup]="passwordForm" class="form-horizontal ng-untouched ng-pristine ng-valid">
-                                                            <div class="card-content">
-                                                                <div class="row">
-                                                                    <label class="col-sm-2 label-on-left">Password</label>
-                                                                    <div class="col-sm-9">
+                                                            
+                                                                <div class="row d-block">
+                                                                    <label class="col-sm-4 label-on-left">Password</label>
+                                                                    <div class="col-sm-12">
                                                                         <div class="form-group label-floating is-empty">
                                                                             <label class="control-label"></label>
                                                                             <input class="form-control" formControlName="password" [(ngModel)]="passwordDetails.password" type="password" value="" (keypress)="enteronsubmit($event)">
@@ -142,15 +162,15 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
+                                                                <div class="row d-block">
                                                                     <div class="col-sm-12">
-                                                                        <button type="button" class="btn btn-success btn-round" data-dismiss="modal" [disabled]="!passwordForm.valid" (click)="investInToken(investData.tokenName)">SUBMIT</button>
+                                                                        <button type="button" class="btn btn-info btn-round" data-dismiss="modal" [disabled]="!passwordForm.valid" (click)="investInToken(investData.tokenName)">SUBMIT</button>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            
                                                         </form>
                                                     </div>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>

@@ -7,7 +7,7 @@
                     <div class="col-md-7 ml-auto">
                         <div class="card" style="background: #fff;">
                             <div class="sleep-card">
-                                <div class="row">
+                                <div class="row d-block">
                                     
                                     <div class="bouts-card">
                                         <div class="row">
@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
                                 </div>
-                               <div class="row">
+                               <div class="row d-block">
                                 <div class="pro-txt">
                                     <h5 style="border-bottom: 1px solid lightgray;margin-top: 20px;">General Info</h5>
                                     <p>{{description? description : '--'}}</p>  
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="row" *ngIf="milestoneStatus">
-                            <div class="main-timeline">
+                            <div class="main-timeline w-100">
                                 
                                 <div class="timeline" *ngFor="let milestone of milestoneInfo">
                                     <div class="timeline-icon"></div>
@@ -133,15 +133,11 @@
                     <div class="head-adn">
                         <div>
                             <div class="head-ico-img">
-                                <p style="font-weight: bold; margin: 6px; font-size: 14px;"> <i class="fa fa-thumbs-up" style="font-size: 18px; color: #ffa500;"></i> CROWDSALE</p> 
+                                <p class="w-50 d-inline-block"> <i class="fa fa-thumbs-up text-info"></i> CROWDSALE</p> 
+                                <p class="w-25  text-right d-inline-block">{{ongoingsupply?.supply ? ongoingsupply?.supply :'--'}}&nbsp;{{tokenData?.tokenTicker}}</p>
                             </div>
                         </div>
-                      <!--  <div class="head-st-rt">
-                            <p style="margin-bottom: -5px; font-size: 15px; margin-left: 15px;font-weight: 500;">{{tokenData?.tokenSupply ? tokenData?.tokenSupply :'--'}} {{tokenData?.tokenTicker}}</p>
-                        </div> -->
-                        <div class="head-st-rt">
-                            <p style="margin-bottom: -5px; font-size: 15px; margin-left: 15px;font-weight: 500;">{{ongoingsupply?.supply ? ongoingsupply?.supply :'--'}}&nbsp;{{tokenData?.tokenTicker}}</p>
-                        </div>
+                      
                     </div>
                     <div class="en-name1">
                         <p class="pull-left" style="font-weight: bold;">Status</p>
@@ -178,21 +174,44 @@
                    
                     <div class="en-name1">
                         <p class="pull-left" style="font-weight: bold;">Price</p>
-                        <p class="pull-right" style="font-weight: 500;">1 {{tokenData?.tokenTicker}} = {{1/(tokenData?.tokenRate)}} ETH</p>
+                        <p class="pull-right" style="font-weight: 500;">1 {{tokenData?.tokenTicker}} = {{tokenRate}} ETH</p>
                     </div>
+                    <p>
+                        <ngb-progressbar [showValue]="true" type={{progressType}} [value]="progress" [max]="100"></ngb-progressbar>
+                    </p>
 
                     <div class="my-social-card"> 
-                        <div class="col-md-12">
-                            <div class="my-s-icon">                          
-                                <a href="{{facebookLink}}" target="_blank" class="btn btn-icon btn-facebook btn-round"  (click)="fbLInk()"><i class="fa fa-facebook-square"></i></a>
-                                <a href="{{twitterLink}}" target="_blank" class="btn btn-icon btn-twitter btn-round margleft30" (click)="twittLInk()"><i class="fa fa-twitter"></i></a>
-                                <a href="{{linkedinLink}}" target="_blank" class="btn btn-icon btn-linkedin btn-round margleft30" (click)="linkLInk()"><i class="fa fa-linkedin"></i></a>
-                             </div>
-                        </div>
-                    </div>
-                    <div class="view text-center" style="font-weight: bold; font-size: 14px;">
+                        <div class="text-center">
+                    <share-button [theme]="'modern-dark'"
+                                                   [button]="'facebook'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                   [icon]="faFacebookSquare"
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'twitter'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'google'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'linkedin'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button>
+                                                  <share-button [theme]="'modern-dark'"
+                                                   [button]="'pinterest'"
+                                                   [size]="1"
+                                                   [url]="socialUrl" 
+                                                  ></share-button> </div>
+                    </div><div class="view text-center" style="font-weight: bold; font-size: 14px;">
                         Follow Us
                     </div>
+                    
                 </b>
                 </div>
                 <b>
@@ -206,7 +225,7 @@
                         </div>
                         
                         <div class="my-bt-card1">
-                            <button (click)="gotToInvest(tokenData._id,tokenData.tokenName,tokenData.tokenAddress)" class="btn btn-primary btn-round pull-center" style="background-color: #fa7132;" [disabled]="investDisable">Invest </button>
+                            <button (click)="gotToInvest(tokenData._id,tokenData.tokenName,tokenData.tokenAddress)" class="btn btn-info btn-round pull-center" [disabled]="investDisable||investDisable2">Invest </button>
                         </div>
                     </div>
                 </div>  

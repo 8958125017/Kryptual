@@ -9,6 +9,7 @@ import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { ToasterContainerComponent, ToasterService, ToasterConfig} from 'angular2-toaster';
 
+
 declare let ga: Function;
 declare var $: any;
 
@@ -38,9 +39,37 @@ export class GlobalService {
                ) {
         this.extarsOnLoad();
         this.toasterService = toasterService
-   
+         
+         // this.socket = io(this.basePath);
+         //   this.socket.on('eventSellOrder', (data) =>{
+         //      console.log('eventSellOrder::',data);
+         //      // push into the left table
+         //      this.eventSellOrder(data);
+         //  })
+
     }
 
+    // eventSellOrder(data : any){
+    //   return data;
+    // }
+
+    // getBuyOrder(){
+    //   this.socket.on('eventBuyOrder', (data) =>{
+    //     console.log('eventBuyOrder::',data);
+    //     // push into the right table
+    //   })
+    // }
+
+    // getActiveOrder(){
+    //   this.socket.on('eventActiveOrder', (data) =>{
+    //     console.log('ActiveOrder::',data);
+    //     // push into the right table
+    //   })
+    // }
+
+    // emitSocketEvent(){
+    //   this.socket.emit('getBidMarket');
+    // }
 
     /*Check form valid or not by passing form objecrt to it*/
     isFormValid(formName){
@@ -52,7 +81,6 @@ export class GlobalService {
 
     showNotification(from, align,message, type, body) {
         this.toasterService.clear();
-        debugger;
          if(type==2){
           this.toasterService.pop('success', "", message);
          }
@@ -90,24 +118,18 @@ export class GlobalService {
         this.userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
          
          // LOCAL Server Path
-        this.basePath = "http://103.201.142.41:4001/";
+       this.basePath = "http://103.201.142.41:4001/";
         this.basePathforReact ="http://103.201.142.41:3000/";
 
        // LOCAL AWS Server Path
        
-        // this.basePath = "http://52.66.185.83:4000/";
-        //  this.basePathforReact ="http://52.66.185.83:3000/";
+         // this.basePath = "http://52.66.185.83:4001/";
+          //this.basePathforReact ="http://52.66.185.83:3000/";
         
        //AWS Path
 
        // this.basePath = "https://www.kryptual.com:4000/";
          // this.basePathforReact ="http://18.188.33.245:3000/";
-
-       //Kunvar
-       // this.basePath = "http://192.168.0.63:4000/";
-
-
-
 
         /*Required for Global Level in whole app*/
         this.userType = this.userInfo.UserRole;
@@ -182,9 +204,9 @@ export class GlobalService {
                 this.showNotification('top','right',error.json().err.object,4,'ti-cross');
                 this.router.navigateByUrl('/login');
             }
-           //   if(error.status===0){
-           //     this.showNotification('top','right','Unable to connect to the internet',4,'ti-cross');
-           // }
+             if(error.status===0){
+               this.showNotification('top','right','No internet connection, Please try again!.',4,'ti-cross');
+           }
             return Observable.throw(error);
         });
     }
@@ -240,13 +262,14 @@ export class GlobalService {
     }
 
 
-    /*Close PopUp*/
+    /*Close  PopUp*/
+    
     closePopUp(value,display){
         value.reset();
         display = false;
     }
 
-    /*Scroll to top*/
+    /*Scroll to top */
     scrollBar(){
     $("html, .main-panel").animate({ scrollTop: 0 },'fast');
     }

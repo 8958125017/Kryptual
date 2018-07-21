@@ -39,7 +39,8 @@
                     if(this.user!=null||this.user!=undefined)
                         {
                               this.getBalance();
-                              this.getTokens();
+                             // this.getTokens();
+                              this.getsendTokens();
                               this.getTransactionHistory();
                        }
                        this.tokenDetails();
@@ -74,7 +75,7 @@
                                 };
                                const url = this.global_service.basePath + 'ETH/getAllsendTokens';
                                this.global_service.PostRequest(url , postData).subscribe(response=>{
-                               
+                                this.noTokenFound=false;
                                if(response[0].status == 200)
                                 {
                                   var tokenDetails=response[0].json.json().data;
@@ -90,21 +91,46 @@
                                     }
                                   else
                                   {
-                                    this.noTokenFound=true;
-                                    console.log("No token Founds Image");
+                                    this.noTokenFound=true;                                    
                                   }
                               }
-                              else
-                              {
-                                    alert("No Data found");
-                              }
+                              
                             })
                      }
+                   
+                   getsendTokens(){
+                         let postData ={
+                                    userId : this.user._id,
+                                    address: this.user.EthAddress
+                                };
+                               const url = this.global_service.basePath + 'api/getSendTokensByEthAddress';
+                               this.global_service.PostRequest(url , postData).subscribe(response=>{
+                               this.noTokenFound=false;
+                               if(response[0].status == 200)
+                                {
+                                  var tokenDetails=response[0].json.json().data;                                
+                                  if(tokenDetails.length!=0)
+                                    {
+                                      for(var data of tokenDetails)
+                                      {
+                                       //var balance = (data.balance/(Math.pow(10,data.tokenInfo.decimals)))
+                                      // data.tokenBalance = balance;
+                                       this.tokenList.push(data);                                       
+                                      }
 
+                                    }
+                                  else
+                                  {
+                                    this.noTokenFound=true;                                    
+                                  }
+                              }
+                              
+                            })
+                   }
 
                     // Get get Contract Address By Token
 
-                    getContractAddressByToken(tokenAddress:any){
+                    getContractAddressByToken(tokenAddress:any){                      
                       this.sendTokenForm.reset();
                       this.passwordForm.reset();
                       let postData ={
@@ -117,22 +143,20 @@
                        if(response[0].status == 200 )
                        {
                           this.ng4LoadingSpinnerService.hide();
-                            if(response[0].json.json().data.length!=0){
-                            this.crowdsaleAddress=response[0].json.json().data.crowdsaleAddress;
-                          }
-
-                        }else{
-                          console.log("no data found");
+                          //   if(response[0].json.json().data.length!=0){
+                          //   this.crowdsaleAddress=response[0].json.json().data.crowdsaleAddress;
+                          // }
+                          this.crowdsaleAddress=tokenAddress;// change in live
                         }
                         });
                     }
 
-                    checkAddress(){                                           
+                    checkAddress(){                                                              
                          if(this.sendTokenDetail.toAddress[0]!=='0'||this.sendTokenDetail.toAddress[1]!=='x'){
                         this.global_service.showNotification('top','right','address should start from 0x',4,'ti-cross');
                          return;
                        }else if(this.sendTokenDetail.toAddress.length<42){
-                     this.global_service.showNotification('top','right','address length should be 42',4,'ti-cross');
+                         this.global_service.showNotification('top','right','address length should be 42',4,'ti-cross');
                          return;
                            }
                          if(this.crowdsaleAddress){
@@ -163,6 +187,7 @@
                   // send token
 
                    sendTokens() {
+                      $('#noticeModa1232').modal('hide');
                      this.ng4LoadingSpinnerService.show();
                      let postData = {
                          userId : this.user._id,                         
@@ -180,6 +205,7 @@
                              this.global_service.showNotification('top','right',response[0].json.json().message,2,'ti-cross');
                              this.sendTokenForm.reset();
                              this.passwordForm.reset();
+                            
                              this.getTokens();
                              this.getTransactionHistory();
                             } else
@@ -199,8 +225,8 @@
 
                  withdrawFormInit() {
                      this.sendTokenForm = this.fb.group({
-                         'amount': new FormControl('',Validators.compose([Validators.required,Validators.pattern(/^.?(0|[0-9]\d*)(\.\d+)?$/)])),
-                         'toAddress': new FormControl('', Validators.required)
+                         'amount': new FormControl('',Validators.compose([Validators.required,Validators.pattern(/^(?:[1-9][0-9]{0,20}(?:\.\d{1,2})?|100000000000000000000|100000.00)$/)])),
+                         'toAddress': new FormControl('', Validators.compose([Validators.required,Validators.pattern(/^0x[a-fA-F0-9]{40}$/)]))
                      });
                  }
                  eventHandler(e) {

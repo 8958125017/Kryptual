@@ -122,7 +122,7 @@ export const TRUNC_TO_DECIMALS = {
 
 // Gaurav used for auto logout
 export const sessionTime = {
- time: 1 //session expire after, time+1 mintutes
+ time: 10 //session expire after, time+1 mintutes
 }
 
 export const frontEndURL = 'http://103.201.142.41:90/krptual_dist/#/login'

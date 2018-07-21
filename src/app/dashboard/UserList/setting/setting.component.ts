@@ -49,8 +49,7 @@
        };
        
          const url = this.global_service.basePath + 'api/ResetPasswordByUserid';
-         this.global_service.PostRequest(url , postData).subscribe(response=>{   
-           debugger
+         this.global_service.PostRequest(url , postData).subscribe(response=>{ 
             if(response[0].json.json().status == 200){ 
               this.updatePasswordForm.reset();
               this.global_service.showNotification('top','right',response[0].json.json().message,2,'ti-cross');  

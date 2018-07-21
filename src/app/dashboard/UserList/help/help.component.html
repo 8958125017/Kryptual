@@ -17,17 +17,17 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <ul class="nav nav-pills nav-pills-icons nav-pills-rose nav-stacked nav-help" role="tablist">
-                                    <li class="active">
+                                    <li class="active w-100">
                                         <a href="#help-1" role="tab" data-toggle="tab" (click)="aboutKryptual()">
                                             ABOUT Kryptual?
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="w-100">
                                         <a href="#help-2" role="tab" data-toggle="tab" (click)="CreateICO()">
                                             CREATE ICO
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="w-100">
                                         <a href="#help-3" role="tab" data-toggle="tab" (click)="InvestICO()">
                                            INVEST ICO
                                         </a>
@@ -38,10 +38,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="help-1">
                                         <div class="row">
-                                            <ol class="breadcrumb">
-                                                <li>
-                                                    <h3 style="font-size:25px;color: #111;font-weight: 200;position: relative;margin-bottom: 0px;">Help</h3></li>
-                                            </ol>
+                                            
                                             <div class="col-sm-12 quest">
                                                 <h2>Q) What is Kryptual?</h2>
                                                 <p>Kryptual aims to become the biggest direct market place for all ICOs ever published. The possibility to buy tokens directly via one market place will not only attract investors, but publishers as well. We have set the goals of publishing more than 150 ICOs in 2017-2018 and of reaching up to $288 millions in funding.</p>
@@ -270,7 +267,7 @@
                                     <div *ngIf="!contactForm.controls['message'].valid&&contactForm.controls['message'].dirty"> <span style="color:red;">Message is required</span>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-fill btn-rose help-btn" (click)="sendMessage(contactForm.value)" [disabled]="!contactForm.valid">Send Message</button>
+                                <button type="submit" class="btn btn-fill btn-info " (click)="sendMessage()" [disabled]="!contactForm.valid">Send Message</button>
                             </form>
                         </div>
                     </div>

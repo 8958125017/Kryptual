@@ -38,10 +38,8 @@ export class ResellerComponent implements OnInit {
 
         ) 
     { 
-       this.year=moment(new Date()).format('YYYY');
-        //debugger;
-        this.http = http          
-         
+       this.year=moment(new Date()).format('YYYY');    
+        this.http = http                   
 
     }
 

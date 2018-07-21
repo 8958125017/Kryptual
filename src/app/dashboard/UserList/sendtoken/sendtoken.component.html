@@ -9,8 +9,8 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-5 col-sm-6">
                             <div class="card-header">
-                                <h4 class="card-title" style="color: #4caf50;">{{ethBalance ? ethBalance : '0.00'}}
-                                <small class="category" style="color: #4caf50;">Ethereum</small>
+                                <h4 class="card-title text-info">{{ethBalance ? ethBalance : '0.00'}}
+                                <small class="category text-info">Ethereum</small>
                             </h4>
                             </div>
                         </div>
@@ -24,7 +24,8 @@
                         <div class="col-lg-4 col-md-5 col-sm-6">
                             <div class="left-scroll">
                                 <ul class="nav nav-pills nav-pills-icons nav-pills-white nav-stacked " role="tablist">
-                                    <li *ngFor="let token of tokenList" (click)="getContractAddressByToken(token.tokenInfo.address)">
+                                    <!-- <li *ngFor="let token of tokenList" (click)="getContractAddressByToken(token.tokenInfo.address)"> -->
+                                    <li *ngFor="let token of tokenList" class="w-100" (click)="getContractAddressByToken(token.address)">
                                         <a data-toggle="tab" href="#dashboard-2" role="tab">
                                             <div class="row">
                                                 <!-- <div class="col-md-4">
@@ -32,8 +33,12 @@
                                                         <img class="picture-src img-responsive" id="wizardPicturePreview" src="assets/img/1.png" title="" style="padding-top: 16px;">
                                                     </div>
                                                 </div> -->
+                                                <!-- <div class="col-md-12">
+                                                    <h3>{{token.tokenInfo.name}}</h3> <span>{{token.tokenBalance}} ETH</span>
+                                                </div> -->
                                                 <div class="col-md-12">
-                                                    <h3>{{token.tokenInfo.name}}</h3> <span>{{token.tokenBalance}} ETH</span></div>
+                                                    <h3>{{token.tokenName}}</h3> <span>{{token.balance}} ETH</span>
+                                                </div>
                                             </div>
                                         </a>
                                     </li>
@@ -54,7 +59,7 @@
                                                 <div class="col-md-11">
                                                     <div class="input-group">
                                                         <span class="input-group-addon">
-                                                            <i class="material-icons">business</i>  
+                                                            <i class="material-icons text-info">business</i>  
                                                         </span>
                                                         <div class="form-group label-floating" style="text-align: left;">
                                                             <label>Address
@@ -62,7 +67,8 @@
                                                             </label>
                                                             <input (change)="enteronsubmit($event)" class="form-control ng-untouched ng-pristine ng-valid" formControlName="toAddress" [(ngModel)]="sendTokenDetail.toAddress" type="text" value="" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
                                                             <div style="color:red" *ngIf="!sendTokenForm.controls['toAddress'].valid&&sendTokenForm.controls['toAddress'].dirty">
-                                                                Address is required
+                                                                <span *ngIf="sendTokenForm.controls['toAddress'].errors['required']" class="small">Address is required</span>
+                                                                <span *ngIf="sendTokenForm.controls['toAddress'].errors['pattern']" class="small">Address is invalid</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -70,35 +76,36 @@
                                                 <div class="col-md-11">
                                                     <div class="input-group">
                                                         <span class="input-group-addon">
-                                                            <i class="material-icons">account_balance_wallet</i>
+                                                            <i class="material-icons text-info">account_balance_wallet</i>
                                                         </span>
                                                         <div class="form-group label-floating" style="text-align: left;">
                                                             <label>Amount
                                                                 <!--  <sup  style="color: red">*</sup> -->
                                                             </label>
-                                                            <input class="form-control ng-untouched ng-pristine ng-valid" (keypress)="eventHandler($event)" formControlName="amount" [(ngModel)]="sendTokenDetail.amount" type="number" value="" min="0" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
+                                                            <input class="form-control ng-untouched ng-pristine ng-valid" (keypress)="eventHandler($event)" formControlName="amount" [(ngModel)]="sendTokenDetail.amount" type="number" value="" min="1" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">
                                                             <div style="color:red" *ngIf="!sendTokenForm.controls['amount'].valid&&sendTokenForm.controls['amount'].dirty">
                                                                 <span *ngIf="sendTokenForm.controls['amount'].errors['required']">Amount is required</span>
-                                                                <span *ngIf="sendTokenForm.controls['amount'].errors['pattern']">Amount should be numbers </span>
+                                                                <span *ngIf="sendTokenForm.controls['amount'].errors['pattern']">Amount should be exceded 10<sup>20</sup> </span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button data-toggle="modal" (click)="checkAddress()" class="btn btn-success" style="background:#18d26e;font-weight:500;top: 11px;" [disabled]="!sendTokenForm.valid">
+                                            <button data-toggle="modal" (click)="checkAddress()" class="btn btn-info"  [disabled]="!sendTokenForm.valid">
                                                 <span class="btn-label">
                                                    <!--  <i class="material-icons">check</i> -->
-                                                </span> Submit
+                                                </span> Send
                                             </button>
                                             <!-- notice modal -->
                                             <div class="modal fade" id="noticeModa1232" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-notice">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
+                                                            <h5 class="modal-title font-weight-normal" id="myModalLabel">Send Token</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
-                                                            <h5 class="modal-title" id="myModalLabel" style="background: linear-gradient(60deg, #66bb6a, #43a047);padding: 15px 16px;color:  #fff;width:33%;border-radius:  3px;text-transform:  uppercase;font-weight: 400;z-index: 9;position: relative;">Send Token</h5>
+                                                            
                                                         </div>
-                                                        <div class="modal-body" style=" margin:  -42px 0 0 0;padding: 60px 20px 1px 20px;">
+                                                        <div class="modal-body m-3 pt-4">
                                                             <div class="instruction">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
@@ -106,8 +113,9 @@
                                                                             <form [formGroup]="passwordForm" class="form-horizontal ng-untouched ng-pristine ng-valid">
                                                                                 <div class="card-content">
                                                                                     <div class="row">
-                                                                                        <label class="col-sm-2 col-md-offset-1 label-on-right" style="text-align: right;">Password</label>
-                                                                                        <div class="col-sm-6">
+                                                                                        <div class="col-sm-12">
+
+                                                                                        <label class="float-left">Password</label>
                                                                                             <div class="form-group label-floating is-empty">
                                                                                                 <label class="control-label"></label>
                                                                                                 <input (keypress)="enteronsend($event)" class="form-control" formControlName="password" [(ngModel)]="sendTokenDetail.password" type="password" value="">
@@ -119,7 +127,7 @@
                                                                                     </div>
                                                                                     <div class="row">
                                                                                         <div class="col-sm-12">
-                                                                                            <button type="button" class="btn btn-success btn-round" data-dismiss="modal" [disabled]="!passwordForm.valid" (click)="sendTokens()">SEND</button>
+                                                                                            <button type="button" class="btn btn-info btn-round" data-dismiss="modal" [disabled]="!passwordForm.valid" (click)="sendTokens()">SEND</button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>

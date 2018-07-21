@@ -48,8 +48,7 @@ socialUrl:any;
                       }else
                       {
                         this.accountType=true;
-                      }
-                      debugger;
+                      }                      
                   this.socialUrl="http://52.66.185.83/#/sharepoints?userId="+this.user._id ;
                 //    this.socialUrl= window.location.host+"/#/sharepoints?userId="+this.user._id ;
                   // this.socialUrl=this.global_service.basePath + '#/sharepoints?userId='+this.user._id ;

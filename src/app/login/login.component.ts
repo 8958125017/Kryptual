@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
     loginDetail:LoginDetail;
     loginForm: FormGroup;
     tokens:any;
+    tokenId : any;
+    tokenAddress:any;
     test: Date = new Date();
     private toggleButton: any;
     private sidebarVisible: boolean;
@@ -34,7 +36,7 @@ export class LoginComponent implements OnInit {
         private fb: FormBuilder,       
         private global_service : GlobalService,  
         private element: ElementRef,
-
+        private activatedRoute: ActivatedRoute,
         private ng4LoadingSpinnerService: Ng4LoadingSpinnerService
         )   { 
             this.year=moment(new Date()).format('YYYY');
@@ -94,13 +96,22 @@ export class LoginComponent implements OnInit {
               if(user.accountType=="Admin"){
                 this.router.navigateByUrl('/dashboard/adminDashboard');
               }else{
-                this.router.navigateByUrl('/dashboard/view-user');
+                this.activatedRoute.params.subscribe(params => {
+                     this.tokenId = params["id"];
+                     this.tokenAddress=params["tokenAddress"];
+                                 })
+                       if(this.tokenId&&this.tokenAddress){
+                         this.router.navigate(['/dashboard/invest', {'id': this.tokenId , "tokenAddress" : this.tokenAddress }]);
+                       }else{
+                         this.router.navigateByUrl('/dashboard/view-user');
+                       }                
               }
-          }else{     
-              this.loginForm.reset();
+          }else{                 
+              //this.loginForm.reset();
                this.ng4LoadingSpinnerService.hide();  
               this.loading=false;   
-              this.global_service.showNotification('top','right',response[0].json.message,4,'ti-cross');   
+              this.global_service.showNotification('top','right',response[0].json.message,4,'ti-cross'); 
+               this.loginDetail.password=null;   
              
           }
        

@@ -64,13 +64,10 @@
       }
 
     getUserList(value) {
-
       this.loader = true;
-      let obj = {page_number:value,token:this.global_service.userInfo.token}
-      
+      let obj = {page_number:value,token:this.global_service.userInfo.token}      
       const url = this.global_service.basePath + 'admin/users/list';
       this.global_service.PostRequest(url,obj)
-
       .subscribe(res => {
           this.loader = false;
           if(res[0].json.json().object.result.count !== 0){
@@ -78,8 +75,8 @@
             this.isDataFound = true;
           }
           else{
-            this.isDataFound = false;
-          }
+               this.isDataFound = false;
+              }
           
         }, err => {
           this.loader = false;
@@ -88,16 +85,12 @@
     }
     
     deleteUserById(id){
-
       this.loader = true;
-      let obj = {id:id,token:this.global_service.userInfo.token}
-      
+      let obj = {id:id,token:this.global_service.userInfo.token}      
       const url = this.global_service.basePath + 'admin/skills/users/delete';
-
       this.global_service.PostRequest(url,obj)
       .subscribe(res => {
-        this.loader = false;
-        // this.global_service.consoleFun(res[0].json.json());
+        this.loader = false;     
         this.getUserList(this.value);
       }, 
       err => {
@@ -141,12 +134,10 @@
            this.resetPasswordForm.value.userId = this.userId;
            this.global_service.PostRequest(url,this.resetPasswordForm.value)
             .subscribe(res => {
-              if (res[0].json.json().error && res[0].json.json().error.object){
-              // this.global_service.showNotifications('success', 'Done' ,res[0].json.json().error.object);
+              if (res[0].json.json().error && res[0].json.json().error.object){            
                  this.global_service.showNotification('top','right',res[0].json.json().error.object,4,'ti-cross');
                 }  
-                else {
-                  // this.global_service.showNotifications('success', 'Done' ,"Added Successfully");
+                else {                 
                 this.global_service.showNotification('top','right',"Password Reset Successfully",2,'ti-check');
                 this.router.navigateByUrl("dashboard/view-user");
                 this.formInitialization();
@@ -157,8 +148,7 @@
               }, 
               err => {
               this.disableMultipleSave = false;
-              // this.loader = false;
-              // this.global_service.consoleFun(err);
+             
               })
             }
       else{

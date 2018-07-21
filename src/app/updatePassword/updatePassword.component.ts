@@ -45,20 +45,14 @@ export class UpdatePasswordComponent implements OnInit {
 
    
     updateUserPassword(){
-      this.ng4LoadingSpinnerService.show(); 
-      debugger
+      this.ng4LoadingSpinnerService.show();    
       let postData ={
-          // userId : this.user._id,   
-          // currentPassword:this.updatePassword.currentPassword,
           token:this.tokenId,
-          newPassword: this.updatePassword.newPassword,
-          //confirmNewPassword: this.updatePassword.confirmNewPassword,
-
+          newPassword: this.updatePassword.newPassword
        };
          const url = this.global_service.basePath + 'api/reset_password';
          this.global_service.PostRequest(url , postData).subscribe(response=>{ 
-           this.ng4LoadingSpinnerService.hide(); 
-           debugger
+           this.ng4LoadingSpinnerService.hide();           
            this.updatePasswordForm.reset();
             if(response[0].json.status == 200){ 
                this.router.navigateByUrl('/login');
@@ -89,12 +83,12 @@ export class UpdatePasswordComponent implements OnInit {
     }
 
     loginFormInit(){
-      this.updatePasswordForm = this.fb.group({
-            // 'currentPassword': new FormControl('', Validators.required),
+      this.updatePasswordForm = this.fb.group({ 
             'newPassword':  new FormControl('',Validators.compose([Validators.required,Validators.minLength(6), Validators.maxLength(100),Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,100})/)])),
             'confirmNewPassword': new FormControl('', Validators.required)            
            }, { validator: this.matchingPasswords('newPassword', 'confirmNewPassword') });
     }
+
     matchingPasswords(passwordKey: string, confirmPasswordKey: string) {       
         return (group: FormGroup): { [key: string]: any } => {
             let newPassword = group.controls[passwordKey];

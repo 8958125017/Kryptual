@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
  userName:any;
  public user:any;
  active:any;
+ userAdmin:boolean=false;
  constructor(
 private element: ElementRef,
         private global_service : GlobalService,
@@ -30,6 +31,9 @@ private element: ElementRef,
          else{
            this.active=true;
            this.user=JSON.parse(localStorage.getItem('currentUser'));
+           if(this.user.accountType ==="Admin"){
+             this.userAdmin=true;
+           }
          //  this.userName=this.user.firstName + " "+this.user.lastName;
          }
       
@@ -50,8 +54,7 @@ private element: ElementRef,
 
                 const url = this.global_service.basePath + 'api/logout';
                 this.global_service.PostRequest(url, postData).subscribe(response => {
-                    if (response[0].json.status == 200) {
-                        console.log("response = = =" + response[0].json.json().message)
+                    if (response[0].json.status == 200) {                      
                         localStorage.clear();
                         localStorage.removeItem('currentUser');
                         localStorage.removeItem('token');

@@ -115,8 +115,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         if( localStorage.getItem('firstLoad') )
-               {  
-               console.log(localStorage.getItem('firstLoad'));  
+               {                
                window.location.reload();
                    }
          window.scrollTo(0, 0);
@@ -305,8 +304,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
         else if(this.upcommingStatus==true) 
          i = i+'u'  
         //-----------------------------------------------------------------------------------
-      var end=new Date(objectData.endTime).getTime();
-      // console.log("--------------------------------------",typeof this.countDownDateExample)
+      var end=new Date(objectData.endTime).getTime();     
         // Get todays date and time
         var now = new Date().getTime();
         
@@ -332,8 +330,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
        this.countDownDateExample=new Date(objectData.endTime).getTime();     
         var now = new Date().getTime();        
         // Find the distance between now an the count down date
-        var distance = this.countDownDateExample - now;
-       /// console.log("this.countDownDateExample,now::::",this.countDownDateExample,now,i, distance)
+        var distance = this.countDownDateExample - now;      
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -342,8 +339,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
         
        // Output the result in an element with id="demo"
             var element = document.getElementById("demo3"+i);
-              if(element){
-           //     console.log("iiiiiiiiiiiiiiiiiii:::::::::::::::::::",+i);
+              if(element){          
                  document.getElementById("demo3"+i).innerHTML = days + "d " + hours + "h "
               + minutes  + "m " + seconds + "s (GMT +5:30)";
               }else{
@@ -355,8 +351,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
         if (distance < 0) {
             clearInterval(this.x);
             var element = document.getElementById("demo3"+i);
-            if(element){
-           //console.log("in expire iiiiiiiiiiiiiiiiiiiiiiiii:",i)
+            if(element){          
              document.getElementById("demo3"+i).innerHTML = "Crowdsale Completed";
             }
           }

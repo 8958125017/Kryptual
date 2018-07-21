@@ -7,10 +7,19 @@
   import { Http, Headers, RequestOptions, Response  } from '@angular/http';
   import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
   import { DomSanitizer } from '@angular/platform-browser';
+  import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-crowdsale',
   templateUrl: './crowdsale.component.html',
-  styleUrls: ['./crowdsale.component.scss']
+  styleUrls: ['./crowdsale.component.scss'],
+  styles: [`
+    ngb-progressbar {
+      margin: 2rem 0;
+         float: left;
+    width: 100%;
+}
+  `]
 })
 export class CrowdsaleComponent implements OnInit {
 public data:any;
@@ -34,16 +43,18 @@ milestoneInfo:any;
 allTokenStatus:any;
 website:any;
 description:any;
-facebookLink:any;
-linkedinLink:any;
-twitterLink:any;
-fbStatus:boolean=true;
 crowedSaleStatus:boolean=false
 whitepaperStatus:boolean=false;
 videosStatus:boolean=false;
 videoUrlLink:any;
 investDisable:boolean=false;
+investDisable2:boolean=false;
 ongoingsupply:any = {supply:"0"};
+progress:any=0;
+progressType:any="success";
+tokenRate:any;
+socialUrl:any;
+
   constructor(               
                 private route: ActivatedRoute,
                 private router: Router,
@@ -52,7 +63,6 @@ ongoingsupply:any = {supply:"0"};
                 private activatedRoute: ActivatedRoute,
                 private ng4LoadingSpinnerService: Ng4LoadingSpinnerService,
                 private domSanitizer :DomSanitizer
-
              )
                  {
                    var status = this.global_service.isLogedIn();
@@ -70,6 +80,7 @@ ongoingsupply:any = {supply:"0"};
                    this.tokenId = params["id"];
                    this.getTokenInfo();
                   })
+                  this.socialUrl="http://52.66.185.83/#/homecrowdsale;id="+this.tokenId ;
 
   }
 
@@ -91,14 +102,27 @@ ongoingsupply:any = {supply:"0"};
       };
           const url = this.global_service.basePath + 'ETH/getTokenInfoByTokenId';
            this.global_service.PostRequest(url,postData).subscribe(response=>{                    
-           if(response[0].json.json().status==200){
-             if(response[0].json.json().data){
+           if(response[0].json.json().status==200){             
+             this.progress=response[0].json.json().tokenSold;             
+             if(this.progress == null || this.progress <= 25){
+                 this.progressType="success";         
+             }else if(response[0].json.json().tokenSold <= 50){
+                this.progressType="info";
+             }else if(response[0].json.json().tokenSold <= 75){
+                this.progressType="warning";
+             }else if(response[0].json.json().tokenSold <= 100){
+               this.investDisable2=true;
+               this.progressType="danger";
+             }
+             if(response[0].json.json().data){               
               this.tokenData=response[0].json.json().data;
+              if(this.tokenData.tokenRate){
+                 this.tokenRate=(1/this.tokenData.tokenRate).toFixed(6);
+               }             
               if(this.tokenData.generalInfo.team.length!=0){              
                    this.teamInfoStatus=true;
                    var teamData=response[0].json.json().data.generalInfo.team;                   
-                   for(var data of teamData){
-                     debugger
+                   for(var data of teamData){                     
                      let objData={
                          teamImage : '',
                          linkdinLink: '',
@@ -142,27 +166,11 @@ ongoingsupply:any = {supply:"0"};
                 this.description="--";
               }
               
-               if(response[0].json.json().data.generalInfo.facebook){
-                this.facebookLink=response[0].json.json().data.generalInfo.facebook;
-              }else{
-                this.facebookLink="https://www.facebook.com";
-              }
-               
-              if(response[0].json.json().data.generalInfo.linkedin){
-                this.linkedinLink=response[0].json.json().data.generalInfo.linkedin;
-              }else{
-                this.linkedinLink="https://www.linkedin.com";
-              }
-              if(response[0].json.json().data.generalInfo.twitter){
-                this.twitterLink=response[0].json.json().data.generalInfo.twitter;
-              }else{
-                this.twitterLink="https://www.twitter.com";
-              }
+              
               if(response[0].json.json().data.generalInfo.vedio){
                  this.videosStatus=true;
                 this.videoUrlLink=response[0].json.json().data.generalInfo.vedio;
-                this.videoUrlLink = this.videoUrlLink.replace("watch?v=", "embed/");                
-                console.log(this.videoUrlLink);
+                this.videoUrlLink = this.videoUrlLink.replace("watch?v=", "embed/"); 
               }
 
               if(this.tokenData.whitePaper){
@@ -187,9 +195,7 @@ ongoingsupply:any = {supply:"0"};
               }
             
             var onGoingSupply = 0;
-               for(var data of this.tokenData.crowdsale){ 
-               debugger                
-                console.log("data.endTime"+data.startTime+" "+data.endTime);
+               for(var data of this.tokenData.crowdsale){     
                 let objData ={
                               tierName :'',
                               startTime:'',
@@ -224,17 +230,10 @@ ongoingsupply:any = {supply:"0"};
         });
     }
     
-    fbLInk(){
-       this.global_service.emitEvent("Invest ICO Page", "Click", this.facebookLink, 1);
-    }
-     linkLInk(){
-       this.global_service.emitEvent("Invest ICO Page", "Click", this.linkedinLink, 1);
-    }
-     twittLInk(){
-       this.global_service.emitEvent("Invest ICO Page", "Click", this.twitterLink, 1);
-    }
+    
     
 
  
     
 }
+

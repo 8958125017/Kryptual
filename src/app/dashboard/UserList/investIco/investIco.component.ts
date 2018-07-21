@@ -22,6 +22,7 @@ import 'rxjs/add/observable/fromEvent';
    public tokenData:any;
    public user:any;
    tokensList:any[]=[];
+   viewlengthtokensList:any;
    value = 1;
    isDataFound : boolean = false;
    tokenLink:any;
@@ -100,11 +101,12 @@ import 'rxjs/add/observable/fromEvent';
         $('#loader1').hide();
         $('#loader2').hide();
         $('#loader3').hide();
-        $('#loader4').hide();           
-        debugger 
+        $('#loader4').hide();          
+     
        if(response[0].json.status==200){               
           this.tokenData=response[0].json.data;
-          this.tokenLength=response[0].json.data.length;      
+          this.tokenLength=response[0].json.data.length;
+          this.viewlengthtokensList= response[0].json.data.length;     
           if(this.tokenLength){
             for(var i=0;i<this.tokenData.length;i++){
              let objData ={
@@ -344,7 +346,7 @@ import 'rxjs/add/observable/fromEvent';
         else if(this.upcommingStatus==true) 
          i = i+'u'
          var end=new Date(objectData.endTime).getTime();
-      // console.log("--------------------------------------",typeof this.countDownDateExample)
+     
         // Get todays date and time
         var now = new Date().getTime();
         
@@ -377,8 +379,7 @@ import 'rxjs/add/observable/fromEvent';
         
        // Output the result in an element with id="demo"
             var element = document.getElementById("demoall"+i);
-              if(element){
-           //     console.log("iiiiiiiiiiiiiiiiiii:::::::::::::::::::",+i);
+              if(element){          
                  document.getElementById("demoall"+i).innerHTML = days + "d " + hours + "h "
               + minutes  + "m " + seconds + "s (GMT +5:30)";
                self.completeTimer.token=false;
@@ -387,7 +388,7 @@ import 'rxjs/add/observable/fromEvent';
                 
               }
         // If the count down is over, write some text 
-        // alert("distance = = "+distance);
+        
         if (distance < 0) { 
                  
             clearInterval(this.x);

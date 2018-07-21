@@ -16,11 +16,11 @@
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">
-                                              <i class="material-icons">code</i>
+                                              <i class="material-icons text-info">code</i>
                                             </span>
                                             <div class="form-group label-floating" style="text-align: left;">
                                                 <label>ENTER CODE</label>
-                                                <input (keypress)="enteronsubmit($event)" class="form-control ng-untouched ng-pristine ng-valid" name="coupon" formControlName="couponCode" [(ngModel)]="couponCode" type="text" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important">                                              
+                                                <input (keypress)="enteronsubmit($event)" class="form-control ng-untouched ng-pristine ng-valid" name="coupon" formControlName="couponCode" [(ngModel)]="couponCode" type="text" style="border: 0px solid !important;border-bottom: 1px solid #e6e6e6 !important" disabled="">                                              
                                             </div>
                                         </div>
                                     </div>
@@ -29,7 +29,7 @@
                             </div>
                         </form>
                         <div class="col-md-12" style="text-align: center;">
-                            <button class="btn btn-raised btn-round btn-success" (click)="joinNow()" [disabled]="!submitForm.valid">
+                            <button class="btn btn-raised btn-round btn-info" (click)="joinNow()" [disabled]="!submitForm.valid">
                                 Join Now
                             </button>
                         </div>

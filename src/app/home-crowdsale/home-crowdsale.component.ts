@@ -10,7 +10,14 @@
 @Component({
   selector: 'app-home-crowdsale',
   templateUrl: './home-crowdsale.component.html',
-  styleUrls: ['./home-crowdsale.component.scss']
+  styleUrls: ['./home-crowdsale.component.scss'],
+  styles: [`
+    ngb-progressbar {
+      margin: 2rem 0;
+         float: left;
+    width: 100%;
+}
+  `]
 })
 export class HomeCrowdsaleComponent implements OnInit {
 
@@ -35,10 +42,6 @@ milestoneInfo:any;
 allTokenStatus:any;
 website:any;
 description:any;
-facebookLink:any;
-linkedinLink:any;
-twitterLink:any;
-fbStatus:boolean=true;
 status:any;
 active:boolean=true;
 userName:any;
@@ -47,6 +50,10 @@ videosStatus:boolean=false;
 videoUrlLink:any;
 investDisable:boolean=false;
 ongoingsupply:any = {supply:"0"};
+progress:any=0;
+progressType:any="success";
+tokenRate:any;
+socialUrl:any;
   constructor(
                 private route: ActivatedRoute,
                 private router: Router,
@@ -59,7 +66,7 @@ ongoingsupply:any = {supply:"0"};
                  { 
                    this.status = this.global_service.isLogedIn();
                    if(this.status==false){
-                    this.active=false;
+                    this.active=false;                    
                    }
                    else{
                        this.active=true;
@@ -72,7 +79,8 @@ ongoingsupply:any = {supply:"0"};
        this.activatedRoute.params.subscribe(params => {
            this.tokenId = params["id"];           
            this.getTokenInfo();
-        })      
+        })
+        this.socialUrl="http://52.66.185.83/#/homecrowdsale;id="+this.tokenId ;      
       }
 
     ngOnInit() {
@@ -88,10 +96,22 @@ ongoingsupply:any = {supply:"0"};
       };
           const url = this.global_service.basePath + 'api/getTokenInfoByTokenId';
            this.global_service.PostRequest(url,postData).subscribe(response=>{ 
-           if(response[0].json.json().status==200){
-             if(response[0].json.json().data){
-               debugger
-              this.tokenData=response[0].json.json().data;             
+           if(response[0].json.json().status==200){            
+            this.progress=response[0].json.json().tokenSold*10;             
+             if(this.progress == null ||this.progress == undefined || this.progress <= 25){
+                 this.progressType="success";         
+             }else if(response[0].json.json().tokenSold <= 50){
+                this.progressType="info";
+             }else if(response[0].json.json().tokenSold <= 75){
+                this.progressType="warning";
+             }else if(response[0].json.json().tokenSold <= 100){
+               this.progressType="danger";
+             }
+             if(response[0].json.json().data){               
+              this.tokenData=response[0].json.json().data;
+              if(this.tokenData.tokenRate){
+                 this.tokenRate=(1/this.tokenData.tokenRate).toFixed(6);
+               }           
               if(response[0].json.json().data.generalInfo.team.length!=0){
                    this.teamInfoStatus=true;
                    var teamData=response[0].json.json().data.generalInfo.team;                   
@@ -139,27 +159,11 @@ ongoingsupply:any = {supply:"0"};
                 this.description="--";
               }
               
-               if(response[0].json.json().data.generalInfo.facebook){
-                this.facebookLink=response[0].json.json().data.generalInfo.facebook;
-              }else{
-                this.facebookLink="https://www.facebook.com";
-              }
                
-              if(response[0].json.json().data.generalInfo.linkedin){
-                this.linkedinLink=response[0].json.json().data.generalInfo.linkedin;
-              }else{
-                this.linkedinLink="https://www.linkedin.com";
-              }
-              if(response[0].json.json().data.generalInfo.twitter){
-                this.twitterLink=response[0].json.json().data.generalInfo.twitter;
-              }else{
-                this.twitterLink="https://www.twitter.com";
-              }
                if(response[0].json.json().data.generalInfo.vedio){
                  this.videosStatus=true;
                 this.videoUrlLink=response[0].json.json().data.generalInfo.vedio;
-                this.videoUrlLink = this.videoUrlLink.replace("watch?v=", "embed/");                
-                console.log(this.videoUrlLink);
+                this.videoUrlLink = this.videoUrlLink.replace("watch?v=", "embed/"); 
               }
                
                if(this.tokenData.whitePaper){
@@ -217,32 +221,31 @@ ongoingsupply:any = {supply:"0"};
              }
             }
           }
-          });
-    }
+        });
+      }
 
-    fbLInk(){
-       this.global_service.emitEvent("Invest ICO Page", "Click", this.facebookLink, 1);
-    }
-     linkLInk(){
-       this.global_service.emitEvent("Invest ICO Page", "Click", this.linkedinLink, 1);
-    }
-     twittLInk(){
-       this.global_service.emitEvent("Invest ICO Page", "Click", this.twitterLink, 1);
-    }
-    teamLinkdenLInk(){
 
-    }
 
     
-    gotToInvestToken(tokenId :any,tokenName:any,tokenAddress : any){
-      if (this.user){
-      this.router.navigate(['/dashboard/invest', { 'id': tokenId, "tokenAddress" : tokenAddress }]);
-      }else{
-        $('#smallModal').modal('show');
-      }
+    gotToInvestToken(tokenId :any,tokenName:any,tokenAddress : any){    
+                            
+                            if (this.user){
+                            this.router.navigate(['/dashboard/invest', { 'id': tokenId, "tokenAddress" : tokenAddress }]);
+                            }
+                            else if(!this.user && this.tokenId){
+                              $('#smallModal').modal('show');
+                          }
+                          else{
+                              $('#smallModal').modal('show');
+                            }
+    }
+    
+    logIngotToInvestToken(){
+      this.router.navigate(['/login', {'id': this.tokenId , "tokenAddress" : this.tokenData.tokenAddress}]);
     }
      ngAfterViewInit() {
        window.scrollTo(0, 0);
+    }
    }
 
-}
+

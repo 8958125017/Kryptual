@@ -33,12 +33,16 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MessageService } from './message.service';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { Safe,TruncatePipe} from './Pipes/pipe';
+import { Safe,TruncatePipe,DateChangePipe } from './Pipes/pipe';
 import { RecaptchaModule ,RECAPTCHA_SETTINGS } from 'ng-recaptcha';
-import {RecaptchaFormsModule} from 'ng-recaptcha/forms';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 declare let ga: Function;
 import { SharepointsComponent } from './sharepoints/sharepoints.component';
 import { ShareButtonModule } from '@ngx-share/button';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ExchangeComponent } from './exchange/exchange.component';
+import { BannerComponent } from './banner/banner.component';
+
 let providers ={
     // "google": {
     //            "clientId": "230815267664643",
@@ -82,7 +86,10 @@ let providers ={
     FooterComponent,   
     SharepointsComponent, 
     Safe,
-    TruncatePipe
+    TruncatePipe,
+    DateChangePipe,    
+    ExchangeComponent,
+    BannerComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -98,38 +105,39 @@ let providers ={
     ToasterModule.forRoot(),
     RecaptchaModule.forRoot(),
     RecaptchaFormsModule,
-    HttpModule,
     HttpClientModule,
     ScrollToModule,
     BrowserModule, 
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
-    ShareButtonModule.forRoot()
+    ShareButtonModule.forRoot(),
+    NgbModule.forRoot()
 
   ],
 
   providers: [
-             AuthGuard,   
-             ToasterService,
-             GlobalService, 
-             AuthGuard,
-             Ng4LoadingSpinnerService,
-             MessageService,
-             // below line is use for add # in url
-             {
-                 provide:
-                 LocationStrategy,
-                 useClass: HashLocationStrategy
-             },
+                 AuthGuard,   
+                 ToasterService,
+                 GlobalService, 
+                 //DatePipe,
+                 Ng4LoadingSpinnerService,
+                 MessageService,
+                 // below line is use for add # in url
+                 {
+                     provide:
+                     LocationStrategy,
+                     useClass: HashLocationStrategy
+                 },
 
-              {
-             provide: RECAPTCHA_SETTINGS,
-              useValue: { 
-                siteKey: '6LdAm04UAAAAABRwz2yNS5P2yLKpxxL47nDqN_sT',
-                          } 
-             },
+                  {
+                 provide: RECAPTCHA_SETTINGS,
+                  useValue: { 
+                    siteKey: '6LdAm04UAAAAABRwz2yNS5P2yLKpxxL47nDqN_sT',
+                              } 
+                 },
 
-             DatePipe,Safe,TruncatePipe],
+                 DatePipe,Safe,TruncatePipe
+             ],
   bootstrap: [AppComponent],
 })
 

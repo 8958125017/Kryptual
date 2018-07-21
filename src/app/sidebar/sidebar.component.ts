@@ -4,6 +4,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MessageService } from './../message.service';
+import { ExchangeadminComponent } from './../dashboard/admin_User/exchangeadmin/exchangeadmin.component';
 
 declare const $: any;
 
@@ -48,6 +49,12 @@ export const ROUTES: RouteInfo[] = [{
         title: 'Reseller',
         type: 'link',
         icontype: 'record_voice_over'
+    },
+     {
+        path: '../exchange',
+        title: 'Exchange',
+        type: 'link',
+        icontype: 'compare_arrows'
     },
 
     // {        path: 'merchandise',   
@@ -101,7 +108,13 @@ export const ROUTESINVESTER: RouteInfo[] = [{
         title: 'Refer',
         type: 'link',
         icontype: 'sendtoken'
-    },  
+    }, 
+     {
+        path: '../exchange',
+        title: 'Exchange',
+        type: 'link',
+        icontype: 'compare_arrows'
+    }, 
     {
         path: 'setting',
         title: 'Setting',
@@ -113,13 +126,7 @@ export const ROUTESINVESTER: RouteInfo[] = [{
         title: 'Help',
         type: 'link',
         icontype: 'help'
-    },
-     {
-        path: 'crowdsale',
-        title: 'Crowdsale',
-        type: 'link',
-        icontype: 'help'
-    },
+    }
 
 ];
 
@@ -144,6 +151,7 @@ export const ROUTESADMIN: RouteInfo[] = [
        type: 'link',
        icontype: 'settings'
    },
+
  
    {
        path: 'adminDashboard',
@@ -152,6 +160,31 @@ export const ROUTESADMIN: RouteInfo[] = [
        icontype: 'sendtoken'
 
    },
+    {
+        path: 'ExchangeAdmin',
+        title: 'Exchange Admin',
+        type: 'sub',
+        icontype: 'compare_arrows',
+        collapse: 'exchange',
+        children: [
+
+            { path: 'ExchangeadminComponent', title: 'Dashboard', ab: ''}, 
+            { path: 'UserdetailsComponent', title: 'User Details', ab: ''},            
+            { path: 'FeemanagementComponent', title: 'Fee Management', ab: '' },
+            { path: 'MarketdetailComponent', title: 'Market Detail', ab: '' },
+            { path: 'ExchangesettingComponent', title: 'Setting', ab: ''},
+            { path: 'CurrencylistComponent', title: 'Currency List', ab: ''},
+            { path: 'FundmanagementComponent', title: 'Fund Management', ab: ''},
+            { path: 'ReportsComponent', title: 'Reports', ab: ''}
+
+        ]
+    },
+    {
+        path: '../exchange',
+        title: 'Exchange',
+        type: 'link',
+        icontype: 'compare_arrows'
+    },
    {
        path: 'help',
        title: 'Help',
@@ -178,6 +211,12 @@ export const ROUTESINSTITUTIONAL: RouteInfo[] = [{
         title: 'Send Token',
         type: 'link',
         icontype: 'sendtoken'
+    },
+    {
+        path: '../exchange',
+        title: 'Exchange',
+        type: 'link',
+        icontype: 'compare_arrows'
     }, 
     
 
@@ -325,12 +364,10 @@ export class SidebarComponent implements OnInit,OnDestroy {
                     ETHaddress: this.user.EthAddress,
                     userId: this.user._id
                 };
-                debugger
+                
                 const url = this.global_service.basePath + 'api/logout';
-                this.global_service.PostRequest(url, postData).subscribe(response => {             
-                    debugger
-                    if (response[0].json.status == 200) {
-                        console.log("response = = =" + response[0].json.json().message)
+                this.global_service.PostRequest(url, postData).subscribe(response => {  
+                    if (response[0].json.status == 200) {                     
                         localStorage.clear();
                         localStorage.removeItem('currentUser');
                         localStorage.removeItem('token');

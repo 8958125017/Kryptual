@@ -57,9 +57,7 @@
         "../node_modules/jvectormap/tests/assets/jquery-jvectormap-map.js",
         "../node_modules/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js",
         "../node_modules/sweetalert2/dist/sweetalert2.js",
-        "../node_modules/jquery-validation/dist/jquery.validate.min.js",
-        "./assets/js/index.js",
-        "./assets/js/three.min.js"
+        "../node_modules/jquery-validation/dist/jquery.validate.min.js"        
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

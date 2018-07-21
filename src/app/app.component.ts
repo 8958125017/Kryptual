@@ -53,10 +53,16 @@ export class AppComponent implements OnInit{
 
   function timerIncrement() {
     idleTime = idleTime + 1;
-    if (idleTime > ico.sessionTime.time) { // 20 minutes    
-     let postData = {
+    let postData;
+    if(JSON.parse(localStorage.getItem('currentUser'))){
+      postData = {
                     userId: JSON.parse(localStorage.getItem('currentUser'))._id
-                };
+                }; 
+        }else{
+          return;
+        }
+    if (idleTime > ico.sessionTime.time) { // 20 minutes    
+     
                 const url = self.global_service.basePath + 'api/logout';
                 clearInterval(idleInterval); 
                 self.global_service.PostRequest(url, postData).subscribe(response => {

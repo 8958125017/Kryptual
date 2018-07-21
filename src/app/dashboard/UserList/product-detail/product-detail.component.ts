@@ -149,6 +149,7 @@ let data={
   "userId" : user._id,
   "password" : currentpassword
 }
+
   this.global_service.PostRequest(url,data).subscribe(response=>{
     if(response[0].json.json().status==200){
         let datas={
@@ -160,11 +161,10 @@ let data={
                   "user_id" :user._id,
                   "userId" :user._id
 
-        }      
-        console.log("datas"+JSON.stringify(datas));
+        } 
+                    
       this.global_service.PostRequest(this.global_service.basePath+'ETH/purchaseProducts',datas).subscribe(response=>{        
-        console.log(response[0].json.json().status);
-         if(response[0].json.json().status==200){
+           if(response[0].json.json().status==200){
            this.global_service.showNotification('top','right','Thankyou for shopping!.',2,'ti-cross'); 
            this.amount=0;  
            this.currentpassword='';
@@ -181,17 +181,17 @@ let data={
     }   
 
     });
-};
+  };
 
-            ngOnInit() {
-                 this.submittForm();
-                    }
-                    
-            submittForm(){
-                this.submitForm = this.fb.group({
-                      'currentPassword': new FormControl('',Validators.compose([Validators.required]))
-                                   });
-                   }
+    ngOnInit() {
+         this.submittForm();
+    }
+            
+    submittForm(){
+                  this.submitForm = this.fb.group({
+                    'currentPassword': new FormControl('',Validators.compose([Validators.required]))
+                  });
+           }
 
 
 }

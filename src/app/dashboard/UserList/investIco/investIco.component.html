@@ -3,24 +3,24 @@
         <div class="header text-center">
             <h3 class="title">INVEST ICO</h3>
         </div>
-        <div class="row">
-            <div class="centerr resp">
-                <div class="col-lg-7 col-md-6 col-sm-12 col-12">
-                    <input _ngcontent-c2="" class="form-control my-srch" placeholder="Search.." type="text" [(ngModel)]="filterText">
+        <div class="row d-block">
+            <div class="centerr resp w-100">
+                <div class="col-lg-7 col-md-7">
+                    <input  class="form-control my-srch bg-white border rounded h-100 float-left border-info m-3" placeholder="Search.." type="text" [(ngModel)]="filterText">
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                <div class="places-buttons eth-bx-head" style="padding-bottom: 0px;">
-                    <div class="col-lg-3 col-md-12 col-sm-12 wdth-eth" style="width: auto;">
+                <div class="col-lg-3 col-md-3">
+                <div class="places-buttons eth-bx-head pb-0">
+                    <div class="col-lg-3 col-md-12 col-sm-12">
                         <div class="card card-stats eth-bx">
                             <div class="card-header" data-background-color="green">
-                                <i class="material-icons" style="font-size: 28px;line-height: 31px;width: auto;height: auto;">style</i>
+                                <i class="fas fa-boxes h-auto w-auto" style="font-size: 20px;line-height: 33px;"></i>
                             </div>
                             <div class="card-content">
                                 <p class="category">TOTAL</p>
-                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="allStatus"> {{tokensList.length ? tokensList.length: '0'}}</h3>
-                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="ongoingStatus"> {{onGoingList.length ? onGoingList.length : '0'}}</h3>
-                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="upcommingStatus"> {{upComming.length ? upComming.length : '0'}}</h3>
-                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="expierStatus"> {{expierList.length ? expierList.length : '0'}}</h3>
+                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="allStatus"> {{viewlengthtokensList?viewlengthtokensList:'0'}}</h3>
+                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="ongoingStatus"> {{viewlengthtokensList ? viewlengthtokensList : '0'}}</h3>
+                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="upcommingStatus"> {{viewlengthtokensList ? viewlengthtokensList : '0'}}</h3>
+                                <h3 style="margin-left: 100px; " class="card-title" *ngIf="expierStatus"> {{viewlengthtokensList ? viewlengthtokensList : '0'}}</h3>
                             </div>
                         </div>
                     </div>
@@ -29,9 +29,9 @@
             </div>
         </div>
     </div>
-    <div class="header text-center" style="margin:40px 0 0;">
+    <div class="header text-center mt-5">
         <div class="nav-center">
-            <ul class="nav nav-pills nav-pills-success nav-pills-icons" role="tablist">
+            <ul class="nav nav-pills nav-pills-info nav-pills-icons" role="tablist">
                 <li class="active">
                     <a role="tab" data-toggle="tab" (click)="all()" style="cursor:pointer;">
                     All 
@@ -56,18 +56,20 @@
         </div>
     </div>
      
-    <div class="row" *ngIf="allStatus">
-        <div id="loader1"><img src="./assets/img/orange_circles.gif" style="width: 30%;margin-left: 35%;margin-top: 5%;">
-        </div>
+    <div class="row d-block centerr" *ngIf="allStatus">
+    <div class="col-md-12 text-center">
+        <div id="loader1"><img src="./assets/img/orange_circles.gif" width="500px" class="img-fluid">
+        </div></div>
+        <div class="col-md-12 text-center">
         <div class="text-center" *ngIf="noToken1">
-            <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
-        </div>
-          <div *ngIf="nofoundStatus">
+            <img src="./assets/img/No-token-Found.png" width="500px" class="img-fluid">
+        </div></div>
+          <div class="col-md-12 text-center" *ngIf="nofoundStatus">
           <div class="text-center" *ngIf="(tokensList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
-                <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
+                <img src="./assets/img/No-token-Found.png" width="500px" class="img-fluid">
             </div>
           </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of tokensList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false ; let i=index">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-5 float-left" *ngFor="let token of tokensList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false ; let i=index">
             <div class="card card-product cards-bx" data-count="3">
                 <div class="card-image" data-header-animation="true">
                     <a>
@@ -85,32 +87,35 @@
                             <a >{{token.tokenName}}</a>
                         </h4>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer bg-white">
                     <div class="price">
-                        <span>Rate</span>
-                        <h4>{{token.tokenSupply}}</h4>
+                         <span>Token Ticker</span>
+                        <h4>{{token.tokenTicker}}</h4>
+                       
                     </div>
                     <div class="price pull-right">
-                        <span>Token Ticker</span>
-                        <h4>{{token.tokenTicker}}</h4>
+                         <span>Supply</span>
+                        <h4>{{token.tokenSupply}}</h4>
                     </div>
                 </div>
-                <div class="card-footer" *ngIf="token.ongingToken">
-                    <div  style="padding: 0 0px;text-align: center;width:  100%;">
-                <h4> 
-                    <div class="timemrgin text-success" style="margin-top: 0%;" id="demoall{{i+1+'a'}}">
+                <div class="card-footer bg-white p-0" *ngIf="token.ongingToken">
+                    <div class="price w-100 pt-5 pb-5">
+                <h5 class="centerr">  
+                    <div class="timemrgin text-info " id="demoall{{i+1+'a'}}">
                         
-                    </div> </h4>
-                            </div>
+                    </div> 
+                </h5>
+                            
+            </div>
                 </div>
                
-                <div class="card-footer" *ngIf="token.completeToken">
-                    <div class="price" style="width: 100%;text-align: center;    margin: 25px 0;">
-                        <p style="font-size: 18px;padding-top: 16px;background:  #e91e63;padding:  10px;color: #fff;display:  block;font-weight: 700;">Crowdsale Completed</p>
+                <div class="card-footer bg-white p-0" *ngIf="token.completeToken">
+                    <div class="price w-100 p-5">
+                        <p style="background:  #e91e63;" class="text-white w-100 font-weight-bold btn-lg btn p-3">Crowdsale Completed</p>
                     </div>
                 </div>
-                <div class="card-footer" *ngIf="token.upcommingToken">
-                    <div class="price" style="width: 100%;text-align: center;    margin: 25px 0;">
+                <div class="card-footer bg-white" *ngIf="token.upcommingToken">
+                    <div class="price" style="width: 100%;text-align: center;    ">
                         <p style="font-size: 18px;padding-top: 16px;background:  #e91e63;padding:  10px;color: #fff;display:  block;font-weight: 700;">Upcoming</p>
                     </div>
                 </div>
@@ -119,7 +124,7 @@
          
             <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreall ">
                 <div class="showmrshow" *ngIf="!(tokensList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
-                    <button class="btn btn-success" (click)="seeMore()">
+                    <button class="btn btn-info" (click)="seeMore()">
                         <span class="btn-label"></span> See More
                     </button>
                 </div>
@@ -127,18 +132,20 @@
        
     </div>
 
-    <div class="row" *ngIf="ongoingStatus">
-        <div id="loader2"><img src="./assets/img/orange_circles.gif" style="width: 30%;margin-left: 35%;margin-top: 5%;">
-        </div>
+    <div class="row d-block" *ngIf="ongoingStatus">
+    <div class="col-md-12 text-center">
+        <div id="loader2"><img src="./assets/img/orange_circles.gif" width="500px" class="img-fluid">
+        </div></div>
+        <div class="col-md-12 text-center">
         <div class="text-center" *ngIf="noToken2">
-            <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
-        </div>
-         <div *ngIf="nofoundStatus">
+            <img src="./assets/img/No-token-Found.png" width="500px" class="img-fluid">
+        </div></div>
+         <div class="col-md-12 text-center" *ngIf="nofoundStatus">
       <div class="text-center" *ngIf="(onGoingList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
-                <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
+                <img src="./assets/img/No-token-Found.png" width="500px" class="img-fluid">
        </div>
        </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of onGoingList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false ; let i=index">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-5 float-left" *ngFor="let token of onGoingList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false ; let i=index">
             <div class="card card-product cards-bx" data-count="3">
                 <div class="card-image" data-header-animation="true">
                     <a>
@@ -156,44 +163,53 @@
                             <a href="#pablo">{{token.tokenName}}</a>
                         </h4>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer bg-white">
                     <div class="price">
-                        <span>Rate</span>
-                        <h4>{{token.tokenSupply}}</h4>
-                    </div>
-                    <div class="price pull-right">
-                        <span>Token Ticker</span>
+                         <span>Token Ticker</span>
                         <h4>{{token.tokenTicker}}</h4>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <div  style="padding: 5% 0px;text-align: center;width:  100%;">
-                               <h4> <div class="timemrgin text-success" style="margin-top: 0%;" id="demo{{i}}"></div> </h4>
+                    <div class="price pull-right">
+                        <span>Supply</span>
+                        <h4>{{token.tokenSupply}}</h4>
+                       
                     </div>
+                </div>
+                <div class="card-footer bg-white p-0">
+                  
+                        <div class="price w-100 pt-5 pb-5">
+                <h5 class="centerr"> 
+                    <div class="timemrgin text-info "  id="demo{{i}}">
+                        
+                    </div> 
+                </h5>
+                            
+            </div>
                 </div>
                
             </div>
         </div>
         <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreOngoing">
                 <div class="showmrshow" *ngIf="!(onGoingList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
-                    <button class="btn btn-success" (click)="seeMore()">
+                    <button class="btn btn-info" (click)="seeMore()">
                         <span class="btn-label"></span> See More
                     </button>
                 </div>
             </div>
     </div>
-    <div class="row" *ngIf="upcommingStatus">
-        <div id="loader3"><img src="./assets/img/orange_circles.gif" style="width: 30%;margin-left: 35%;margin-top: 5%;">
-        </div>
+    <div class="row d-block" *ngIf="upcommingStatus">
+    <div class="col-md-12 text-center">
+        <div id="loader3"><img src="./assets/img/orange_circles.gif" width="500px" class="img-fluid">
+        </div></div>
+        <div class="col-md-12 text-center">
         <div class="text-center" *ngIf="noToken1">
-            <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
-        </div>
-        <div *ngIf="nofoundStatus">
+            <img src="./assets/img/No-token-Found.png" width="500px" class="img-fluid">
+        </div></div>
+        <div class="col-md-12 text-center" *ngIf="nofoundStatus">
          <div class="text-center" *ngIf="(upComming | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
                 <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
        </div>
       </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of upComming | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false | orderBy: 'endTime'">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-5 float-left" *ngFor="let token of upComming | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false | orderBy: 'endTime'">
             <div class="card card-product cards-bx" data-count="3">
                 <div class="card-image" data-header-animation="true">
                     <a>
@@ -211,18 +227,19 @@
                             <a href="#pablo">{{token.tokenName}}</a>
                         </h4>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer bg-white">
                     <div class="price">
-                        <span>Rate</span>
-                        <h4>{{token.tokenSupply}}</h4>
+                         <span>Token Ticker</span>
+                        <h4>{{token.tokenTicker}}</h4>
+                        
                     </div>
                     <div class="price pull-right">
-                        <span>Token Ticker</span>
-                        <h4>{{token.tokenTicker}}</h4>
+                       <span>Supply</span>
+                        <h4>{{token.tokenSupply}}</h4>
                     </div>
                 </div>               
-                <div class="card-footer" *ngIf="upcommingToken">
-                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;margin: 25px 0;margin: 5% 0;">
+                <div class="card-footer bg-white" *ngIf="upcommingToken">
+                    <div class="price" style="padding: 0 20px;width: 100%;text-align: center;">
                         <p style="font-size: 18px;padding-top: 16px;background:  #e91e63;padding:  10px;color: #fff;display:  block;font-weight: 700;">Upcoming</p>
                     </div>
                 </div>
@@ -230,25 +247,27 @@
         </div>
         <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreUpcomming">
                 <div class="showmrshow" *ngIf="!(upComming | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
-                    <button class="btn btn-success" (click)="seeMore()">
+                    <button class="btn btn-info" (click)="seeMore()">
                         <span class="btn-label"></span> See More
                     </button>
                 </div>
             </div>
 
     </div>
-    <div class="row" *ngIf="expierStatus">
-        <div id="loader4"><img src="./assets/img/orange_circles.gif" style="width: 30%;margin-left: 35%;margin-top: 5%;">
-        </div>
+    <div class="row d-block" *ngIf="expierStatus">
+    <div class="col-md-12 text-center">
+        <div id="loader4"><img src="./assets/img/orange_circles.gif" width="500px" class="img-fluid">
+        </div></div>
+        <div class="col-md-12 text-center">
         <div class="text-center" *ngIf="noToken4">
-            <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
-        </div>
-        <div *ngIf="nofoundStatus">
+            <img src="./assets/img/No-token-Found.png" width="500px" class="img-fluid">
+        </div></div>
+        <div class="col-md-12 text-center" *ngIf="nofoundStatus">
         <div class="text-center" *ngIf="(expierList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
                 <img src="./assets/img/No-token-Found.png" style="width:500px;margin-left: 2%;margin-top: 7%;">
        </div>
        </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top: 36px;float: left;" *ngFor="let token of expierList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false | orderBy: 'endTime'">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-5 float-left" *ngFor="let token of expierList | filter:{ tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText} : false | orderBy: 'endTime'">
             <div class="card card-product cards-bx" data-count="3">
                 <div class="card-image" data-header-animation="true">
                     <a>
@@ -266,18 +285,19 @@
                             <a >{{token.tokenName}}</a>
                         </h4>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer bg-white">
                     <div class="price">
-                        <span>Rate</span>
-                        <h4>{{token.tokenSupply}}</h4>
+                       <span>Token Ticker</span>
+                        <h4>{{token.tokenTicker}}</h4>
                     </div>
                     <div class="price pull-right">
-                        <span>Token Ticker</span>
-                        <h4>{{token.tokenTicker}}</h4>
+                          <span>Supply</span>
+                        <h4>{{token.tokenSupply}}</h4>
+                       
                     </div>
                 </div>
                 
-                <div class="card-footer" *ngIf="completeToken">
+                <div class="card-footer bg-white" *ngIf="completeToken">
                     <div class="price" style="padding: 0 20px;width: 100%;text-align: center;margin: 5% 0;">
                         <p style="font-size: 18px;padding-top: 16px;background:  #e91e63;padding:  10px;color: #fff;display:  block;font-weight: 700;">Crowdsale Completed</p>
                     </div>
@@ -286,10 +306,11 @@
         </div>
         <div class="col-md-12 text-center" style="margin-top: 20px;"  *ngIf="seemoreExpired">
                 <div class="showmrshow" *ngIf="!(expierList | filter: { tokenTicker: filterText, tokenName: filterText, tokenSupply: filterText}).length <= 0">
-                    <button class="btn btn-success" (click)="seeMore()">
+                    <button class="btn btn-info" (click)="seeMore()">
                         <span class="btn-label"></span> See More
                     </button>
                 </div>
             </div>
     </div>
 </div>
+

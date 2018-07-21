@@ -17,7 +17,7 @@ import { MessageService } from './../../../message.service';
   })
 
   export class MyProfileComponent implements OnInit {
-     private subject = new Subject<any>();
+  private subject = new Subject<any>();
   public user:any;
   firstName:any;
   public profileDetail:any;
@@ -59,8 +59,6 @@ import { MessageService } from './../../../message.service';
               if(response[0].json.json().data){
                  this.updateDetails=response[0].json.json().data; 
               }          
-            }else{
-             console.log("data = = "+response.data)
             }
           })
     }
@@ -92,7 +90,6 @@ import { MessageService } from './../../../message.service';
     }
 
    ngOnInit() {  
-
         this.myprofileFormInit();
     }
 

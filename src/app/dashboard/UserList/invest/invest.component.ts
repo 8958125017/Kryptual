@@ -34,6 +34,7 @@ export class InvestComponent implements OnInit {
   ethrate : string = '';
   holderCount:any;
   crowdSaleAddress:any;
+  socialUrl:any;
   buyingToken:any= {
                       amount:""
                    }
@@ -68,6 +69,7 @@ export class InvestComponent implements OnInit {
         this.getBalance();
         this.getTokenInfo();
         this.getHolderCount();
+        this.socialUrl="http://52.66.185.83/#/homecrowdsale;id="+this.tokenAddress ;
       }
 
   ngOnInit() {
@@ -103,6 +105,12 @@ export class InvestComponent implements OnInit {
    }
    fundStatus:boolean=false;
   enterTokenValue(event:any){
+    if(event.target.value > this.investData.tokenSupply){
+      this.fundStatus = false;
+      this.global_service.showNotification('top','right',"You can't buy "+event.target.value+" tokens!.",4,'ti-cross');
+      return false;
+    }
+
     if(!this.enablePaypal){
       this.calculatedEth = this.getETHERUM();
       if(this.calculatedEth > this.ethBalance){  
@@ -172,20 +180,18 @@ export class InvestComponent implements OnInit {
                 this.investData.endDate=res.data.endTime;
                 //this.investData.endDate = this.enddate;
                 this.counterDemo(this.investData.endDate);
-                this.getTokenBalanceForInvest(res.data.crowdsaleAddress);
+                this.getTokenBalanceForInvest(this.investData.tokenAddress,res.data.crowdsaleAddress);
             }
           });
 
       }
      x:any;
-     counterDemo(endTime:any){
-      // window.clearInterval(this.x);              
+     counterDemo(endTime:any){             
       this.x = setInterval(function() {
        this.countDownDateExample=new Date(endTime).getTime();     
         var now = new Date().getTime();        
         // Find the distance between now an the count down date
-        var distance = this.countDownDateExample - now;
-       /// console.log("this.countDownDateExample,now::::",this.countDownDateExample,now,i, distance)
+        var distance = this.countDownDateExample - now;      
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -194,16 +200,11 @@ export class InvestComponent implements OnInit {
         
        // Output the result in an element with id="demo"
             var element = document.getElementById("demo9");
-              if(element){
-           //     console.log("iiiiiiiiiiiiiiiiiii:::::::::::::::::::",+i);
+              if(element){         
                  document.getElementById("demo9").innerHTML = days + "d " + hours + "h "
               + minutes  + "m " + seconds + "s";
-              }else{
-                
-                // alert("Hello else");
               }
-        // If the count down is over, write some text 
-        //alert("distance = = "+distance);
+        // If the count down is over, write some text        
         if (distance < 0) {          
             clearInterval(this.x);
             var element = document.getElementById("demo9");
@@ -212,19 +213,21 @@ export class InvestComponent implements OnInit {
             }
           }
         }, 1000);
-      }
+      }  
       
-  getTokenBalanceForInvest(crowdsaleAddress : any) :any{
+  getTokenBalanceForInvest(tokenAddress:any,crowdsaleAddress : any) :any{
     let postData = {
       crowdSaleAddress :crowdsaleAddress,
       userId : this.user._id,
+      userEthAddres : this.user.EthAddress,
+      tokenAddress : tokenAddress
     };
    
-    const url = this.global_service.basePath + 'ETH/getTokenBalanceForInvest';
+    const url = this.global_service.basePath + 'api/getTokenBalanceForInvest';
      this.global_service.PostRequest(url,postData).subscribe(response=>{
        let res = response[0].json.json();
       if(res.status==200){
-          this.tokenBalance=res.data.tokenBalance;
+          this.tokenBalance=res.tokenBalance;
       }else{
               
       }
@@ -238,8 +241,7 @@ export class InvestComponent implements OnInit {
 
       if(type==1)  {
         this.calculatedEth = this.getETHERUM();
-         this.enablePaypal = false;
-         // this.gotoEthPayment();
+         this.enablePaypal = false;         
       }else if(type==2){
 
         this.calculatedEth = this.getDoller();
@@ -251,10 +253,7 @@ export class InvestComponent implements OnInit {
           this.global_service.showNotification('top','right','Buy token',4,'ti-cross');
         }
 
-      }else{
-        alert('3');
       }
-
     }
 
 
@@ -299,8 +298,7 @@ export class InvestComponent implements OnInit {
             if(response[0].json.json().status==200)
               {
                 this.ng4LoadingSpinnerService.hide();
-               this.passwordDetails={};
-               debugger
+               this.passwordDetails={};            
                this.global_service.showNotification('top','right','You have bought '+postData.quantity+" tokens!.",2,'ti-cross');
                  
               }
@@ -321,8 +319,7 @@ export class InvestComponent implements OnInit {
                       userId : this.user._id,
                       amount: investAmount.toString(),
                      password : this.passwordDetails.password
-        };
-        console.log("postData   ="+JSON.stringify(postData));
+        };       
         const url = this.global_service.basePath + 'ETH/WithdrawEth';
         this.global_service.PostRequest(url , postData).subscribe(response=>{
           

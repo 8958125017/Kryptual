@@ -113,6 +113,8 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
  tokentikerstatus:boolean=false;
  tokendecimalstatus=false;
  cmpStatus:boolean=false;
+    cmp:boolean=false;
+   des:boolean=false;
  generalInfo:any={
                   company     : "",
                   description : "",
@@ -507,9 +509,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                            this.nextButtons=false;
                            this.tierSave=false;
                            this.icowizards.crowdsale.pricingStrategy.push(data1);
-                           this.icowizards.crowdsale.crowdsale.push(data);
-                           console.log("rate length"+this.icowizards.crowdsale.pricingStrategy.length);
-                           console.log("rate length"+this.icowizards.crowdsale.crowdsale.length);
+                           this.icowizards.crowdsale.crowdsale.push(data);                           
                            this.global_service.showNotification('top','right','Tier add successfully',2,'ti-cross');
                           }
                     }
@@ -546,7 +546,7 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                                              }
           
          
-          // alert("this.crowdsale.startTime = = "+this.crowdsale.startTime);
+        
          
           this.tierCard=true;
        }
@@ -681,7 +681,6 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
                       this.tierCard=false;
                       this.nextButtons=false;
                       this.global_service.showNotification('top','right','Tier edit successfully',2,'ti-cross');
-                   //   this.tierNextButton=true;
                       return;
 
                }else{
@@ -850,7 +849,12 @@ export class GenerateIcoComponent implements OnInit, OnChanges, AfterViewInit {
         }
 editTeamIndex:any=-1;
     pushteam(){
+      if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl||this.cmp||this.des){
+      this.nextButtons=true;
+      }else{
        this.nextButtons=false;
+      }
+       //this.nextButtons=false;
            if(this.team.image==undefined){
              this.team.image="assets/img/default-avatar.png";
            }
@@ -890,6 +894,7 @@ imgteam:any;
             this.team={};
             this.editTeamIndex=-1;
             this.imgteam=null;
+            this.teamList=true;
            }
 
     }
@@ -924,7 +929,12 @@ imgteam:any;
     }
 
     pushroadmap(){
-      this.nextButtons=false;
+      if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl||this.cmp||this.des){
+      this.nextButtons=true;
+      }else{
+       this.nextButtons=false;
+      }
+      //this.nextButtons=false;
        this.milestone.milestonedate= moment(this.milestone.milestonedate).format('YYYY-MM-DD');
         if(this.milestone.milestone1){
            this.roadmapCard=false;
@@ -956,6 +966,7 @@ imgteam:any;
       if(this.icowizards.crowdsale.milestone.length===0){
             this.milestone={};
             this.editIndexRoadmap=-1;
+            this.roadmapList=true;
            }
   }
 
@@ -1178,9 +1189,7 @@ editreservedIndex:any=-1;
     
   }
   sendtoReact(){
-    const url = this.global_service.basePath + 'api/saveCrowdsale';  
-    console.log("FINAL DATA = = "+JSON.stringify(this.postData));
-    debugger
+    const url = this.global_service.basePath + 'api/saveCrowdsale';     
     this.global_service.PostRequest(url,this.postData).subscribe(response=>{
      if(response[0].json.json().status==200){     
        this.withdrawEth();
@@ -1228,7 +1237,7 @@ editreservedIndex:any=-1;
     const url=this.global_service.basePath + 'api/deleteCrowdsale';
             this.global_service.PostRequest(url, postData).subscribe(response => {
             if (response[0].json.status == 200) {
-             console.log("delete crowdsale");
+          
 
              }
         })
@@ -1297,8 +1306,7 @@ editreservedIndex:any=-1;
     let reader = new FileReader();
     let file = event.target.files[0];
     reader.onloadend = (e:any) => {
-      this.selectedWhitePaperImage = e.target.result;
-      console.log()
+      this.selectedWhitePaperImage = e.target.result;   
       var whitePaperImg=this.selectedWhitePaperImage.split(',')[1]      
       let postData={
         image : whitePaperImg
@@ -1848,15 +1856,17 @@ editreservedIndex:any=-1;
     minus(e){           
               if (e.keyCode === 189 ) 
               {
-                 return false;
+                 return false ;
               }
             }
 
-      urlValidation(event,val){   
+      urlValidation(event,val){  
+             console.log("event.target.value = = ="+event.target.value);
         if(!event.target.value){
           if(val=="videoLink"){
            this.videoUrl=false;
-           if(this.websiteUrl||this.facebookUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl){
+           //this.nextButtons=false;
+           if(this.websiteUrl||this.facebookUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl||this.des==true||this.cmp==true){
                this.nextButtons=true;
            }else{
              this.nextButtons=false;
@@ -1864,35 +1874,40 @@ editreservedIndex:any=-1;
            
          }else if(val=="webLink"){
            this.websiteUrl=false;
-           if(this.videoUrl||this.facebookUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl){
+           //this.nextButtons=false;
+           if(this.videoUrl||this.facebookUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl||this.des==true||this.cmp==true){               
                this.nextButtons=true;
            }else{
              this.nextButtons=false;
            }
          }else if(val=="fb"){
            this.facebookUrl=false;
-           if(this.videoUrl||this.websiteUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl){
+           //this.nextButtons=false;
+           if(this.videoUrl||this.websiteUrl||this.twitterUrl||this.linkedinUrl||this.teamlinkedUrl||this.des==true||this.cmp==true){
                this.nextButtons=true;
            }else{
              this.nextButtons=false;
            }
          }else if(val=="twitLink"){
            this.twitterUrl=false;
-           if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.linkedinUrl||this.teamlinkedUrl){
+          // this.nextButtons=false;
+           if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.linkedinUrl||this.teamlinkedUrl||this.des==true||this.cmp==true){
                this.nextButtons=true;
            }else{
              this.nextButtons=false;
            }
          }else if(val=="linkedLink"){
            this.linkedinUrl=false;
-            if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.twitterUrl||this.teamlinkedUrl){
+           this.nextButtons=false;
+            if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.twitterUrl||this.teamlinkedUrl||this.des==true||this.cmp==true){
                this.nextButtons=true;
            }else{
              this.nextButtons=false;
            }
          }else if(val=="teamLink"){
            this.teamlinkedUrl=false;
-           if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.linkedinUrl||this.teamlinkedUrl){
+           this.nextButtons=false;
+           if(this.videoUrl||this.websiteUrl||this.facebookUrl||this.linkedinUrl||this.teamlinkedUrl||this.des==true||this.cmp==true){
                this.nextButtons=true;
            }else{
              this.nextButtons=false;
@@ -1907,54 +1922,114 @@ editreservedIndex:any=-1;
          }
         }else if(event.target.value){
           var urlregex = new RegExp("^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.){1}([0-9A-Za-z]+\.)");
-                     
-                      if(val=="videoLink"){
+                     if(val=="cmpname"){
+                      if(event.target.value.length<3){
+                         this.cmp=true;
+                         this.nextButtons=true;
+                      }else{
+                        if(this.teamlinkedUrl==true||this.videoUrl==true ||this.websiteUrl==true || this.facebookUrl==true||this.linkedinUrl==true||this.twitterUrl==true||this.des==true){
+                          this.cmp=false;
+                          this.nextButtons=true;
+                        }else{
+                         this.cmp=false;
+                         this.nextButtons=false;
+                       }
+                      }
+                     }
+
+                     else if(val=="descname"){
+                      if(event.target.value.length<20){
+                         this.des=true;
+                         this.nextButtons=true;
+                      }else{
+                        if(this.teamlinkedUrl==true||this.videoUrl==true ||this.websiteUrl==true || this.facebookUrl==true||this.linkedinUrl==true||this.twitterUrl==true||this.cmp==true){
+                          this.des=false;
+                          this.nextButtons=true;
+                        }else{
+                         this.des=false;
+                         this.nextButtons=false;
+                       }                         
+                      }
+                     }
+
+                      else if(val=="videoLink"){
                          if(urlregex.test(event.target.value)){
+                           if(this.teamlinkedUrl==true||this.websiteUrl==true || this.facebookUrl==true||this.linkedinUrl==true||this.twitterUrl==true ||this.des==true||this.cmp==true){
                               this.videoUrl=false;
+                              this.nextButtons=true;
+                           }else{
+                             this.videoUrl=false;
                               this.nextButtons=false;
+                           }                              
                           }else{
                               this.videoUrl=true;
                               this.nextButtons=true;
                           }
                         }else if(val=="webLink"){
                           if(urlregex.test(event.target.value)){
+                            if(this.teamlinkedUrl==true||this.videoUrl==true || this.facebookUrl==true||this.linkedinUrl==true||this.twitterUrl==true ||this.des==true||this.cmp==true){
                               this.websiteUrl=false;
+                              this.nextButtons=true;
+                           }else{
+                             this.websiteUrl=false;
                               this.nextButtons=false;
+                           }                             
                           }else{
                               this.websiteUrl=true;
                               this.nextButtons=true;
                           }
                         }else if(val=="fb"){
                           if(urlregex.test(event.target.value)){
-                               this.facebookUrl=false;
-                              this.nextButtons=false;
+                            if(this.teamlinkedUrl==true||this.videoUrl==true || this.websiteUrl==true||this.linkedinUrl==true||this.twitterUrl==true ||this.des==true||this.cmp==true){
+                              this.facebookUrl=false;
+                              this.nextButtons=true;
+                           }else{
+                             this.facebookUrl=false;
+                             this.nextButtons=false;
+                           }                                 
                           }else{
                               this.facebookUrl=true;
                               this.nextButtons=true;
                           }
                         }else if(val=="twitLink"){
                           if(urlregex.test(event.target.value)){
+                            if(this.teamlinkedUrl==true||this.videoUrl==true || this.websiteUrl==true||this.linkedinUrl==true||this.facebookUrl==true ||this.des==true||this.cmp==true){
                               this.twitterUrl=false;
-                              this.nextButtons=false;
+                              this.nextButtons=true;
+                           }else{
+                             this.twitterUrl=false;
+                             this.nextButtons=false;
+                           }                               
                           }else{
                               this.twitterUrl=true;
                               this.nextButtons=true;
                           }
                         }else if(val=="linkedLink"){
                           if(urlregex.test(event.target.value)){
+                            if(this.teamlinkedUrl==true||this.videoUrl==true || this.websiteUrl==true||this.twitterUrl==true||this.facebookUrl==true ||this.des==true||this.cmp==true){
                               this.linkedinUrl=false;
-                              this.nextButtons=false;
+                              this.nextButtons=true;
+                           }else{
+                             this.linkedinUrl=false;
+                             this.nextButtons=false;
+                           }                               
                           }else{
                               this.linkedinUrl=true;
                               this.nextButtons=true;
                           }
                         }else if(val=="teamLink"){
                           if(urlregex.test(event.target.value)){
+                            if(this.videoUrl==true || this.websiteUrl==true||this.twitterUrl==true||this.linkedinUrl==true||this.facebookUrl==true ||this.des==true||this.cmp==true){
                               this.teamlinkedUrl=false;
+                              this.nextButtons=true;                             
+                           }else{
+                             this.teamlinkedUrl=false;
                               this.nextButtons=false;
                               this.teamSave=false;
+                           } 
+                              
                           }else{
-                             this.teamlinkedUrl=true;
+                              this.teamlinkedUrl=true;
                               this.nextButtons=true;
                               this.teamSave=true;
                           }
@@ -1966,11 +2041,12 @@ editreservedIndex:any=-1;
                                this.nextButtons=true;
                                 this.resSave=true;   
                              }
-                         }else{
-                              this.teamlinkedUrl=true;
-                              this.teamSave=true;
-                              this.nextButtons=true;
-                          }
+                         }
+                        //  else{
+                        //       this.teamlinkedUrl=true;
+                        //       this.teamSave=true;
+                        //       this.nextButtons=true;
+                        // }
           
         }
        
@@ -2039,14 +2115,12 @@ editreservedIndex:any=-1;
             {
              this.cmpStatus=false;
              this.discStatus=false;
-             this.stepCounter++;   
-                console.log("this.stepCounter 2 = = "+this.stepCounter);          
+             this.stepCounter++;  
             }
        }
       else if(this.stepCounter===2){
         if(this.token.name&&this.token.ticker&&this.token.decimals){       
-          this.stepCounter++;           
-             console.log("this.stepCounter 3 = = "+this.stepCounter);
+          this.stepCounter++;  
         }
         
         if(this.reservedToken){
@@ -2066,8 +2140,7 @@ editreservedIndex:any=-1;
         
       }else if(this.stepCounter===3){                
       if(this.icowizards.crowdsale.crowdsale.length>=1&&this.inversterMinCap.mincap) {
-         this.stepCounter++; 
-            console.log("this.stepCounter 4 = = "+this.stepCounter);           
+         this.stepCounter++;                     
        }         
            
         if(this.tierCard){

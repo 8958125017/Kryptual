@@ -4,7 +4,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="card">
                     <form [formGroup]="updateForm" (ngSubmit)="updateUserInfo()">
-                       <div _ngcontent-c5="" class="" data-background-color="" style="background: #18d26e;margin-top:-25px;">
+                       <div _ngcontent-c5="" class="" data-background-color="" style="background-image: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%)!important;margin-top:-25px;">
                             <h4 _ngcontent-c5="" class="card-title" style="font-weight: 400;text-align: center;">Update Your Profile</h4>
                         </div>
                         <div class="card-content" style="text-align: center;">
@@ -12,7 +12,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                        <i class="material-icons">person</i>
+                                        <i class="material-icons text-info">person</i>
                                     </span>
                                         <div class="form-group label-floating lft-rff">
                                             <label>First Name
@@ -22,7 +22,7 @@
                                             <div style="color:red" *ngIf="!updateForm.controls['firstName'].valid&&updateForm.controls['firstName'].dirty">
                                                 <span *ngIf="updateForm.controls['firstName'].errors['required']">First Name cannot be left blank</span>
                                                 <span *ngIf="updateForm.controls['firstName'].errors['minlength']">First Name must contain 3-28 characters, only alphabets and no spaces</span>
-                                                <span *ngIf="updateForm.controls['firstName'].errors['pattern']&&!updateForm.controls['firstName'].errors['minlength']">First name should be alphabet </span>
+                                                <span *ngIf="updateForm.controls['firstName'].errors['pattern']&&!updateForm.controls['firstName'].errors['minlength']">Sorry, you are not allowed to enter any spaces</span>
                                             </div>
                                         </div>
                                     </div>
@@ -30,7 +30,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                        <i class="material-icons">person_outline</i>
+                                        <i class="material-icons text-info">person_outline</i>
                                     </span>
                                         <div class="form-group label-floating lft-rff">
                                             <label>Last Name
@@ -40,7 +40,7 @@
                                             <div style="color:red" *ngIf="!updateForm.controls['lastName'].valid&&updateForm.controls['lastName'].dirty">
                                                 <span *ngIf="updateForm.controls['lastName'].errors['required']">Last name cannot be left blank</span>
                                                 <span *ngIf="updateForm.controls['lastName'].errors['minlength']">Last Name must contain 3-28 characters, only alphabets and no spaces</span>
-                                                <span *ngIf="updateForm.controls['lastName'].errors['pattern']&&!updateForm.controls['lastName'].errors['minlength']">Last name should be alphabet </span>
+                                                <span *ngIf="updateForm.controls['lastName'].errors['pattern']&&!updateForm.controls['lastName'].errors['minlength']">Sorry, you are not allowed to enter any spaces</span>
                                             </div>
                                         </div>
                                     </div>
@@ -48,7 +48,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                        <i class="material-icons">email</i>
+                                        <i class="material-icons text-info">email</i>
                                     </span>
                                         <div class="form-group label-floating lft-rff" >
                                             <label>Email Id
@@ -60,9 +60,9 @@
                                     </div>
                                 </div>                                
                             </div>
-                            <button class="btn btn-success"  [disabled]="!updateForm.valid">
+                            <button class="btn btn-info"  [disabled]="!updateForm.valid">
                                 <span class="btn-label">                               
-                            </span> Submit
+                            </span> Update Profile
                             </button>
                         </div>
                     </form>

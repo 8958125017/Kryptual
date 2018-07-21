@@ -4,7 +4,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="card">
                     <form [formGroup]="updatePasswordForm" (ngSubmit)="updateUserPassword()" class="form-horizontal">
-                        <div class="" data-background-color="" style="background: #18d26e;margin-top:-25px;">
+                        <div class="" data-background-color="" style="background-image: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%)!important;margin-top:-25px;">
                             <h4 class="card-title" style="font-weight: 400;text-align: center;">Change Your Account Password</h4>
                         </div>
                         <div class="card-content" style="text-align: center;">
@@ -12,7 +12,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="material-icons">lock</i>  
+                                            <i class="material-icons text-info">lock</i>  
                                         </span>
                                         <div class="form-group label-floating  lft-rff">
                                             <label>Current Password
@@ -28,7 +28,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="material-icons">lock_open</i>
+                                            <i class="material-icons text-info">lock_open</i>
                                         </span>
                                         <div class="form-group label-floating  lft-rff">
                                             <label>New Password
@@ -46,7 +46,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="material-icons">lock_outline</i>
+                                            <i class="material-icons text-info">lock_outline</i>
                                         </span>
                                         <div class="form-group label-floating  lft-rff">
                                             <label>Confirm Password
@@ -62,7 +62,7 @@
                             
                         </div>
                         
-                        <button class="btn btn-success" style="background:#18d26e;font-weight:500;" [disabled]="!updatePasswordForm.valid">
+                        <button class="btn btn-info font-weight-normal" [disabled]="!updatePasswordForm.valid">
                             <span class="btn-label">
                                 <!-- <i class="material-icons">check</i> -->
                             </span> Update Password

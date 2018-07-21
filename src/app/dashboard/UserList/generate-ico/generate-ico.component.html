@@ -1,9 +1,9 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="col-sm-10 col-sm-offset-1">
+        <div class="col-sm-12">
             <!--      Wizard container        -->
             <div class="wizard-container">
-                <div class="card wizard-card wzd-card" data-color="green" id="wizardProfile">
+                <div class="card wizard-card wzd-card" data-color="blue" id="wizardProfile">
                     <form action="" method="" name="icoForm">
                         <!--        You can switch " data-color="purple" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                         <div class="wizard-header">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane" id="General-info">
-                                <div class="row">
+                                <div class="row d-block">
                                     <h3 class="wizard-title text-center">
                                         CROWDSALE CONTRACT
                                     </h3>
@@ -59,15 +59,15 @@
                                     <div class="col-sm-7">
                                         <div class="input-group">
                                             <span class="input-group-addon">
-                                                <i class="material-icons">business</i>
+                                                <i class="material-icons text-info">business</i>
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label>COMPANY NAME
                                                     <sup style="color: red">*</sup>
                                                 </label>
-                                                <input name="company" [(ngModel)]="generalInfo.company" type="text" class="form-control" (blur)="onCompanyName(generalInfo.company)" minlength="3" maxlength="50">
-                                                <div *ngIf="cmpStatus">
-                                                        <span class="small" style="color:red;">Must be a valid URL!</span>
+                                                <input name="company" [(ngModel)]="generalInfo.company" type="text" class="form-control" (blur)="onCompanyName(generalInfo.company)" minlength="3" maxlength="50" (keyup)="urlValidation($event,'cmpname')">
+                                                <div *ngIf="cmp">
+                                                        <span class="small" style="color:red;">Company Name must contain atleast 3 characters!</span>
                                                     </div>
                                             </div>
                                         </div>
@@ -75,26 +75,28 @@
                                     <div class="col-sm-7">
                                         <div class="input-group">
                                             <span class="input-group-addon">
-                                                <i class="material-icons">description</i>
+                                                <i class="material-icons text-info">description</i>
                                             </span>
                                             <div class="form-group label-floating">
-                                                <label>DESCRIPTION
+                                                <label>DESCRIPTION  
                                                     <sup style="color: red">*</sup>
+                                               
                                                 </label>
-                                                <input name="description" [(ngModel)]="generalInfo.description" type="text" class="form-control" minlength="20" maxlength="100">
-                                                <div *ngIf="discStatus">
-                                                        <span class="small" style="color:red;">Must be a valid URL!</span>
+                                                <input name="description" [(ngModel)]="generalInfo.description" type="text" class="form-control" minlength="20" maxlength="100" (keyup)="urlValidation($event,'descname')">
+                                               
+                                                <div *ngIf="des">
+                                                        <span class="small" style="color:red;">Description must contain atleast 20 characters!</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row br-bottom">
+                                <div class="row br-bottom d-block">
                                     <div class="col-sm-12">
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <i class="material-icons">video_library</i>
+                                                    <i class="fas fa-video text-info"></i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>Video Link
@@ -109,7 +111,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <i class="material-icons">link</i>
+                                                    <i class="material-icons text-info">link</i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>Website Link
@@ -126,7 +128,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <i class="fa fa-facebook"></i>
+                                                    <i class="fab fa-facebook text-info"></i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>Facebook Link
@@ -141,12 +143,12 @@
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <i class="fa fa-twitter"></i>
+                                                    <i class="fab fa-twitter text-info"></i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>Twitter Link
                                                     </label>
-                                                    <input name="twitter" [(ngModel)]="generalInfo.twitter" type="text" class="form-control" (keyup)="urlValidation($event)" (keyup)="urlValidation($event,'twitLink')">
+                                                    <input name="twitter" [(ngModel)]="generalInfo.twitter" type="text" class="form-control" (keyup)="urlValidation($event,'twitLink')">
                                                     <div *ngIf="twitterUrl">
                                                         <span class="small" style="color:red;">Must be a valid URL!</span>
                                                     </div>
@@ -158,7 +160,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <i class="fa fa-linkedin"></i>
+                                                    <i class="fab fa-linkedin text-info"></i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>Linkedin Link
@@ -173,7 +175,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon" style="vertical-align: text-bottom;">
-                                                    <i class="fa fa-file"></i>
+                                                    <i class="fa fa-file text-info"></i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>WHITE PAPER
@@ -194,7 +196,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row " style="margin-bottom: 20px " *ngIf="whitepaperStatus">
+                                <div class="row d-block" style="margin-bottom: 20px " *ngIf="whitepaperStatus">
                                     <div class="col-sm-12">
                                         <iframe class="whitepaperiframe" [src]='icowizards.crowdsale.whitePaper | safeHtml' width="640" height="360" frameborder="0"
                                             webkitallowfullscreen mozallowfullscreen allowfullscreen style="float: left;width: 100%;">
@@ -203,21 +205,21 @@
                                 </div>
                                 <!-- team section -->
 
-                                <div class="row br-top">
+                                <div class="row br-top d-block">
                                     <div class="col-sm-12">
                                         <h4 class="info-text">Team</h4>
-                                        <div class="row cl-bx-right">
+                                        <div class="row cl-bx-right d-block">
                                             <div class="col-sm-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="material-icons"></i>
+                                                        <i class="material-icons text-info"></i>
                                                     </span>
                                                     <div class="form-group label-floating" *ngIf="teamList">
                                                         <label>Members :
                                                         </label>
                                                         <input name="Teams details" disabled="" placeholder="No Teams available, Please add." type="text" class="form-control">
                                                     </div>
-                                                    <div class="row">
+                                                    <div class="row d-block">
                                                         <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let team of icowizards.crowdsale.team ; let i = index">
                                                             <div class="card ">
                                                                 <div class="card-header text-center">
@@ -242,7 +244,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div  class="save-left">
-                                                                    <button  class="btn btn-success" (click)="editteam(i)">
+                                                                    <button  class="btn btn-info" (click)="editteam(i)">
                                                                         <i  class="material-icons">edit</i>
                                                                         <div class="ripple-container"></div>
                                                                     </button>
@@ -253,7 +255,7 @@
                                                 </div>
                                             </div>
                                             <div class="plus-lgt">
-                                                <button class="btn btn-success" (click)="addteam()" scrollTo href="#addsection">
+                                                <button class="btn btn-info" (click)="addteam()" scrollTo href="#addsection">
                                                     <i class="material-icons">add</i>
                                                     <div class="ripple-container"></div>
                                                 </button>
@@ -272,7 +274,7 @@
                                                             </div>
                                                             <div class="modal-footer text-center">
                                                                 <button type="button" class="btn btn-simple" data-dismiss="modal">Never mind</button>
-                                                                <button type="button" class="btn btn-success btn-simple">Yes</button>
+                                                                <button type="button" class="btn btn-info btn-simple">Yes</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -280,7 +282,7 @@
                                                 <!--    end small modal -->
                                             </div>
                                         </div>
-                                        <div class="row br-bx" *ngIf="teamCard" id="addsection">
+                                        <div class="row br-bx d-block" *ngIf="teamCard" id="addsection">
                                             <div class="close-btm">
                                                 <button class="btn  btn-rose" (click)="closeTeamCard()">
                                                     <i class="material-icons">close</i>
@@ -288,7 +290,7 @@
                                                 </button>
                                             </div>
                                             <div class="save-left">
-                                                <button class="btn btn-success" (click)="pushteam()" [disabled]="teamlinkedUrl">
+                                                <button class="btn btn-info" (click)="pushteam()" [disabled]="teamlinkedUrl">
                                                     <i class="material-icons">save</i>Save Team
                                                     <div class="ripple-container"></div>
                                                 </button>
@@ -320,7 +322,7 @@
                                             <div class="col-sm-8">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="material-icons">person</i>
+                                                        <i class="material-icons text-info">person</i>
                                                     </span>
                                                     <div class="form-group label-floating">
                                                         <label>NAME
@@ -335,7 +337,7 @@
                                             <div class="col-sm-8">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="fa fa-linkedin"></i>
+                                                        <i class="fab fa-linkedin text-info"></i>
                                                     </span>
                                                     <div class="form-group label-floating">
                                                         <label>LINKEDIN LINK
@@ -350,7 +352,7 @@
                                             <div class="col-sm-8">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="material-icons">description</i>
+                                                        <i class="material-icons text-info">description</i>
                                                     </span>
                                                     <div class="form-group label-floating">
                                                         <label>DESIGNATION
@@ -365,18 +367,18 @@
                                     <!-- road map -->
                                     <div class="col-sm-12">
                                         <h4 class="info-text">MILESTONES</h4>
-                                        <div class="row cl-bx-right">
+                                        <div class="row cl-bx-right d-block">
                                             <div class="col-sm-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="material-icons"></i>
+                                                        <i class="material-icons text-info"></i>
                                                     </span>
                                                     <div class="form-group label-floating" *ngIf="roadmapList">
                                                         <label>MILESTONE :
                                                         </label>
                                                         <input name="Teams details" disabled="" placeholder="No Business Milestone, Please add." type="text" class="form-control">
                                                     </div>
-                                                    <div class="row">
+                                                    <div class="row d-block">
                                                         <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let roadmap of icowizards.crowdsale.milestone ; let i = index">
                                                             <div class="card">
                                                                 <div class="card-content">
@@ -389,7 +391,7 @@
                                                                             <div class="ripple-container"></div>
                                                                         </button>
                                                                         <div  class="save-left">
-                                                                    <button  class="btn btn-success" (click)="editroadmap(i)">
+                                                                    <button  class="btn btn-info" (click)="editroadmap(i)">
                                                                         <i  class="material-icons">edit</i>
                                                                         <div class="ripple-container"></div>
                                                                     </button>
@@ -402,7 +404,7 @@
                                                 </div>
                                             </div>
                                             <div class="plus-lgt">
-                                                <button class="btn btn-success" (click)="addroadmap()" scrollTo href="#addmilestoneSection">
+                                                <button class="btn btn-info" (click)="addroadmap()" scrollTo href="#addmilestoneSection">
                                                     <i class="material-icons">add</i>
                                                     <div class="ripple-container"></div>
                                                 </button>
@@ -421,7 +423,7 @@
                                                             </div>
                                                             <div class="modal-footer text-center">
                                                                 <button type="button" class="btn btn-simple" data-dismiss="modal">Never mind</button>
-                                                                <button type="button" class="btn btn-success btn-simple">Yes</button>
+                                                                <button type="button" class="btn btn-info btn-simple">Yes</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -429,7 +431,7 @@
                                                 <!--    end small modal -->
                                             </div>
                                         </div>
-                                        <div class="row br-bx" *ngIf="roadmapCard" id="addmilestoneSection">
+                                        <div class="row br-bx d-block" *ngIf="roadmapCard" id="addmilestoneSection">
                                             <div class="close-btm">
                                                 <button class="btn  btn-rose" (click)="closeRoadMapCard()">
                                                     <i class="material-icons">close</i>
@@ -437,15 +439,15 @@
                                                 </button>
                                             </div>
                                             <div class="save-left">
-                                                <button class="btn btn-success" (click)="pushroadmap()">
-                                                    <i class="material-icons">add_location</i>Save Milestone
+                                                <button class="btn btn-info" (click)="pushroadmap()">
+                                                    <i class="material-icons text-info">add_location</i>Save Milestone
                                                     <div class="ripple-container"></div>
                                                 </button>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="material-icons">add_location</i>
+                                                        <i class="material-icons text-info">add_location</i>
                                                     </span>
                                                     <div class="form-group label-floating">
                                                         <label>MILESTONE
@@ -460,7 +462,7 @@
                                             <div class="col-sm-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
+                                                        <i class="fa fa-calendar text-info"></i>
                                                     </span>
                                                     <div class="form-group label-floating">
                                                         <label>DATE
@@ -475,7 +477,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="Token-setup">
-                                <div class="row br-bottom">
+                                <div class="row br-bottom d-block">
                                     <h3 class="wizard-title text-center">
                                         TOKEN SETUP
                                     </h3>
@@ -484,7 +486,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <i class="material-icons">account_box</i>
+                                                    <i class="material-icons text-info">account_box</i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>NAME
@@ -503,7 +505,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <i class="material-icons">filter_center_focus</i>
+                                                    <i class="material-icons text-info">filter_center_focus</i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>TICKER
@@ -525,7 +527,7 @@
                                     <div class="col-sm-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
-                                                <i class="material-icons">view_comfy</i>
+                                                <i class="material-icons text-info">view_comfy</i>
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label>DECIMALS
@@ -545,7 +547,7 @@
                                 </div>
                                 </div>
                                 <!-- RESERVED TOKENS SECTION -->
-                               <div class="row br-top" style="position: relative;">
+                               <div class="row br-top d-block" style="position: relative;">
                                     <div class="col-sm-12">
                                         <h3 class="wizard-title text-center">
                                             RESERVED TOKENS
@@ -553,7 +555,7 @@
                                     </div>
                                     <div class="col-sm-12" *ngFor="let resToken of token.reservedTokens; let i = index">
                                         <div class="card " style="margin:2% 0;">
-                                            <div class="row" style="padding: 1%;">
+                                            <div class="row d-block" style="padding: 1%;">
                                                 <div class="col-sm-6">
                                                     <div class="spc">
                                                         <b>Address : </b>
@@ -587,7 +589,7 @@
                                     </div>
                                 <div class="col-sm-12">
                                     <div class="inner-bx-cwrd">
-                                    <div class="row br-bx" *ngIf="reservedToken">
+                                    <div class="row br-bx d-block" *ngIf="reservedToken">
                                         <div  class="close-btm">
                                                     <button  class="btn  btn-rose" (click)="closeResTokenCard()">
                                                         <i  class="material-icons">close</i>
@@ -595,7 +597,7 @@
                                                     </button>
                                                 </div>
                                                 <div  class="save-left">
-                                                    <button  class="btn btn-success" (click)="pushreservedToken()" [disabled]="resSave">
+                                                    <button  class="btn btn-info" (click)="pushreservedToken()" [disabled]="resSave">
                                                         <i  class="material-icons">save</i>Save 
                                                         <div  class="ripple-container"></div>
                                                     </button>
@@ -603,7 +605,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <i class="material-icons">home</i>
+                                                    <i class="material-icons text-info">home</i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>ADDRESS
@@ -621,7 +623,7 @@
                                         <div class="col-sm-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <i class="fa fa-money"></i>
+                                                    <i class="fa fa-money text-info"></i>
                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label>VALUE
@@ -636,7 +638,7 @@
                                             <div class="col-sm-6 br-bx" style="border: 0px solid ">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="material-icons">brightness_low</i>
+                                                        <i class="material-icons text-info">brightness_low</i>
                                                     </span>
                                                     <p class="wizard-title text-center" style="text-align:left;padding-left: 8px;padding-top: 4%">
                                                         DIMENSIONS :
@@ -666,7 +668,7 @@
                                 </div>
                             </div>
                                     <div class="plus-lgt" style="top:0;">
-                                        <button class="btn btn-success" (click)="addreservedToken()">
+                                        <button class="btn btn-info" (click)="addreservedToken()">
                                             <i class="material-icons">add</i>
                                             <div class="ripple-container"></div>
                                         </button>
@@ -675,9 +677,9 @@
                             </div>
                             <!-- Crowdsale-setup  -->
                             <div class="tab-pane" id="Crowdsale-setup">
-                                <div class="row">
+                                <div class="row d-block">
                                     <div class="col-sm-12 text-center">
-                                        <div class="row add-tier" *ngIf="addBoolean">
+                                        <div class="row d-block add-tier" *ngIf="addBoolean">
                                             <div class="col-sm-12">
                                                 <div class="plus-lgt" style="top: -35px;right: 20px;text-align: left;">
                                                     <button class="btn btn-rose" (click)="addTier()">
@@ -692,22 +694,22 @@
                                             parameters of your crowdsale campaign. </h4>
                                     </div>
                                 </div>
-                                <div class="row br-bottom">
+                                <div class="row br-bottom d-block">
                                     <div class="col-sm-12">
-                                        <div class="row cl-bx-right">
+                                        <div class="row cl-bx-right d-block">
                                             <div class="col-sm-12">
-                                                <div class="row text-center">
+                                                <div class="row text-center d-block">
                                                     <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let tierList of icowizards.crowdsale.crowdsale ; let i = index">
                                                         <div class="card ">
                                                             <div class="card-content">
                                                                 <!-- <div class="close-btm">
-                                                                    <button class="btn  btn-success" (click)="editTire(i)">
+                                                                    <button class="btn  btn-info" (click)="editTire(i)">
                                                                         Edit
                                                                         <div class="ripple-container"></div>
                                                                     </button>
                                                                 </div> -->
                                                                 <div class="edtnew" *ngIf="tierEditDelete">
-                                                                    <button class="btn btn-raised btn-round btn-success" data-target="#noticeModal3" data-toggle="modal" (click)="editTire(i)">
+                                                                    <button class="btn btn-raised btn-round btn-info" data-target="#noticeModal3" data-toggle="modal" (click)="editTire(i)">
                                                                         <i class="material-icons">edit</i>
                                                                     </button>
                                                                     <button class="btn btn-raised btn-round btn-rose" data-toggle="modal" mattooltip="Remove" ng-reflect-message="Remove" data-toggle="modal"
@@ -749,7 +751,7 @@
                                                                             </div>
                                                                             <div class="modal-footer text-center">
                                                                                 <button type="button" class="btn btn-simple" data-dismiss="modal">Never mind</button>
-                                                                                <button type="button" class="btn btn-success btn-simple" data-dismiss="modal" (click)="deleteTire()">Yes</button>
+                                                                                <button type="button" class="btn btn-info btn-simple" data-dismiss="modal" (click)="deleteTire()">Yes</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -763,7 +765,7 @@
 
 
                                         <div class="inner-bx-cwrd">
-                                            <div class="row br-bx" *ngIf="tierCard">
+                                            <div class="row br-bx d-block" *ngIf="tierCard">
                                                 <div class="close-btm">
                                                     <button class="btn  btn-rose" (click)="closetierbox()">
                                                         <i class="material-icons">close</i>
@@ -771,17 +773,17 @@
                                                     </button>
                                                 </div>
                                                 <div class="save-left">
-                                                    <button class="btn btn-success" (click)="pushtier()" >
+                                                    <button class="btn btn-info" (click)="pushtier()" >
                                                         <i class="material-icons">save</i>Save Tier
                                                         <div class="ripple-container"></div>
                                                     </button>
                                                 </div>
-                                                <div class="row  br-bottom ">
+                                                <div class="row  br-bottom d-block">
                                                     <div class="col-sm-12">
                                                         <div class="col-sm-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
-                                                                    <i class="material-icons">person_outline</i>
+                                                                    <i class="material-icons text-info">person_outline</i>
                                                                 </span>
                                                                 <div class="form-group label-floating">
                                                                     <label>CROWDSALE SETUP NAME
@@ -797,7 +799,7 @@
                                                         <div class="col-sm-6 ">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
-                                                                    <i class="material-icons">account_balance_wallet</i>
+                                                                    <i class="material-icons text-info">account_balance_wallet</i>
                                                                 </span>
                                                                 <div class="form-group label-floating">
                                                                     <label>WALLET ADDRESS
@@ -815,7 +817,7 @@
                                                         <div class="col-sm-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
-                                                                    <i class="material-icons">timer</i>
+                                                                    <i class="material-icons text-info">timer</i>
                                                                 </span>
                                                                 <div class="form-group label-floating">
                                                                     <label>START TIME
@@ -834,7 +836,7 @@
                                                         <div class="col-sm-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
-                                                                    <i class="material-icons">timer_off</i>
+                                                                    <i class="material-icons text-info">timer_off</i>
                                                                 </span>
                                                                 <div class="form-group label-floating">
                                                                     <label>END TIME
@@ -854,7 +856,7 @@
                                                         <div class="col-sm-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
-                                                                    <i class="material-icons">monetization_on</i>
+                                                                    <i class="material-icons text-info">monetization_on</i>
                                                                 </span>
                                                                 <div class="form-group label-floating">
                                                                     <label>RATE
@@ -869,7 +871,7 @@
                                                         <div class="col-sm-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon">
-                                                                    <i class="material-icons">settings_applications</i>
+                                                                    <i class="material-icons text-info">local_shipping</i>
                                                                 </span>
                                                                 <div class="form-group label-floating">
                                                                     <label>SUPPLY
@@ -887,14 +889,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row br-top">
+                                <div class="row br-top d-block">
                                     <div class="col-sm-12  text-center">
                                         <h4> GLOBAL LIMITS</h4>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
-                                                <i class="material-icons">transform</i>
+                                                <i class="material-icons text-info">transform</i>
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label >INVESTOR MIN CAP 
@@ -932,7 +934,7 @@
                                                 <div class="col-sm-9">
                                                     <div class="form-group label-floating">
                                                         <label>
-                                                            <i class="fa fa-building"></i>COMPANY NAME</label>
+                                                            <i class="fa fa-building text-info"></i>COMPANY NAME</label>
                                                         <p>{{generalInfo.company ? generalInfo.company : '--'}}
                                                         </p>
                                                     </div>
@@ -940,7 +942,7 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label>
-                                                            <i class="fa  fa-file"></i>DESCRIPTION</label>
+                                                            <i class="fa  fa-file text-info"></i>DESCRIPTION</label>
                                                         <div class="form-group label-floating is-empty" style="margin: 0;">
                                                             <p>{{generalInfo.description ? generalInfo.description : '--'}}</p>
                                                             <span class="material-input"></span>
@@ -951,12 +953,12 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-content">
-                                                <div class="row">
+                                                <div class="row d-block">
                                                     <h4 class="info-text"> SOCIAL LINK</h4>
                                                     <div class="col-sm-12">
                                                         <div class="form-group ">
                                                             <label>
-                                                                <i _ngcontent-c4="" class="fa fa-file-video-o"></i>VIDEO LINK </label>
+                                                                <i class="fas fa-video"></i>VIDEO LINK </label>
                                                             <p class="socialp">{{generalInfo.vedio ? generalInfo.vedio : '--'}}</p>
                                                         </div>
                                                     </div>
@@ -964,7 +966,7 @@
                                                         <div class="input-group">
                                                             <div class="form-group ">
                                                                 <label>
-                                                                    <i class="fa fa-link"></i> WEBSITE LINK </label>
+                                                                    <i class="fa fa-link text-info"></i> WEBSITE LINK </label>
                                                                 <p class="socialp">{{generalInfo.website ? generalInfo.website : '--'}}</p>
                                                             </div>
                                                         </div>
@@ -973,7 +975,7 @@
                                                         <div class="input-group">
                                                             <div class="form-group ">
                                                                 <label>
-                                                                    <i class="fa fa-facebook"></i>FACEBOOK LINK </label>
+                                                                    <i class="fab fa-facebook text-info"></i>FACEBOOK LINK </label>
                                                                 <p class="socialp">{{generalInfo.facebook ? generalInfo.facebook : '--'}}</p>
                                                             </div>
                                                         </div>
@@ -981,14 +983,14 @@
                                                     <div class="col-sm-12">
                                                         <div class="form-group ">
                                                             <label>
-                                                                <i class="fa fa-twitter"></i>TWITTER LINK</label>
+                                                                <i class="fab fa-twitter text-info"></i>TWITTER LINK</label>
                                                             <p class="socialp">{{generalInfo.twitter ? generalInfo.twitter : '--'}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-12">
                                                         <div class="form-group">
                                                             <label>
-                                                                <i class="fa fa-linkedin"></i>LINKEDIN LINK</label>
+                                                                <i class="fab fa-linkedin text-info"></i>LINKEDIN LINK</label>
                                                             <p class="socialp">{{generalInfo.linkedin ? generalInfo.linkedin : '--'}}</p>
                                                         </div>
                                                     </div>
@@ -1014,7 +1016,7 @@
                                                             <span class="check"></span>
                                                         </span> {{item.name}} &nbsp;&nbsp;${{item.price}}
                                                         <a>
-                                                            <i class="fa fa-info-circle" data-toggle="tooltip" title="" data-title="{{item.previewText}}"></i>
+                                                            <i class="fa fa-info-circle text-info" data-toggle="tooltip" title="" data-title="{{item.previewText}}"></i>
                                                             <!--   <i class="material-icons" data-toggle="tooltip" data-title="{{item.previewText}}">remove_red_eye</i> -->
                                                         </a>
                                                         <br>
@@ -1025,7 +1027,7 @@
                                                             <span class="check"></span>
                                                         </span> {{item.name}}&nbsp;&nbsp;${{item.price}}
                                                         <a>
-                                                            <i class="fa fa-info-circle" data-toggle="tooltip" title="" data-title="{{item.previewText}}"></i>
+                                                            <i class="fa fa-info-circle text-info" data-toggle="tooltip" title="" data-title="{{item.previewText}}"></i>
                                                             <!--  <i class="material-icons" data-toggle="tooltip" data-title="{{item.previewText}}">remove_red_eye</i> -->
                                                         </a>
                                                         <br>
@@ -1037,13 +1039,13 @@
                                                     <label>Promo Code : </label>
                                                     <input name="coupon" [(ngModel)]="promoCoupen.coupon" type="text" class="form-control">
                                                     <span class="pull-right">
-                                                        <button class="btn btn-success" (click)="applyPromo()">Submit</button>
+                                                        <button class="btn btn-info" (click)="applyPromo()">Submit</button>
                                                     </span>
                                                     <br>
                                                 </div>
                                             </div>
-                                            <div class="card-footer">
-                                                <div class="row">
+                                            <div class="card-footer bg-white">
+                                                <div class="row d-block">
                                                     <div class="stats pull-left">
                                                         <b class="category">
                                                             Total Charges :</b>
@@ -1061,9 +1063,9 @@
                                                 </div>
                                                 <br>
 
-                                                <div class="row">
+                                                <div class="row d-block">
                                                     <div class="col-md-6">
-                                                        <button data-toggle="modal" (click)="checkETHBalance()" class="btn btn-success" [disabled]="space || nextButtons|| tierNextButton || tiker || mincap || decimalValid || checkSavetier || nextStatus">
+                                                        <button data-toggle="modal" (click)="checkETHBalance()" class="btn btn-info" [disabled]="space || nextButtons||  tiker || mincap || decimalValid || checkSavetier">
                                                             <span class="btn-label" >
                                                                 <!-- <i class="material-icons">check</i> -->
                                                             </span> CONFIRM
@@ -1071,18 +1073,18 @@
                                                         </button>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <button (click)="saveDraft()" class="btn btn-success"  [disabled]="space || nextButtons|| tierNextButton || tiker || mincap || decimalValid || checkSavetier || nextStatus">Save as Draft</button>
+                                                        <button (click)="saveDraft()" class="btn btn-info"  [disabled]="space || nextButtons|| tiker || mincap || decimalValid || checkSavetier">Save as Draft</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card">
                                             <h4 class="info-text">TOKEN SETUP</h4>
-                                            <div class="row">
+                                            <div class="row d-block">
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label>
-                                                            <i class="material-icons" style="float: left;padding: 6px 20px 0 0;">person</i>NAME
+                                                            <i class="material-icons text-info" style="float: left;padding: 6px 20px 0 0;">person</i>NAME
                                                         </label>
                                                         <p class="socialp">{{token.name}}</p>
                                                     </div>
@@ -1090,7 +1092,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>
-                                                            <i class="material-icons" style="float: left;padding: 6px 20px 0 0;">description</i>TICKER
+                                                            <i class="material-icons text-info" style="float: left;padding: 6px 20px 0 0;">description</i>TICKER
                                                         </label>
                                                         <p class="socialp">{{token.ticker}}</p>
                                                     </div>
@@ -1098,7 +1100,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>
-                                                            <i class="material-icons" style="float: left;padding: 6px 20px 0 0;">video_library</i>DECIMALS
+                                                            <i class="material-icons text-info" style="float: left;padding: 6px 20px 0 0;">video_library</i>DECIMALS
                                                         </label>
                                                         <p class="socialp">{{token.decimals}}</p>
                                                     </div>
@@ -1107,7 +1109,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row d-block">
                                     <!-- <div class="col-sm-12" *ngIf="!noteam">
                                         <div class="card">
                                              <div class="card-content">
@@ -1117,7 +1119,7 @@
                                     </div> -->
                                     <div class="col-sm-12" *ngIf="noteam">
                                         <h4 class="info-text">Teams</h4>
-                                        <div class="row">
+                                        <div class="row d-block">
                                             <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let team of icowizards.crowdsale.team">
                                                 <div class="card card-stats text-center">
                                                     <div class="spc">
@@ -1143,9 +1145,9 @@
                                     </div>
                                 </div>
                               
-                                <div class="col-sm-12" *ngIf="nobusiness">
-                                    <h4 class="info-text">business Road</h4>
-                                    <div class="row">
+                                <div class="col-sm-12" *ngIf="noBussiness">
+                                    <h4 class="info-text">MILESTONES</h4>
+                                    <div class="row d-block">
                                         <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let roadmap of icowizards.crowdsale.milestone">
                                             <div class="card card-stats ">
                                                 <div class="card-content">
@@ -1171,7 +1173,7 @@
                                     <div class="" *ngIf="resToken">
                                         <div class="card">
                                             <div class="card-content">
-                                                <div class="row" *ngFor="let resToken of token.reservedTokens">
+                                                <div class="row d-block" *ngFor="let resToken of token.reservedTokens">
                                                     <div class="col-sm-7">
                                                         <div class="spc">
                                                             <b>Address : </b>
@@ -1252,7 +1254,7 @@
                                 </div>
 
                             </div>
-                                <div class="row " style="margin-bottom: 20px " *ngIf="whitepaperStatus">
+                                <div class="row d-block" style="margin-bottom: 20px " *ngIf="whitepaperStatus">
                                     <div class="col-sm-12">
                                         <iframe class="whitepaperiframe" [src]='icowizards.crowdsale.whitePaper | safeHtml' width="640" height="360" frameborder="0"
                                             webkitallowfullscreen mozallowfullscreen allowfullscreen style="float: left;width: 100%;">
@@ -1264,7 +1266,7 @@
                 
                 <div class="wizard-footer">
                     <div class="pull-right card-content">
-                        <input type='button' [disabled]="space || nextButtons|| tierNextButton || tiker || mincap || decimalValid || checkSavetier || nextStatus" class='btn btn-next btn-fill btn-rose btn-wd'name='next' value='Next' (click)="nextClick()"/>
+                        <input type='button' [disabled]="space || nextButtons|| tiker || mincap || decimalValid || checkSavetier" class='btn btn-next btn-fill btn-rose btn-wd'name='next' value='Next' (click)="nextClick()"/>
                         <!-- <input type='button' [disabled]="space || tiker || mincap || decimalValid || checkSavetier" class='btn btn-next btn-fill btn-rose btn-wd' name='next' value='Next' /> -->
                         <!-- <input type='button' class='btn btn-finish btn-fill btn-rose btn-wd' name='finish' value='Finish' (click)="saveCrowdsale()" /> -->
                     </div>
@@ -1284,21 +1286,23 @@
     <div class="modal-dialog modal-notice mdbx-wd">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Confirm Password</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     <i class="material-icons">clear</i>
                 </button>
-                <h5 class="modal-title" id="myModalLabel">Confirm Password</h5>
+                
             </div>
             <div class="modal-body">
                 <div class="instruction">
-                    <div class="row">
+                    <div class="row d-block">
                         <div class="col-md-12">
-                            <div class="card modalch2" style="margin-bottom: 0;">
+                            <div class=" modalch2" style="margin-bottom: 0;">
                                 <form [formGroup]="withDrawForm"  class="form-horizontal ng-untouched ng-pristine ng-valid">
                                     <div class="card-content">
-                                        <div class="row">
-                                            <label class="col-sm-2 label-on-left">Password</label>
-                                            <div class="col-sm-9">
+                                        <div class="row d-block">
+                                            
+                                            <div class="col-sm-12">
+                                                <label>Password</label>
                                                 <div class="form-group label-floating is-empty">
                                                     <label class="control-label"></label>
                                                     <input (keypress)="enterOnSubmit($event)" class="form-control" formControlName="password" [(ngModel)]="withdrawDetails.password" type="password" value="">
@@ -1308,9 +1312,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row d-block">
                                             <div class="col-sm-12">
-                                                <button type="button" class="btn btn-success btn-round" data-dismiss="modal" [disabled]="!withDrawForm.valid" (click)="checkPassword()">SUBMIT</button>
+                                                <button type="button" class="btn btn-info btn-round" data-dismiss="modal" [disabled]="!withDrawForm.valid" (click)="checkPassword()">SUBMIT</button>
                                             </div>
                                         </div>
                                     </div>

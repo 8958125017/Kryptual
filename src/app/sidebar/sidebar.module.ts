@@ -28,7 +28,17 @@ import { MerchandiseComponent } from '../dashboard/UserList/merchandise/merchand
 import { ProductDetailComponent } from '../dashboard/UserList/product-detail/product-detail.component';
 import { ImageZoomModule} from 'angular2-image-zoom';
 import { AdminDashboardComponent } from '../dashboard/admin_User/admin_Dashboard/admin_Dashboard.component';
+import { ExchangeadminComponent } from "../dashboard/admin_User/exchangeadmin/exchangeadmin.component";
+import { UserdetailsComponent } from "../dashboard/admin_User/exchangeadmin/userdetails/userdetails.component";
+import { FeemanagementComponent } from "../dashboard/admin_User/exchangeadmin/feemanagement/feemanagement.component";
+import { MarketdetailComponent } from "../dashboard/admin_User/exchangeadmin/marketdetail/marketdetail.component";
+import { ExchangesettingComponent } from "../dashboard/admin_User/exchangeadmin/exchangesetting/exchangesetting.component";
+import { CurrencylistComponent } from "../dashboard/admin_User/exchangeadmin/currencylist/currencylist.component";
+import { FundmanagementComponent } from "../dashboard/admin_User/exchangeadmin/fundmanagement/fundmanagement.component";
+import { ReportsComponent } from "../dashboard/admin_User/exchangeadmin/reports/reports.component";
+
 import { ShareButtonModule } from '@ngx-share/button';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
     imports: [
         RouterModule,
@@ -42,7 +52,8 @@ import { ShareButtonModule } from '@ngx-share/button';
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
         ImageZoomModule,
-        ShareButtonModule.forRoot()
+        ShareButtonModule.forRoot(),
+        NgbModule
        ],
 
     providers: [AuthGuard, { provide: LocationStrategy, useClass: HashLocationStrategy }, DatePipe],
@@ -70,7 +81,15 @@ import { ShareButtonModule } from '@ngx-share/button';
         InvestComponent,
         MerchandiseComponent,
         ProductDetailComponent,
-        AdminDashboardComponent
+        AdminDashboardComponent,
+        ExchangeadminComponent,
+        UserdetailsComponent,
+        FeemanagementComponent,
+        MarketdetailComponent,
+        ExchangesettingComponent,
+        CurrencylistComponent,
+        FundmanagementComponent,
+        ReportsComponent
      ],
 
     exports: [ SidebarComponent ]

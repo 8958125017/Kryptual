@@ -1,0 +1,32 @@
+.btn {
+    font-size: 9px !important;
+}
+
+th {
+    font-size: 12px !important;
+    text-align: center;
+    border-bottom: 1px solid #ddd !important;
+    font-weight: 700 !important;
+}
+
+th:nth-child(odd) {
+    border-right: 1px solid #ddd !important;
+}
+
+th:nth-child(even) {
+    border-right: 1px solid #ddd !important;
+}
+
+td {
+    font-size: 12px !important;
+    text-align: center;
+}
+
+.heading-main1 {
+    font-size: 18px;
+    padding-bottom: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0%;
+    margin-bottom: 20px;
+}

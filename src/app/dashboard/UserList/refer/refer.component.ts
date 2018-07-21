@@ -57,23 +57,14 @@ submitForm:FormGroup;
    ngOnInit() {
      this.submittForm();
         }
-submittForm(){
+
+   submittForm(){
     this.submitForm = this.fb.group({
-          'couponCode': new FormControl('',Validators.compose([Validators.required]))
+                      'couponCode': new FormControl('',Validators.compose([Validators.required]))
                        });
        }
 
-  signIn(provider){
-    this.sub = this._auth.login(provider).subscribe(
-      (data) => {
-        debugger;
-                  console.log(data);
-                  //user data
-                  //name, image, uid, provider, uid, email, token (accessToken for Facebook & google, no token for linkedIn), idToken(only for google)
-                }
-    )
-  }
-
+  
      refferalCall(){
           let postData ={
                         userId:this.user._id
@@ -81,8 +72,7 @@ submittForm(){
          const url = this.global_service.basePath + 'api/getResellerCode';
           this.user=localStorage.getItem('currentUser');
           this.global_service.PostRequestUnautorized(url , postData)
-        .subscribe((response) => {
-            console.log("response = = = ="+JSON.stringify(response))
+        .subscribe((response) => {           
           if(response[0].json.status==200){
             this.coupenStatus=false;
             this.linkStatus=true;

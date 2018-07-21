@@ -97,7 +97,17 @@ export class RoundPipe implements PipeTransform {
 
 @Pipe({name: 'datex'})
 export class DatexPipe implements PipeTransform {
-   transform(value: any, format: string = ""): string {      
+   transform(value: any ,format:string): string {      
+       var momentDate = moment(value);
+       // If moment didn't understand the value, return it unformatted.
+       if (!momentDate.isValid()) return value;
+       // Otherwise, return the date formatted as requested.
+       return momentDate.format(format);
+   }
+}
+@Pipe({name: 'dateChange'})
+export class DateChangePipe implements PipeTransform {
+   transform(value: any ,format:string): string {      
        var momentDate = moment(value);
        // If moment didn't understand the value, return it unformatted.
        if (!momentDate.isValid()) return value;

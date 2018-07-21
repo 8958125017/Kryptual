@@ -341,7 +341,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                       startTime : ""
                     };
          this.tierForm=true;
-         this.tierTabel=false;
+         this.tierTabel=true;
     }
 
 
@@ -408,8 +408,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
     let reader = new FileReader();
     let file = event.target.files[0];
     reader.onloadend = (e:any) => {
-      this.selectedWhitePaperImage = e.target.result;
-      console.log()
+      this.selectedWhitePaperImage = e.target.result;    
       var whitePaperImg=this.selectedWhitePaperImage.split(',')[1]      
       let postData={
         image : whitePaperImg
@@ -464,7 +463,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
 
           
 
-    generateIco(){ 
+    generateIco(){       
                   let data={
                                email                : this.company_email.email,
                                tokenImage           : this.icowizards.crowdsale.tokenImage,
@@ -491,10 +490,10 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                                checkoutItems        : this.icowizards.crowdsale.checkoutItems,
                          
                } 
+   console.log(JSON.stringify(data));
                  const url = this.global_service.basePath + 'users/listICO';
                  this.ng4LoadingSpinnerService.show();                 
-                 this.global_service.PostRequest(url,data).subscribe(response=>{
-                   console.log(response);
+                 this.global_service.PostRequest(url,data).subscribe(response=>{                
                  this.ng4LoadingSpinnerService.hide();
                   if(response[0].json.json().status==200){  
                    this.ng4LoadingSpinnerService.hide();    
@@ -524,6 +523,13 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                             this.global_service.showNotification('top','right','address length should be 42',4,'ti-cross');
                            return;
                          }
+                         // else if(!this.data.crowdsaleAddress){
+                         //   this.global_service.showNotification('top','right','please enter Crowdsale Address Value',4,'ti-cross');
+                         //   return;
+                         // }else if(!this.data.tokenAddress){
+                         //   this.global_service.showNotification('top','right','please enter Token Address Value',4,'ti-cross');
+                         //   return;
+                         // }
                           else{
                               this.reservedTokenForm=false;
                               this.reservedTokenTabel=true;
@@ -549,6 +555,10 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                
                    this.icowizards.crowdsale.reservedTokens.push(data);
    }
+   // this.data={
+   //            crowdsaleAddress:"",
+   //            tokenAddress:""
+   //  }
   }
      
      addMorereservedToken(){
@@ -558,7 +568,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                               //dim : ""
                              }
             this.reservedTokenForm=true;
-            this.reservedTokenTabel=false;
+            this.reservedTokenTabel=true;
      }
      popreservedTokens(itemNo1){
        var index = this.icowizards.crowdsale.reservedTokens.findIndex(function(o,index){
@@ -643,7 +653,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                 designation   : ""
               }
          this.teamForm=true;
-         this.teamTabel=false;
+         this.teamTabel=true;
     }
     addMoreroadmap(){
        this.milestone= {
@@ -651,7 +661,7 @@ export class ListicoComponent implements OnInit,AfterViewInit {
                      milestonedate : ""
                     };
       this.milestoneForm=true;
-       this.milestoneTabel=false;
+       this.milestoneTabel=true;
     }
 
      pushroadmap(){
@@ -790,8 +800,8 @@ export class ListicoComponent implements OnInit,AfterViewInit {
              'addr': new FormControl('',Validators.compose([Validators.pattern(/^0x[a-fA-F0-9]{40}$/)])),  
              'val': new FormControl('',Validators.compose([ Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|1000000000)$/)])),
              'tier': new FormControl('',Validators.required),          
-             'supply': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|1000000000)$/)])),
-             'rate': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|100000)$/)])),
+             'supply': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|[1-8][0-9]{9}|9[0-8][0-9]{8}|99[0-8][0-9]{7}|999[0-8][0-9]{6}|9999[0-8][0-9]{5}|99999[0-8][0-9]{4}|999999[0-8][0-9]{3}|9999999[0-8][0-9]{2}|99999999[0-8][0-9]|999999999[0-9]|10000000000)(?:\.\d{1,18})?$/)])),
+             'rate': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([1-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|[1-8][0-9]{3}|9[0-8][0-9]{2}|99[0-8][0-9]|999[0-9]|[1-8][0-9]{4}|9[0-8][0-9]{3}|99[0-8][0-9]{2}|999[0-8][0-9]|9999[0-9]|[1-8][0-9]{5}|9[0-8][0-9]{4}|99[0-8][0-9]{3}|999[0-8][0-9]{2}|9999[0-8][0-9]|99999[0-9]|[1-8][0-9]{6}|9[0-8][0-9]{5}|99[0-8][0-9]{4}|999[0-8][0-9]{3}|9999[0-8][0-9]{2}|99999[0-8][0-9]|999999[0-9]|[1-8][0-9]{7}|9[0-8][0-9]{6}|99[0-8][0-9]{5}|999[0-8][0-9]{4}|9999[0-8][0-9]{3}|99999[0-8][0-9]{2}|999999[0-8][0-9]|9999999[0-9]|[1-8][0-9]{8}|9[0-8][0-9]{7}|99[0-8][0-9]{6}|999[0-8][0-9]{5}|9999[0-8][0-9]{4}|99999[0-8][0-9]{3}|999999[0-8][0-9]{2}|9999999[0-8][0-9]|99999999[0-9]|[1-8][0-9]{9}|9[0-8][0-9]{8}|99[0-8][0-9]{7}|999[0-8][0-9]{6}|9999[0-8][0-9]{5}|99999[0-8][0-9]{4}|999999[0-8][0-9]{3}|9999999[0-8][0-9]{2}|99999999[0-8][0-9]|999999999[0-9]|10000000000)(?:\.\d{1,18})?$/)])),
              'startTime': new FormControl('',Validators.required),
              'endTime': new FormControl('',Validators.required),
              'mincap': new FormControl('',Validators.compose([Validators.required , Validators.pattern(/^([0-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|1000)(?:\.\d{1,18})?$/)])) 

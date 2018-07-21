@@ -65,12 +65,10 @@
                       };
      const url = this.global_service.basePath+'admin/getAllUser';
      this.global_service.PostRequest(url , postData).subscribe(response=>{
-            if(response[0].json.status==200){
-              console.log(JSON.stringify(response[0].json.json().data));
+            if(response[0].json.status==200){            
               if(response[0].json.json().data){
                    this.tabeldata2=false;
-                 for(var data of response[0].json.json().data){
-                   //debugger;
+                 for(var data of response[0].json.json().data){                
                    if(data.accountType!="Admin"){
                    this.userData.push(data);
                    }

@@ -129,11 +129,10 @@ let data={
                   "user_id" :user._id,
                   "userId" :user._id
 
-        }      
-        console.log("datas"+JSON.stringify(datas));
+        }     
+     
       this.global_service.PostRequest(this.global_service.basePath+'ETH/purchaseProducts',datas).subscribe(response=>{        
-      	console.log(response[0].json.json().status);
-         if(response[0].json.json().status==200){
+      	  if(response[0].json.json().status==200){
            this.global_service.showNotification('top','right','Thankyou for shopping!.',2,'ti-cross'); 
            this.amount=0;  
            this.cartProduct=[];
@@ -218,14 +217,13 @@ getPoints(){
                         $('#whistlistmodal').modal('show');  
                             }         
                    }
+
    // when add on wish list button
 wishList(product){
   this.global_service.emitEvent("Merchandise Page", "click",'buy now'+ " " +product.name, 10); 
- //s this.global_service.clearMessage();
 var index = this.wishlist.findIndex(function(pro){
        return pro._id === product._id;
    });
-//console.log("i = = "+index);
    if (index !== -1){
      this.global_service.showNotification('top','right','Product already added',4,'ti-cross');
    }else{
@@ -235,6 +233,7 @@ var index = this.wishlist.findIndex(function(pro){
      
    }
 }
+
 //on delete wishlist products
 deleteWishList(i){
 this.wishlist.splice(i,1);
@@ -262,42 +261,35 @@ increseQuantity(i,maxQuantity){
   var qt = $('#'+i).val();
   var qtInt = parseInt(qt);
   $('#'+i).val(++qtInt);
-if(qtInt<=maxQuantity){
-this.priceArray[i]=this.priceArray[i]+this.cartProduct[i].price;
- this.count(); 
-}else{
-this.global_service.showNotification('top','right','Sorry you cannot exceed maximum quantity',4,'ti-cross');
-$('#'+i).val(--qtInt);
-   this.count();
-}
-  
- // if(this.amount>this.ethBalance){
- //   $('#'+i).val(--qtInt);
- //   this.priceArray[i]=this.priceArray[i]-this.cartProduct[i].price;
- //   this.count();
- //   this.global_service.showNotification('top','right','Sorry you do not have sufficient balance',4,'ti-cross');
- // }
+  if(qtInt<=maxQuantity){
+  this.priceArray[i]=this.priceArray[i]+this.cartProduct[i].price;
+   this.count(); 
+  }else{
+  this.global_service.showNotification('top','right','Sorry you cannot exceed maximum quantity',4,'ti-cross');
+  $('#'+i).val(--qtInt);
+     this.count();
+  }
 }
 
 decreseQuantity(i){
- // debugger;
   var qt = $('#'+i).val();
   var qtInt = parseInt(qt);
-if(qtInt == 1){
- $('#'+i).val(1); 
-}else{
-  $('#'+i).val(--qtInt);
-   this.priceArray[i]=this.priceArray[i]-this.cartProduct[i].price;
-   this.count();
+    if(qtInt == 1){
+     $('#'+i).val(1); 
+    }else{
+           $('#'+i).val(--qtInt);
+           this.priceArray[i]=this.priceArray[i]-this.cartProduct[i].price;
+           this.count();
          }
   
   }  
 
   ngOnInit() {
-     this.submittForm();
-     this.heart="card-header whthrt";
+         this.submittForm();
+         this.heart="card-header whthrt";
         }
-submittForm(){
+
+  submittForm(){
     this.submitForm = this.fb.group({
           'currentPassword': new FormControl('',Validators.compose([Validators.required]))
                        });
@@ -305,12 +297,9 @@ submittForm(){
 
 
   Product_Detail(productId:any){
-     $('#whistlistmodal').modal('hide'); 
-            // this.global_service.emitEvent("Invest ICO Page", "Click",'Invest button'+ " "+tokenName, 1);
+            $('#whistlistmodal').modal('hide');          
             this.router.navigate(['/dashboard/productdetail', { 'pid': productId }]);
-            
-
-              }
+            }
 
     
 

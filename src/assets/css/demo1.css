@@ -848,7 +848,9 @@ float: left;
 }
 .main-timeline .timeline:last-child:before{
     top: auto;
-    bottom: -54px;
+    bottom: -37%;
+    margin: 0 auto;
+    right: -50%;
 }
 .main-timeline .timeline:last-child:nth-child(even):before{
     right: auto;
@@ -860,7 +862,7 @@ float: left;
     background: #fff;
     border: 1px solid #cfcdcd;
     position: absolute;
-    top: 17px;
+    top: 38px;
     right: -13px;
     z-index: 1;
     transform: rotate(45deg);

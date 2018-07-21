@@ -14,7 +14,7 @@
     <div class="full-page register-page signUppg" filter-color="black">
         <div class="container">
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-12">
                     <div class="card card-signup">
                         <a [routerLink]="['/home']" style="margin-top: 0px;margin-bottom: 35px;float:  left;width:  100%;text-align: center;"><img src="assets/img/tokenology-logo_1.png" style="cursor: pointer;width:40%"></a>
                         <h3 class="card-title text-center">Sign Up for {{account}}</h3>
@@ -64,7 +64,7 @@
                                                 <i class="material-icons">person</i>
                                             </span>
                                             <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" [(ngModel)]="signUpDetails.firstName" required />
-                                            <div style="color:red" *ngIf="!registerForm.controls['firstName'].valid&&registerForm.controls['firstName'].dirty">
+                                            <div class="small" *ngIf="!registerForm.controls['firstName'].valid&&registerForm.controls['firstName'].dirty">
                                                 <span *ngIf="registerForm.controls['firstName'].errors['required']">First Name cannot be left blank</span>
                                                 <span *ngIf="registerForm.controls['firstName'].errors['pattern']">First Name must contain 3-28 characters, only alphabets and no spaces</span>
                                             </div>
@@ -74,7 +74,7 @@
                                                 <i class="material-icons">person_outline</i>
                                             </span>
                                             <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" [(ngModel)]="signUpDetails.lastName" required />
-                                            <div style="color:red" *ngIf="!registerForm.controls['lastName'].valid&&registerForm.controls['lastName'].dirty">
+                                            <div class="small" *ngIf="!registerForm.controls['lastName'].valid&&registerForm.controls['lastName'].dirty">
                                                 <span *ngIf="registerForm.controls['lastName'].errors['required']">Last Name cannot be left blank</span>
                                                 <span *ngIf="registerForm.controls['lastName'].errors['pattern']">Last Name must contain 3-28 characters, only alphabets and no spaces</span>
                                             </div>
@@ -84,7 +84,7 @@
                                                 <i class="material-icons">email</i>
                                             </span>
                                             <input type="email" class="form-control" placeholder="Email" formControlName="email" [(ngModel)]="signUpDetails.email" required />
-                                            <div style="color:red" *ngIf="!registerForm.controls['email'].valid&&registerForm.controls['email'].dirty">
+                                            <div class="small" *ngIf="!registerForm.controls['email'].valid&&registerForm.controls['email'].dirty">
                                                 <span *ngIf="registerForm.controls['email'].errors['required']">Email cannot be left blank</span>
                                                 <span *ngIf="registerForm.controls['email'].errors['pattern']">Email address format is incorrect</span>
                                             </div>
@@ -94,7 +94,7 @@
                                                 <i class="material-icons">lock_outline</i>
                                             </span>
                                             <input type="password" class="form-control" placeholder="Password" formControlName="password" [(ngModel)]="signUpDetails.password" required />
-                                            <div style="color:red" *ngIf="!registerForm.controls['password'].valid&&registerForm.controls['password'].dirty">
+                                            <div class="small" *ngIf="!registerForm.controls['password'].valid&&registerForm.controls['password'].dirty">
                                                 <span *ngIf="registerForm.controls['password'].errors['required']">Password cannot be left blank</span>
                                                 <span *ngIf="registerForm.controls['password'].errors['minlength']">password must be atleast 6 characters</span>
                                                 <span *ngIf="registerForm.controls['password'].errors['pattern']&&!registerForm.controls['password'].errors['minlength']">Password must contain at least 6 characters including 1 uppercase and 1 lowercase letter, 1 special character and 1 number</span>
@@ -105,9 +105,9 @@
                                                 <i class="material-icons">lock</i>
                                             </span>
                                             <input type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword" [(ngModel)]="signUpDetails.confirmPassword" required />
-                                            <div style="color:red" *ngIf="!registerForm.controls['confirmPassword'].valid&&registerForm.controls['confirmPassword'].dirty">
+                                            <div class="small" *ngIf="!registerForm.controls['confirmPassword'].valid&&registerForm.controls['confirmPassword'].dirty">
                                             </div>
-                                            <div *ngIf="registerForm.controls['confirmPassword'].dirty&&registerForm.hasError('mismatchedPasswords')"><span style="color:red;"> Passwords do not match.</span></div>
+                                            <div *ngIf="registerForm.controls['confirmPassword'].dirty&&registerForm.hasError('mismatchedPasswords')"><span class="small"> Passwords do not match.</span></div>
                                         </div>
                                         <div class="input-group" *ngIf="referalStatus">
                                             <span class="input-group-addon in-add">
@@ -123,13 +123,13 @@
                                         </div>
                                     </div>
                                   <div class="footer" style="padding-left: 25px;display: flex;justify-content: center;align-items: center;">
-                                        <re-captcha  formControlName="recaptchaReactive" ></re-captcha>
+                                        <re-captcha (resolved)="resolved($event)" formControlName="captcha" siteKey="6LdAm04UAAAAABRwz2yNS5P2yLKpxxL47nDqN_sT"></re-captcha>
                                     </div>
                                     <div class="footer text-center">
-                                        <button class="btn btn-success btn-round" (click)="register(registerForm.value)" [disabled]="!registerForm.valid">Get Started</button>
+                                        <button class="btn btn-info btn-round" (click)="register(registerForm.value)" [disabled]="!registerForm.valid">Get Started</button>
                                     </div>
                                     <div class="footer text-center">
-                                        <a [routerLink]="['/login']" align="right" style="line-height: 0px; color: Green">Already have an account?</a>
+                                        <a [routerLink]="['/login']" class="text-info font-weight-normal" align="right">Already have an account?</a>
                                     </div>
                                 </form>
                             </div>
@@ -146,7 +146,7 @@
                 </p>
             </div>
         </footer>
-        <div class="full-page-background" style="background :#4caf50 "></div>
-
+        <div class="full-page-background"></div>
+        <!-- <div class="full-page-background" style="background-image: url(./assets/img/register.jpeg) "></div> -->
     </div>
 </div>

@@ -4,9 +4,9 @@
                 <div class="col-md-12 ">
                     <div class=" card-signup ">
                         <div class="row ">
-                            <div class="col-md-5 animated slideInUp ">
+                            <div class="col-md-6 animated slideInUp ">
                                 <div class="contact-left card-content ">
-                                    <h2 class="card-title text-center ">Get in Touch</h2>
+                                    <h2 class="card-title  ">Get in Touch</h2>
                                     <h4 class="description " style="padding-top: 0; ">The crypto market never stops, neither do we. For any queries, get in touch with us.</h4>
                                     <div class=" info-horizontal ">
                                         <div class="icon icon-rose ">
@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 mrgn animated slideInDown ">
+                            <div class="col-md-6  animated slideInDown ">
                                 <div class="card social card-contact card-raised ">
                                     <div class=" text-center ">
                                         <h3 class="card-title ">Contact Us</h3>
@@ -51,19 +51,19 @@
                                                         <input class="form-control " placeholder="Name... " type="text " style="border: 0px solid #eee !important;margin: 0!important;" formControlName="name" [(ngModel)]="contactDetail.name">
                                                     </div>
                                                 </div>
-                                                <div *ngIf="!contactForm.controls['name'].valid&&contactForm.controls['name'].dirty"> <span style="color:red;">Name is required</span></div>
+                                                <div *ngIf="!contactForm.controls['name'].valid&&contactForm.controls['name'].dirty"> <span class="small">Name is required</span></div>
                                             </div>
                                             <div class="col-md-6 ">
                                                 <div class="input-group ">
                                                     <span class="input-group-addon">
 
-                                                            <i class="material-icons ">format_size</i>
+                                                            <i class="material-icons ">mail_outline</i>
                                                         </span>
                                                     <div class="form-group is-empty" style="margin-bottom: 0 !important;">
                                                         <input class="form-control " placeholder="Email... " type="text " style="border: 0px solid #eee !important;margin: 0!important;" formControlName="email" [(ngModel)]="contactDetail.email">
                                                     </div>
                                                 </div>
-                                                <div style="color:red" *ngIf="!contactForm.controls['email'].valid&&contactForm.controls['email'].dirty">
+                                                <div class="small" *ngIf="!contactForm.controls['email'].valid&&contactForm.controls['email'].dirty">
                                                     <span *ngIf="contactForm.controls['email'].errors['required']">Email id is required</span>
                                                     <span *ngIf="contactForm.controls['email'].errors['pattern']">Invalid email id</span>
                                                 </div>
@@ -71,30 +71,31 @@
                                             <div class="col-md-12 ">
                                                 <div class="input-group ">
                                                     <span class="input-group-addon ">
-                                                            <i class="material-icons ">mail_outline</i>
+                                                        <i class="material-icons ">format_size</i>
+                                                            
                                                         </span>
                                                     <div class="form-group is-empty" style="margin-bottom: 0 !important;">
                                                         <input class="form-control " placeholder="Subject here... " type="text " style="border: 0px solid #eee !important;margin: 0!important;" formControlName="subject" [(ngModel)]="contactDetail.subject">
                                                     </div>
-                                                    <div *ngIf="!contactForm.controls['subject'].valid&&contactForm.controls['subject'].dirty"> <span style="color:red;">Subject is required</span>
+                                                    <div *ngIf="!contactForm.controls['subject'].valid&&contactForm.controls['subject'].dirty"> <span class="small">Subject is required</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 ">
                                                 <div class="form-group is-empty ">
                                                     <textarea class="form-control " style="border: 1px solid #eaeaea !important;" placeholder="Your message " rows="5 " formControlName="message" [(ngModel)]="contactDetail.message"></textarea>
-                                                    <div *ngIf="!contactForm.controls['message'].valid&&contactForm.controls['message'].dirty"> <span style="color:red;">Message is required</span>
+                                                    <div *ngIf="!contactForm.controls['message'].valid&&contactForm.controls['message'].dirty"> <span class="small">Message is required</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="footer text-center ">
-                                            <div class="col-md-6 " style="    margin-left: 11%;">                                                
-                                                 <re-captcha  formControlName="recaptchaReactive" ></re-captcha>
-                                              
+                                            <div class="col-md-12 centerr">
+                                                <re-captcha (resolved)="resolved($event)" formControlName="captcha" siteKey="6LdAm04UAAAAABRwz2yNS5P2yLKpxxL47nDqN_sT"></re-captcha>
+                                               <!--  <re-captcha (resolved)="resolved($event)"  siteKey="6LdAm04UAAAAABRwz2yNS5P2yLKpxxL47nDqN_sT"></re-captcha> -->
                                             </div>
                                             <div class="col-md-12 ">
-                                                <button class="btn btn-primary btn-round " [disabled]="!contactForm.valid" (click)="sendMessage(contactForm.value)">Send Message</button>
+                                                <button class="btn btn-info btn-round " [disabled]="!contactForm.valid" (click)="sendMessage(contactForm.value)">Send Message</button>
                                             </div>
                                         </div>
                                     </form>
@@ -110,31 +111,31 @@
         <div class="container-fluid ">
             <div class="row ">
                 <div class="col-md-12 ">
-                    <div class="col-md-3 ">
-                        <h5 style="color:#f96332 ">About Kryptual</h5>
+                    <div class="col-md-3 col-sm-12 ">
+                        <h5 class="text-info">About Kryptual</h5>
                         <p>Kryptual is an automated wizard for blockchain based ICO-creation platform connecting business owners with investors. Kryptual helps them in raising funds to grow their businesses and focus on their trade strength.</p>
                     </div>
-                    <div class="col-md-2 ">
-                        <h5><a routerLink="/reseller">Become a Reseller</a></h5>
+                    <div class="col-md-2 col-sm-12">
+                        <h5 ><a routerLink="/reseller" class="text-info">Become a Reseller</a></h5>
                         <ul class="links-vertical ">
                             <p>Earn money from Kryptual. Refer your friends and set upto 5% out of their transactions</p>
                         </ul>
                     </div>
-                    <div class="col-md-2 ">
-                        <h5><a routerLink="/faq">FAQ</a></h5>
+                    <div class="col-md-2 col-sm-12">
+                        <h5 ><a routerLink="/faq" class="text-info">FAQ</a></h5>
                         <ul class="links-vertical ">
                             <p>You can always reach out to us. But click on the above to know about frequent queries.</p>
                         </ul>
                     </div>
-                    <div class="col-md-2 ">
-                        <h5><a routerLink="/privacy">Privacy and Policy</a></h5>
+                    <div class="col-md-2 col-sm-12">
+                        <h5 ><a routerLink="/privacy" class="text-info">Privacy and Policy</a></h5>
                         <ul class="links-vertical ">
                             <p>We are privacy freaks ourselves and respect yours too. Your secrets are safe with us.</p>
                         </ul>
                     </div>
                     
-                     <div class="col-md-3">
-                                <h5><a style="color:#f96332">Subscribe to Newsletter</a></h5>
+                     <div class="col-md-3 col-sm-12">
+                                <h5 class="text-info"><a>Subscribe to Newsletter</a></h5>
                                 <p>
                                     Join our newsletter and get news in your inbox every week! We hate spam too, so no worries about this.
                                 </p>
@@ -142,7 +143,7 @@
                        
                             <div class="form-group">
                                 <input type="email" style="margin-bottom: 3px;" formControlName="email" [(ngModel)]="subscribeDetail.email" id="suscribeemail" name="email" class="form-control" placeholder="Your Email...">
-                                 <div style="color:red" *ngIf="!subscribeForm.controls['email'].valid&&subscribeForm.controls['email'].dirty" >
+                                 <div class="small" *ngIf="!subscribeForm.controls['email'].valid&&subscribeForm.controls['email'].dirty" >
                                 <span *ngIf="subscribeForm.controls['email'].errors['required']">Email id is required</span>
                               <span *ngIf="subscribeForm.controls['email'].errors['pattern']">Invalid email id</span>
                             </div>
@@ -161,12 +162,12 @@
                 <div class="col-md-12 centerr ">
                     <div class="col-md-1 col-sm-1 ">
                         <a href="https://twitter.com/login?lang=en" target="_blank" class="btn btn-just-icon btn-round btn-twitter">
-                                <i class="fa fa-twitter"></i>
+                            <i class="fab fa-twitter"></i>
                         </a>
                     </div>
                     <div class="col-md-1 col-sm-1 ">
                         <a href="https://facebook.com/login?lang=en" target="_blank" class="btn btn-just-icon btn-round btn-facebook ">
-                            <i class="fa fa-facebook "> </i>
+                            <i class="fab fa-facebook-f"></i>
                             <div class="ripple-container-fluid "></div>
                         </a>
                     </div>

@@ -2,19 +2,17 @@
     <app-header></app-header>
     <div class="main-home">
         <div class="wrapper faq_title">
-            <div class="content-center">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2 class="title" style="font-size: 55px;font-weight: 600;color: #fff;">List ICO</h2>
-                    </div>
+            <div class="content-center  position-absolute">
+                <div class="mx-auto text-center">
+                    <h1 class="title text-white p-0 m-0">List ICO</h1>
                 </div>
             </div>
         </div>
         <!--List ICO  Content-->
         <div class="listico-home" data-background-color="gray">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-10 ml-auto mr-auto card" style="padding:30px 0 0 0px;margin-top: -80px;margin-bottom: 43px !important;">
+                <div class="row d-block">
+                    <div class="col-md-12  card" style="padding:30px 0 0 0px;margin-top: -80px;margin-bottom: 43px !important;">
                         <h2 class="title text-center">Token Setup</h2>
                         <p class="title text-center" style="padding-top: 0px;padding-bottom: 0;font-size: 20px;">Configure properties of your token. Created token contract will be ERC-20 compatible</p>
                         <form [formGroup]="registerForm">
@@ -26,7 +24,7 @@
                                         <label>Company Name<sup style="color: red">*</sup></label>
                                         <div class="input-group">
                                             <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-address-card-o"></i>
+                                                        <i  class="fas fa-building"></i>
                                                     </span>
                                             <div class="form-group is-empty">
                                                 <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Company Name..." [(ngModel)]="generalInfo.companyName" formControlName="companyName" type="text" required />
@@ -53,7 +51,7 @@
                                         <label>Company Email<sup style="color: red">*</sup></label>
                                         <div class="input-group">
                                             <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-address-card-o"></i>
+                                                        <i  class="far fa-envelope"></i>
                                                     </span>
                                             <div class="form-group is-empty">
                                                 <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Company Email..." [(ngModel)]="company_email.email" type="text" formControlName="email" required />
@@ -79,7 +77,7 @@
                                         <label>White Paper</label>
                                         <div class="input-group">
                                             <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-file-o"></i>
+                                                        <i  class="far fa-newspaper"></i>
                                                     </span>
                                             <div style="padding: 7px;">
                                                 <input placeholder="White Paper..." type="file" style="border:0px solid" accept="application/pdf" (change)="whitePaperlistico($event)">
@@ -95,7 +93,7 @@
                                         <label>Twitter Link</label>
                                         <div class="input-group">
                                             <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-twitter"></i>
+                                                        <i  class="fab fa-twitter-square"></i>
                                                     </span>
                                             <div class="form-group is-empty">
                                                 <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Twitter Link..." formControlName="twitter" [(ngModel)]="generalInfo.twitter" type="text">
@@ -109,7 +107,7 @@
                                         <label>Facebook Link</label>
                                         <div class="input-group">
                                             <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-facebook"></i>
+                                                        <i  class="fab fa-linkedin"></i>
                                                     </span>
                                             <div class="form-group is-empty">
                                                 <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Facebook Link..." formControlName="facebook" [(ngModel)]="generalInfo.facebook" type="text">
@@ -123,7 +121,7 @@
                                         <label>Linkedin Link</label>
                                         <div class="input-group">
                                             <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-linkedin"></i>
+                                                        <i  class="fab fa-facebook"></i>
                                                     </span>
                                             <div class="form-group is-empty">
                                                 <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="linkedin Link..." formControlName="linkedin" [(ngModel)]="generalInfo.linkedin" type="text">
@@ -165,21 +163,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row input_fields_wrap " style="text-align: right;">
+                                <div class="row input_fields_wrap  d-block" style="text-align: right;">
                                     <div *ngIf="teamForm">
-                                        <div class="col-md-12">
-                                            <div class="col-md-7">
-                                                <h6 class="text-right" style="font-weight: bold;padding-right: 8%;"> TEAM</h6></div>
-                                            <div class="col-md-5">
-                                                <button class="add_field_button btn btn-round " style="background:green; margin-bottom: 20px; " (click)="pushteam()">Save</button>
-                                            </div>
+                                        <div class="col-md-7">
+                                            <h6 class="text-right m-4" style="font-weight: bold;padding-right: 8%;"> TEAM</h6></div>
+                                        <div class="col-md-5">
+                                            <button class="add_field_button btn btn-round btn-info " style=" margin-bottom: 20px; " (click)="pushteam()">Save</button>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="col-md-6 pr-2 ">
                                                 <label>Member Name</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-user-o"></i>
+                                                        <i  class="fas fa-users"></i>
                                                     </span>
                                                     <div class="form-group is-empty">
                                                         <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Member Name..." formControlName="teamnames" [(ngModel)]="team.teamNames" type="text">
@@ -193,7 +189,7 @@
                                                 <label>Designation</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-id-card-o"></i>
+                                                        <i  class="fas fa-address-card"></i>
                                                     </span>
                                                     <div class="form-group is-empty">
                                                         <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Designation..." formControlName="designation" [(ngModel)]="team.designation" type="text">
@@ -205,11 +201,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <div class="col-md-6 pl-2 ">
+                                            <div class="col-md-6 pr-2 ">
                                                 <label>Linkedin name</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-id-card-o"></i>
+                                                        <i  class="fab fa-linkedin"></i>
                                                     </span>
                                                     <div class="form-group is-empty">
                                                         <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="linkedin name..." formControlName="linkedinname" [(ngModel)]="team.linkedinname" type="text">
@@ -219,7 +215,7 @@
                                                     <span class="small">linkedin name should have atleast three alphabets</span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 pr-2 " style="text-align: left;">
+                                            <div class="col-md-6 pl-2 " style="text-align: left;">
                                                 <label>Profile Image</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon brd-right">
@@ -234,12 +230,11 @@
                                     </div>
                                     <div *ngIf="teamTabel">
                                         <div class="col-md-12">
-                                            <button class="add_field_button btn btn-round " style="background:green; margin-bottom: 20px; " (click)="addMoreteamteam()">Add More Team Members</button>
-                                        </div>
-                                        <div class="col-md-12">
                                             <div class="text-center">
-                                                <h6 style="font-weight: bold;margin:  0;"> TEAM</h6></div>
-                                            <div class="card card-plain">
+                                                <h6 class="m-4" style="font-weight: bold;margin:  0;"> TEAM</h6>
+                                                <button class="add_field_button btn btn-round btn-info" style="margin-bottom: 20px; " (click)="addMoreteamteam()">Add More Team Members</button>
+                                            </div>
+                                            <div class="card card-plain m-4">
                                                 <div class="card-content table-responsive">
                                                     <table class="table table-hover">
                                                         <thead>
@@ -261,7 +256,7 @@
                                                                 <td>{{team.designation ? team.designation : ''}}</td>
                                                                 <td>{{team.linkedinname ? team.linkedinname : ''}}</td>
                                                                 <!-- <td class="text-success"><i class="material-icons" >edit</i></td> -->
-                                                                <td class="text-danger"><i class="material-icons" (click)="popteam(i)">close</i></td>
+                                                                <td class="text-danger"><i class="material-icons" (click)="popteam(i)" style="cursor: pointer;">close</i></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -271,14 +266,14 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div *ngIf="milestoneForm">
-                                            <div class="col-md-12">
+                                            <div class="row d-block">
                                                 <div class="col-md-7">
-                                                    <h6 class="text-right" style="font-weight: bold;padding-right: 3%;"> MILESTONE</h6></div>
+                                                    <h6 class="text-right m-4" style="font-weight: bold;padding-right: 3%;"> MILESTONE</h6></div>
                                                 <div class="col-md-5">
-                                                    <button class="add_milestone_button btn btn-round " style="background:green;margin-bottom: 20px; " (click)="pushroadmap()">save</button>
+                                                    <button class="add_milestone_button btn btn-round btn-info" style="margin-bottom: 20px; " (click)="pushroadmap()">save</button>
                                                 </div>
                                             </div>
-                                            <div class="row input_fields_addmilestone ">
+                                            <div class="row d-block input_fields_addmilestone ">
                                                 <div class="col-md-6 pr-2 ">
                                                     <label>Milestones</label>
                                                     <div class="input-group">
@@ -297,7 +292,7 @@
                                                         <i  class="fa fa-calendar"></i>
                                                     </span>
                                                         <div class="form-group is-empty">
-                                                            <input [(ngModel)]="milestone.milestonedate" [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" class="form-control" formControlName="milestonedate" placeholder="MM/DD/YYYY" onkeydown="return false">
+                                                            <input [(ngModel)]="milestone.milestonedate" [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" class="form-control border-0" formControlName="milestonedate" placeholder="MM/DD/YYYY" onkeydown="return false">
                                                             <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
                                                         </div>
                                                     </div>
@@ -307,12 +302,11 @@
                                     </div>
                                     <div *ngIf="milestoneTabel">
                                         <div class="col-md-12">
-                                            <button class="add_milestone_button btn btn-round " style="background:green;margin-bottom: 20px; " (click)="addMoreroadmap()">Add More Milestone</button>
-                                        </div>
-                                        <div class="col-md-12">
                                             <div class="text-center">
-                                                <h6 style="font-weight: bold;margin:  0;"> Milestone</h6></div>
-                                            <div class="card card-plain">
+                                                <h6 style="font-weight: bold;margin:  0;"> MILESTONE</h6>
+                                                <button class="add_milestone_button btn btn-round btn-info" style="margin-bottom: 20px; " (click)="addMoreroadmap()">Add More Milestone</button>
+                                            </div>
+                                            <div class="card card-plain m-4">
                                                 <div class="card-content table-responsive">
                                                     <table class="table table-hover">
                                                         <thead>
@@ -330,7 +324,7 @@
                                                                 <td>{{milestone.milestone1 ? milestone.milestone1 : '--'}}</td>
                                                                 <td>{{milestone.milestonedate ? milestone.milestonedate : '--'}}</td>
                                                                 <!--  <td class="text-success"><i class="material-icons">edit</i></td> -->
-                                                                <td class="text-danger"><i class="material-icons" (click)="popmilestone(i)">close</i></td>
+                                                                <td class="text-danger"><i class="material-icons" (click)="popmilestone(i)" style="cursor: pointer;">close</i></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -339,7 +333,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            <!-- </div>
+                                <!-- </div>
                             <div class="page 2 " style=" padding: 2%; "> -->
                                 <h4 class="title ">TOKEN SETUP</h4>
                                 <p>Configure properties of your token. Created token contract will be ERC-20 compatible</p>
@@ -349,7 +343,7 @@
                                             <label>Token Name<sup style="color: red">*</sup></label>
                                             <div class="input-group">
                                                 <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-user-o"></i>
+                                                        <i  class="fas fa-user"></i>
                                                     </span>
                                                 <div class="form-group is-empty">
                                                     <input class="form-control" style="border-bottom: 0px solid #eee !important; text-transform:uppercase" placeholder="name..." type="text" formControlName="name" [(ngModel)]="token.name" required />
@@ -411,18 +405,51 @@
                                             </div>
                                             <small>How many tokens will be sold on this tier. Cap of crowdsale equals to sum of supply of all tiers.</small>
                                         </div>
+
+                                            <div class="col-md-6 pr-2 ">
+                                                <label>Crowdsale Address<sup style="color: red">*</sup></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon brd-right">
+                                                        <i  class="fas fa-address-card"></i>
+                                                    </span>
+                                                    <div class="form-group is-empty">
+                                                        <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Crowdsale Address..." name="crowdsaleAddress" [(ngModel)]="data.crowdsaleAddress" type="text" formControlName="crowdsaleAddress" (blur)="addressValidate(data.crowdsaleAddress)" required/>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!registerForm.controls['crowdsaleAddress'].valid&&registerForm.controls['crowdsaleAddress'].dirty"> <span *ngIf="registerForm.controls['crowdsaleAddress'].errors['required']" class="small">Crowdsale Address is required</span>
+                                                    <span *ngIf="registerForm.controls['crowdsaleAddress'].errors['pattern']" class="small">Crowdsale Address is incorrect</span>
+                                                </div>
+                                                <small>The address where users will send their Ether to purchase token.
+                                    </small>
+                                            </div>
+                                            <div class="col-md-6 pr-2 ">
+                                                <label>Token Address<sup style="color: red">*</sup></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon brd-right">
+                                                        <i  class="fa fa-university"></i>
+                                                    </span>
+                                                    <div class="form-group is-empty">
+                                                        <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Token Address..." name="tokenAddress" [(ngModel)]="data.tokenAddress" type="text" formControlName="tokenAddress" (blur)="addressValidate(data.tokenAddress)" required/>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!registerForm.controls['tokenAddress'].valid&&registerForm.controls['tokenAddress'].dirty"> <span *ngIf="registerForm.controls['tokenAddress'].errors['required']" class="small">Token Address is required</span>
+                                                    <span *ngIf="registerForm.controls['tokenAddress'].errors['pattern']" class="small">Token Address is incorrect</span>
+                                                </div>
+                                                <small>Address corresponding to the token information.</small>
+                                            </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="row " *ngIf="reservedTokenForm">
+                                    <div class="row pt-5" *ngIf="reservedTokenForm">
                                         <div class="col-md-12" style="text-align: right;">
                                             <div class="col-md-7">
-                                                <h6 class="text-right" style="font-weight: bold;"> RESERVED TOKENS </h6></div>
+                                                <h6 class="text-right m-4" style="font-weight: bold;"> RESERVED TOKENS </h6></div>
                                             <div class="col-md-5">
-                                                <button class="add_rtoken_button btn btn-round " style="background:green;margin-bottom: 20px;" (click)="pushreservedToken()">Save</button>
+                                                <button class="add_rtoken_button btn btn-round btn-info" style="margin-bottom: 20px;" (click)="pushreservedToken()">Save</button>
                                             </div>
                                         </div>
-                                        <div class="row input_fields_addrtoken">
+                                        <div class="row d-block input_fields_addrtoken">
                                             <div class="col-md-6 pr-2 ">
                                                 <label>Reserved Tokens</label>
                                                 <div class="input-group">
@@ -455,22 +482,25 @@
                                                 <small>Values in tokens.</small>
                                             </div>
                                         </div>
+                                       
                                     </div>
                                 </div>
-                                <div *ngIf="reservedTokenTabel">
-                                    <div class="col-md-12" style="text-align: right;">
-                                        <button class="add_rtoken_button btn btn-round " style="background:green;margin-bottom: 20px;" (click)="addMorereservedToken()">Add More Reserved Token</button>
+
+                                <hr>
+                                <div class="row mt-5 d-block" *ngIf="reservedTokenTabel">
+                                    <div class="col-md-12 text-center">
+                                        <h6 style="font-weight: bold;margin:  0;">RESERVED TOKEN</h6>
+                                        <button class="add_rtoken_button btn btn-round btn-info" (click)="addMorereservedToken()">Add More Reserved Token</button>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="card card-plain">
+                                        <div class="card card-plain m-4">
                                             <div class="card-content table-responsive">
                                                 <table class="table table-hover">
                                                     <thead>
                                                         <tr>
                                                             <th>ID</th>
-                                                           
                                                             <th>Address</th>
-                                                             <th>Value</th>
+                                                            <th>Value</th>
                                                             <!--<th>Edit</th> -->
                                                             <th>Remove</th>
                                                         </tr>
@@ -478,11 +508,10 @@
                                                     <tbody>
                                                         <tr *ngFor="let reservedTokens of icowizards.crowdsale.reservedTokens ; let i = index">
                                                             <td>{{i+1}}</td>
-                                                            
                                                             <td>{{reservedTokens.addr ? reservedTokens.addr : '--'}}</td>
                                                             <td>{{reservedTokens.val ? reservedTokens.val : '--'}}</td>
                                                             <!--<td class="text-success"><i class="material-icons" >edit</i></td> -->
-                                                            <td class=" text-danger"><i class="material-icons" (click)="popreservedTokens(i)">close</i></td>
+                                                            <td class=" text-danger"><i class="material-icons" (click)="popreservedTokens(i)" style="cursor: pointer;">close</i></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -490,46 +519,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-6 pr-2 ">
-                                        <label>Crowdsale Address<sup style="color: red">*</sup></label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-id-card-o"></i>
-                                                    </span>
-                                            <div class="form-group is-empty">
-                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Crowdsale Address..." name="crowdsaleAddress" [(ngModel)]="data.crowdsaleAddress" type="text" formControlName="crowdsaleAddress" (blur)="addressValidate(data.crowdsaleAddress)" required/>
-                                            </div>
-                                        </div>
-                                        <div *ngIf="!registerForm.controls['crowdsaleAddress'].valid&&registerForm.controls['crowdsaleAddress'].dirty"> <span *ngIf="registerForm.controls['crowdsaleAddress'].errors['required']" class="small">Crowdsale Address is required</span>
-                                            <span *ngIf="registerForm.controls['crowdsaleAddress'].errors['pattern']" class="small">Crowdsale Address is incorrect</span>
-                                        </div>
-                                        <small>The address where users will send their Ether to purchase token.
-                                    </small>
-                                    </div>
-                                    <div class="col-md-6 pr-2 ">
-                                        <label>Token Address<sup style="color: red">*</sup></label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-university"></i>
-                                                    </span>
-                                            <div class="form-group is-empty">
-                                                <input class="form-control" style="border-bottom: 0px solid #eee !important" placeholder="Token Address..." name="tokenAddress" [(ngModel)]="data.tokenAddress" type="text" formControlName="tokenAddress" (blur)="addressValidate(data.tokenAddress)" required/>
-                                            </div>
-                                        </div>
-                                        <div *ngIf="!registerForm.controls['tokenAddress'].valid&&registerForm.controls['tokenAddress'].dirty"> <span *ngIf="registerForm.controls['tokenAddress'].errors['required']" class="small">Token Address is required</span>
-                                            <span *ngIf="registerForm.controls['tokenAddress'].errors['pattern']" class="small">Token Address is incorrect</span>
-                                        </div>
-                                        <small>Address corresponding to the token information.</small>
-                                    </div>
-                                </div>
                                 <div class="page 3 ">
                                     <h4 class="title ">CROWDSALE SETUP</h4>
-                                    <p>The most important and exciting part of the crowdsale process. Here you can define parameters of your crowdsale campaign.</p>
+                                    <p style="padding: 0 0 0px 0;">The most important and exciting part of the crowdsale process. Here you can define parameters of your crowdsale campaign.</p>
                                     <div *ngIf="tierForm" style=" padding: 2%; ">
                                         <div class="col-md-12" style="text-align: right;">
-                                            <button class="add_crowdsale_button btn btn-round " style="background:green;margin-bottom: 20px; " (click)="pushtier()">Save</button>
+                                            <button class="add_crowdsale_button btn btn-round btn-info" style="margin-bottom: 20px; " (click)="pushtier()">Save</button>
                                         </div>
                                         <div class="row input_fields_addcrowdsale" style="background: #eeeeee6b;padding: 3%;">
                                             <div class="col-md-12">
@@ -537,7 +532,7 @@
                                                     <label>Crowdsale Setup Name<sup style="color: red">*</sup></label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-pencil"></i>
+                                                        <i  class="fas fa-user"></i>
                                                     </span>
                                                         <div class="form-group is-empty">
                                                             <input class="form-control" style="border-bottom: 0px solid #eee !important" name="tier" [(ngModel)]="crowdsale.tier" placeholder="Crowdsale Setup Name..." type="text" formControlName="tier" required/>
@@ -551,7 +546,7 @@
                                                     <label>Wallet Address<sup style="color: red">*</sup></label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon brd-right">
-                                                        <i  class="fa fa-id-card-o"></i>
+                                                        <i  class="fas fa-wallet"></i>
                                                     </span>
                                                         <div class="form-group is-empty">
                                                             <input class="form-control" style="border-bottom: 0px solid #eee !important" name="walletAddress" [(ngModel)]="crowdsale.walletAddress" placeholder="Wallet Address..." type="text" formControlName="walletAddress" (blur)="addressValidate(crowdsale.walletAddress)" required>
@@ -570,7 +565,7 @@
                                                     </span>
                                                         <div class="form-group is-empty">
                                                             <!-- <input class="form-control" style="border-bottom: 0px solid #eee !important" name="startTime" [(ngModel)]="crowdsale.startTime" placeholder="Start Time..." type="datetime-local" formControlName="startTime" required/> -->
-                                                            <input [(ngModel)]="crowdsale.startTime" [min]="min" [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11" id='txtDate1' formControlName="startTime" class="form-control" placeholder="MM/DD/YYYY, hh:mm:ss" onkeydown="return false">
+                                                            <input [(ngModel)]="crowdsale.startTime" [min]="min" [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11" id='txtDate1' formControlName="startTime" class="form-control" style="border-bottom:0px solid #eee!important" placeholder="MM/DD/YYYY, hh:mm:ss" onkeydown="return false">
                                                             <owl-date-time #dt11></owl-date-time>
                                                         </div>
                                                     </div>
@@ -584,7 +579,7 @@
                                                         <i  class="fa fa-calendar-check-o"></i>
                                                     </span>
                                                         <div class="form-group is-empty">
-                                                            <input [(ngModel)]="crowdsale.endTime" [min]="min" [owlDateTimeTrigger]="dtPicker1" formControlName="endTime" [owlDateTime]="dtPicker1" class="form-control" placeholder="MM/DD/YYYY, hh:m:ss" id='txtDate' onkeydown="return false">
+                                                            <input [(ngModel)]="crowdsale.endTime" [min]="min" [owlDateTimeTrigger]="dtPicker1" formControlName="endTime" [owlDateTime]="dtPicker1" class="form-control" style="border-bottom:0px solid #eee!important" placeholder="MM/DD/YYYY, hh:m:ss" id='txtDate' onkeydown="return false">
                                                             <owl-date-time #dtPicker1></owl-date-time>
                                                         </div>
                                                     </div>
@@ -629,11 +624,12 @@
                                         </div>
                                     </div>
                                     <div *ngIf="tierTabel">
-                                        <div class="col-md-12" style="text-align: right;">
-                                            <button class="add_crowdsale_button btn btn-round " style="background:green;margin-bottom: 20px; " (click)="addMoretier()">Add More Crowdsale</button>
+                                        <div class="col-md-12 text-center">
+                                            <h6 style="font-weight: bold;margin:  0;">CROWDSALE SETUP</h6>
+                                            <button class="add_crowdsale_button btn btn-round btn-info" (click)="addMoretier()">Add More Crowdsale</button>
                                         </div>
                                         <div class="col-md-12">
-                                            <div class="card card-plain">
+                                            <div class="card card-plain m-4">
                                                 <div class="card-content table-responsive">
                                                     <table class="table table-hover">
                                                         <thead>
@@ -657,7 +653,7 @@
                                                                 <td>{{icowizards.crowdsale.pricingStrategy[i].rate ? icowizards.crowdsale.pricingStrategy[i].rate : '--'}}</td>
                                                                 <td>{{crowdsale.supply ? crowdsale.supply : '--'}}</td>
                                                                 <!--    <td class="text-success"><i class="material-icons" (click)="poptier(i)">edit</i></td> -->
-                                                                <td class="text-danger"><i class="material-icons" (click)="poptier(i)">close</i></td>
+                                                                <td class="text-danger"><i class="material-icons" (click)="poptier(i)" style="cursor: pointer;">close</i></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -679,7 +675,7 @@
                                             </div>
                                             <div *ngIf="!registerForm.controls['mincap'].valid && registerForm.controls['mincap'].dirty">
                                                 <span *ngIf="registerForm.controls['mincap'].errors['required']" class="small">Min cap  is required</span>
-                                                <span *ngIf="registerForm.controls['mincap'].errors['pattern']" class="small">Min cap should be between 0 to 1000f</span>
+                                                <span *ngIf="registerForm.controls['mincap'].errors['pattern']" class="small">Min cap should be between 0 to 1000</span>
                                             </div>
                                             <small>Minimum amount tokens to buy. Not a minimum size of a transaction. If minCap is 1 and user bought 1 token in a previous transaction and buying 0.1 token it will allow him to buy.</small>
                                         </div>
@@ -688,7 +684,7 @@
                             </div>
                             <p class="text-center ">
                                 <!--  -->
-                                <button (click)="generateIco(registerForm.value)" [disabled]="!registerForm.valid" type="submit" class="btn btn-primary btn-round" name="submit" style="background-color: #f96332;">Submit </button>
+                                <button (click)="generateIco()" [disabled]="!registerForm.valid" type="submit" class="btn btn-info btn-round" name="submit">Submit </button>
                             </p>
                         </form>
                     </div>

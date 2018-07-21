@@ -92,6 +92,7 @@ import { Observable } from 'rxjs/Rx';
     teamStatus:boolean=false;
     totalTokenSupply : number = 0;     
     allparam:any;
+    enablePaypal :boolean =  true;
 
    // paypalButtonStatus:boolean=true;
     text:any = {
@@ -151,7 +152,10 @@ import { Observable } from 'rxjs/Rx';
                    this.ethAddress=this.user.EthAddress;
                    this.getEthereumFromUSD();
                    this.getBalance();
-                   this.getTransactionsByAccount();
+                   //2ndtable
+                   //this.getTransactionsByAccount();
+                   //2ndtable
+                   this.getTransactionsByAccountRopsten();
                    this.getToken("ongoing");
                    // this.getTokenBalanceByAddress();
                   }
@@ -160,7 +164,9 @@ import { Observable } from 'rxjs/Rx';
                    this.transDataDetail();
                    this.loadPaypalButton();
                    // for left side token balance
-                  this.getTokenBalanceAndName();
+                  //this.getTokenBalanceAndName();
+                  // for left side token balance
+                  this.getTokenBalanceAndNameRopsten();
                   this.tabelJquery();
               
                }
@@ -173,7 +179,7 @@ import { Observable } from 'rxjs/Rx';
                          responsive: true,
                          language: {
                          search: '_INPUT_',
-                         searchPlaceholder: 'Search records',
+                         searchPlaceholder: 'Search..',
                         }
                       });
                      });
@@ -185,7 +191,7 @@ import { Observable } from 'rxjs/Rx';
                          responsive: true,
                          language: {
                          search: '_INPUT_',
-                         searchPlaceholder: 'Search records',
+                         searchPlaceholder: 'Search..',
                         }
                       });
                      });
@@ -194,6 +200,7 @@ import { Observable } from 'rxjs/Rx';
      
 
             valuechange(e : any){
+              this.enablePaypal = true;
                if (e.keyCode === 189 ) {
                           return false;
                       }
@@ -214,7 +221,8 @@ import { Observable } from 'rxjs/Rx';
                   }
 
 
-             getEthereumFromUSD(){
+             getEthereumFromUSD(){  
+             this.ethrate="";                             
                    const url = this.global_service.basePath + 'api/getEthereumFromUSD';
                    this.global_service.GetRequest(url).subscribe(response=>{
                     if(response[0].status==200){
@@ -556,14 +564,13 @@ makeCrowedSaleFinal(data:any){
           })
        }
 
-     counterDemo(objectData:any,i:any){
-      // window.clearInterval(this.x);              
+     counterDemo(objectData:any,i:any){                   
       this.x = setInterval(function() {
        this.countDownDateExample=new Date(objectData.endTime).getTime();     
         var now = new Date().getTime();        
         // Find the distance between now an the count down date
         var distance = this.countDownDateExample - now;
-       /// console.log("this.countDownDateExample,now::::",this.countDownDateExample,now,i, distance)
+       
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -572,16 +579,12 @@ makeCrowedSaleFinal(data:any){
         
        // Output the result in an element with id="demo"
             var element = document.getElementById("demo5"+i);
-              if(element){
-           //     console.log("iiiiiiiiiiiiiiiiiii:::::::::::::::::::",+i);
+              if(element){             
                  document.getElementById("demo5"+i).innerHTML = days + "d " + hours + "h "
               + minutes  + "m " + seconds + "s (GMT +5:30)";
-              }else{
-                
-                // alert("Hello else");
               }
         // If the count down is over, write some text 
-        //alert("distance = = "+distance);
+       
         if (distance < 0) {          
             clearInterval(this.x);
             var element = document.getElementById("demo5"+i);
@@ -610,8 +613,7 @@ makeCrowedSaleFinal(data:any){
                 {
                     for(var data of res[0].crowdsale.crowdsale)
                       {
-                         this.totalTokenSupply = this.totalTokenSupply + parseInt(data.supply);
-                         console.log("this.incompleteICO = = "+JSON.stringify(this.incompleteICO[2]));
+                         this.totalTokenSupply = this.totalTokenSupply + parseInt(data.supply);                         
                      }
 
                      this.incompleteICO=response[0].json.json().data;
@@ -641,36 +643,88 @@ makeCrowedSaleFinal(data:any){
     }
 
     // get token name and token balance by KUNVAR SUINGH
-getTokenBalanceAndName(){
+// getTokenBalanceAndName(){
+//      let postData ={
+//                     Address:this.user.EthAddress,
+//                     userId:this.user._id
+//                    };
+//        //for live            
+//      // const url = this.global_service.basePath + 'ETH/getAllsendTokens';
+//       //for local
+//       const url = this.global_service.basePath + 'ETH/getRopstenTokenTransactions';
+//       this.global_service.PostRequest(url , postData).subscribe(response=>{
+//             if(response[0].json.status==200)
+//               {
+//                this.tokenBalanceList = [];
+//                if(response[0].json.json().data){
+//                  var result=response[0].json.json().data.tokens;
+
+//                if(result){
+//                  if(result.length!=0){
+//                      this.tabeldata2=false;
+//                      for(var i=0;i<result.length;i++){
+//                         let objData ={
+//                             sn :'',
+//                             tokenAddress:'',
+//                             tokenName:'',
+//                             result:''
+//                         };
+//                         var j = i+1;
+
+//                         objData.sn =j.toString();
+//                         objData.tokenAddress=(result[i].tokenInfo.tokenAddress);
+//                         objData.tokenName=(result[i].tokenInfo.name);
+//                         objData.result=(result[i].balance/(Math.pow(10,result[i].tokenInfo.decimals))).toString();
+//                         this.tokenBalanceList.push(objData);
+//                      }
+//                        $(document).ready( function () {
+//                         $('#tabledata_id').DataTable({
+//                            'pagingType': 'full_numbers',
+//                            'lengthMenu': [[5, 10, 15, -1], [5, 10, 15, 'All']],
+//                            responsive: true,
+//                            language: {
+//                            search: '_INPUT_',
+//                            searchPlaceholder: 'Search ..',
+//                           }
+//                         });
+//                      });
+//                    }
+//                  }else{
+//                  this.tabeldata2=true;
+//                  }
+//                 } 
+//                }               
+//             })
+//     }
+// gettoken name and token balance by gaurav
+getTokenBalanceAndNameRopsten(){
      let postData ={
                     Address:this.user.EthAddress,
                     userId:this.user._id
                    };
-      const url = this.global_service.basePath + 'ETH/getAllsendTokens';
+     this.tabeldata2=true;
+       //for live            
+     // const url = this.global_service.basePath + 'ETH/getAllsendTokens';
+      //for local
+      const url = this.global_service.basePath + 'ETH/getRopstenTokenTransactions';
       this.global_service.PostRequest(url , postData).subscribe(response=>{
             if(response[0].json.status==200)
               {
+                //debugger;
                this.tokenBalanceList = [];
                if(response[0].json.json().data){
-                 var result=response[0].json.json().data.tokens;
-
-               if(result){
+                 var result=response[0].json.json().data;
+               
                  if(result.length!=0){
                      this.tabeldata2=false;
                      for(var i=0;i<result.length;i++){
-                        let objData ={
-                            sn :'',
-                            tokenAddress:'',
-                            tokenName:'',
-                            result:''
-                        };
-                        var j = i+1;
-
-                        objData.sn =j.toString();
-                        objData.tokenAddress=(result[i].tokenInfo.tokenAddress);
-                        objData.tokenName=(result[i].tokenInfo.name);
-                        objData.result=(result[i].balance/(Math.pow(10,result[i].tokenInfo.decimals))).toString();
-                        this.tokenBalanceList.push(objData);
+                        if(result[i].value != 0){
+                          var obj = {
+                              tokenName : result[i].tokenName,
+                              value : result[i].value/Math.pow(10,result[i].tokenDecimal)
+                            };
+                        this.tokenBalanceList.push(obj);
+                      }
                      }
                        $(document).ready( function () {
                         $('#tabledata_id').DataTable({
@@ -679,86 +733,121 @@ getTokenBalanceAndName(){
                            responsive: true,
                            language: {
                            search: '_INPUT_',
-                           searchPlaceholder: 'Search records',
+                           searchPlaceholder: 'Search..',
                           }
                         });
                      });
-                   }
-                 }else{
-                 this.tabeldata2=true;
-                 }
+                   }else{this.tabeldata2=true;}
+                 
                 } 
-               }
-               else
-              {
-                 console.log(response);
-              }
+               }else{this.tabeldata2=false;}               
             })
     }
-
     // get token balance by address
 
-    getTokenBalanceByAddress(){
-     let postData ={
-                    ETHaddress:this.user.EthAddress,
-                    userId:this.user._id
-                   };
-      const url = this.global_service.basePath + 'ETH/getTokenBalanceByAddress';
-      this.global_service.PostRequest(url , postData).subscribe(response=>{
-            if(response[0].json.status==200)
-              {
-               this.tokenBalanceList = [];
-               var result=response[0].json.json().data;
-               if(result.length!=0){
-                 this.tabeldata2=false;
-                 for(var i=0;i<result.length;i++){
-                  let objData ={
-                      sn :'',
-                      tokenAddress:'',
-                      result:''
-                  };
-                  var j = i+1;
-                  objData.sn =j.toString();
-                  objData.tokenAddress=(result[i].tokenAddress);
-                  objData.result=result[i].result;
+    // getTokenBalanceByAddress(){
+    //  let postData ={
+    //                 ETHaddress:this.user.EthAddress,
+    //                 userId:this.user._id
+    //                };
+    //   const url = this.global_service.basePath + 'ETH/getTokenBalanceByAddress';
+    //   this.global_service.PostRequest(url , postData).subscribe(response=>{
+    //         if(response[0].json.status==200)
+    //           {
+    //            this.tokenBalanceList = [];
+    //            var result=response[0].json.json().data;
+    //            if(result.length!=0){
+    //              this.tabeldata2=false;
+    //              for(var i=0;i<result.length;i++){
+    //               let objData ={
+    //                   sn :'',
+    //                   tokenAddress:'',
+    //                   result:''
+    //               };
+    //               var j = i+1;
+    //               objData.sn =j.toString();
+    //               objData.tokenAddress=(result[i].tokenAddress);
+    //               objData.result=result[i].result;
 
-                 this.tokenBalanceList.push(objData);
-                 }
-                   $(document).ready( function () {
-                    $('#tabledata_id').DataTable({
-                       'pagingType': 'full_numbers',
-                       'lengthMenu': [[5, 10, 15, -1], [5, 10, 15, 'All']],
-                       responsive: true,
-                       language: {
-                       search: '_INPUT_',
-                       searchPlaceholder: 'Search records',
-                      }
-                    });
-                 });
-              }else{
-                 this.tabeldata2=true;
+    //              this.tokenBalanceList.push(objData);
+    //              }
+    //                $(document).ready( function () {
+    //                 $('#tabledata_id').DataTable({
+    //                    'pagingType': 'full_numbers',
+    //                    'lengthMenu': [[5, 10, 15, -1], [5, 10, 15, 'All']],
+    //                    responsive: true,
+    //                    language: {
+    //                    search: '_INPUT_',
+    //                    searchPlaceholder: 'Search records',
+    //                   }
+    //                 });
+    //              });
+    //           }else{
+    //              this.tabeldata2=true;
+    //           }
+    //          }else{this.tabeldata2=false;}               
+    //         })
+    // }
 
-              }
-
-               }
-               else
-              {
-                 console.log(response);
-              }
-            })
-    }
 
     // Get Transaction By account 2nd tabel
-    getTransactionsByAccount(){
+    // getTransactionsByAccount(){
+    //   this.tabeldata=true;
+    //   let postData ={
+    //              address:this.user.EthAddress,
+    //              userId:this.user._id,
+    //              startBlock:'',
+    //              endBlock: ''
+    //              };
+
+    //       const url = this.global_service.basePath + 'ETH/getTransactionFromRopston';                   //getTransactionsByAccount';
+    //       this.global_service.PostRequest(url , postData).subscribe(response=>{
+    //            if(response[0].json.status==200){
+    //            this.transactionData = [];
+    //            if(response[0].json.json().data){
+    //            var result=response[0].json.json().data;
+    //            if(result.length!=0){
+    //              this.tabeldata=false;
+    //               for(var i=0;i<result.length;i++){
+    //               let objData ={
+    //                  sn :'',
+    //                  hash:'',
+    //                  value:''
+    //               };
+
+    //               var j = i+1;
+    //               objData.sn =j.toString();
+    //               objData.hash=(result[i].hash);
+    //               objData.value=result[i].value;
+    //               this.transactionData.push(objData);
+    //           }
+    //           $(document).ready( function () {
+    //           $('#table_id').DataTable({
+    //              'pagingType': 'full_numbers',
+    //              'lengthMenu': [[5, 10, 15, -1], [5, 10, 15, 'All']],
+    //              responsive: true,
+    //              language: {
+    //              search: '_INPUT_',
+    //              searchPlaceholder: 'Search ..',
+    //             }
+    //           });
+    //          });
+    //            }else{
+    //              this.tabeldata=true;
+    //            }
+    //          }
+    //          }             
+    //      })
+    //     }
+//get transation in 2nd table by gaurav
+ getTransactionsByAccountRopsten(){
       this.tabeldata=true;
       let postData ={
-                 address:this.user.EthAddress,
-                 userId:this.user._id,
-                 startBlock:'',
-                 endBlock: ''
+                 Address:this.user.EthAddress,
+                 userId:this.user._id,                 
                  };
-
-          const url = this.global_service.basePath + 'ETH/getTransactionFromRopston';                   //getTransactionsByAccount';
+             //debugger;
+          const url = this.global_service.basePath + 'ETH/getRopstenTransactionList';                   
           this.global_service.PostRequest(url , postData).subscribe(response=>{
                if(response[0].json.status==200){
                this.transactionData = [];
@@ -767,17 +856,11 @@ getTokenBalanceAndName(){
                if(result.length!=0){
                  this.tabeldata=false;
                   for(var i=0;i<result.length;i++){
-                  let objData ={
-                     sn :'',
-                     hash:'',
-                     value:''
+                  var obj = {
+                    hash : result[i].hash,
+                    value : result[i].value/Math.pow(10,18)
                   };
-
-                  var j = i+1;
-                  objData.sn =j.toString();
-                  objData.hash=(result[i].hash);
-                  objData.value=result[i].value;
-                  this.transactionData.push(objData);
+                 this.transactionData.push(obj);
               }
               $(document).ready( function () {
               $('#table_id').DataTable({
@@ -786,7 +869,7 @@ getTokenBalanceAndName(){
                  responsive: true,
                  language: {
                  search: '_INPUT_',
-                 searchPlaceholder: 'Search records',
+                 searchPlaceholder: 'Search ..',
                 }
               });
              });
@@ -794,13 +877,9 @@ getTokenBalanceAndName(){
                  this.tabeldata=true;
                }
              }
-             }
-             else{
-               console.log(response);
-            }
+             }             
          })
         }
-
 
 
     ngOnInit() {
@@ -967,7 +1046,7 @@ this.deleteTokenid=value;
   $('#noticeModalinvest_delete').modal('show');
 }
 
-    deleteToken(value:any){
+    deleteToken(){
        let postData ={
                  userId : this.user._id,
                  tokenId: this.deleteTokenid
@@ -1015,12 +1094,13 @@ this.deleteTokenid=value;
         };
         const url = this.global_service.basePath + 'ETH/withdrawEth';
         this.global_service.PostRequest(url, postData).subscribe(response => {
-debugger
             if (response[0].json.json().status == 200) {
               this.global_service.showNotification('top','right',"ETH withdraw successfully",2,'ti-cross');
               this.getBalance();
-              this.getTokenBalanceByAddress();
-              this.getTransactionsByAccount();
+              //this.getTokenBalanceByAddress();
+             // this.getTransactionsByAccount();
+              //2ndtable
+               this.getTransactionsByAccountRopsten();
               this.withDrawForm.reset();
              } else
               {
@@ -1093,8 +1173,6 @@ debugger
               if (index !== -1){
                     this.updateDetails.team.splice(index, 1);
               }
-            }else{
-              console.log(response);
             }
           })
     }
@@ -1218,9 +1296,11 @@ debugger
       }
       
       depositeETHModal(){
+        
         this.global_service.emitEvent("Dashbard Page", "click", "Deposit Button", 1);
         this.mymodel="" ;
         this.depositEth="" ;
+        this.getEthereumFromUSD();
         $('#noticeModal').modal('show');
       }
 
@@ -1238,7 +1318,7 @@ debugger
             responsive: true,
             language: {
             search: '_INPUT_',
-            searchPlaceholder: 'Search records',
+            searchPlaceholder: 'Search ..',
             }
 
         });
@@ -1251,7 +1331,7 @@ debugger
             responsive: true,
             language: {
               search: '_INPUT_',
-              searchPlaceholder: 'Search records',
+              searchPlaceholder: 'Search ..',
             }
         });
 
